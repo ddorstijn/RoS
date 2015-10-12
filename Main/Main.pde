@@ -29,7 +29,7 @@ void setup() {
   keys[1] = false;
   keys[2] = false;
 
-  floor = new Platform(width/2-30, Math.round((height - 9)/ 20.0) * 20.0, 60, gridSize);
+  floor = new Platform(width/2-30, Math.round((height - 9)/ 20.0) * 20.0, 80, gridSize);
   platforms = new ArrayList();
   player1 = new Player();
   worldCamera = new Camera();
