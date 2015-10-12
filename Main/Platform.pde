@@ -1,8 +1,8 @@
 class Platform { //<>//
   float x, y, iWidth, iHeight, 
-    left, right, top, bottom;
+    left, right, top, bottom, index;
 
-  Platform(float _x, float _y, float _width, float _height) {
+  Platform(float _x, float _y, float _width, float _height, int _index) {
     x = _x;
     y = _y;
     iWidth = _width;
@@ -12,6 +12,8 @@ class Platform { //<>//
     right = x + iWidth;
     top = y;
     bottom = y + iHeight;
+    
+    index = _index;
   }
 
   void run() {
@@ -60,9 +62,17 @@ class Platform { //<>//
     }
   }
 
+  void mouseReleased() {
+    // Removal of a box
+    if (mouseButton == RIGHT) {
+      System.out.println(worldCamera.pos.x + mouseX + " " + left + " " + right);
+      if (worldCamera.pos.x + mouseX > left && worldCamera.pos.x + mouseX < right && mouseY > top && mouseY < bottom) {
+        platforms.remove(index);
+      }
+    }
+  }
 
   void collisionDetection() {
-
 
     if (rectRectIntersect(player1.nLeft, player1.nTop, player1.nRight, player1.nBottom, left, top, right, bottom)) {
       if (player1.vx > 0) {// If player collides from right side
