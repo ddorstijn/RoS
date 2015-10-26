@@ -1,5 +1,5 @@
 void keyPressed() {
-  if (keyCode == 16) {
+  if (keyCode == 16) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
   }
 
@@ -11,22 +11,22 @@ void keyPressed() {
 void keyReleased()
 {
   switch (keyCode) {
-  case 37: // In case left arrow key is pressed and left is not obstructed move left
+  case 37: // In case left arrow key is pressed 
     keys[0] = false;
     break;
-  case 39:
+  case 39: //In case the right arrow key is pressed
     keys[1] = false;
     break;
-  case 38:
+  case 17:
     keys[2] = false;
     break;
   }
 }
 
 //Level building!
-
 void mousePressed() {
   if (shiftKey == true && mouseButton == LEFT) {
+    //Take first mouse position after clicked and allign it to the grid
     beginX = Math.round((worldCamera.pos.x + mouseX - gridSize/2-1)/ gridSize) * gridSize;
     beginY = Math.round((mouseY - gridSize/2-1)/ gridSize) * gridSize;
   }
@@ -34,6 +34,7 @@ void mousePressed() {
 
 void mouseReleased() {
   if (shiftKey == true && mouseButton == LEFT) {
+    //Take position of the mouse when released and allign it to the grid
     endX = Math.round((worldCamera.pos.x + mouseX + gridSize/2-1)/ gridSize) * gridSize - beginX;
     endY = Math.round((mouseY + gridSize/2-1)/ gridSize) * gridSize - beginY;
 
@@ -43,6 +44,7 @@ void mouseReleased() {
 
 void preview() {
   if (mousePressed && mouseButton == LEFT && shiftKey == true) {
+    //show the preview of the box by just drawing a rectangle from begin to mouse
     pushMatrix();
     rectMode(CORNER);
     fill(0);

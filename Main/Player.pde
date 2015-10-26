@@ -10,15 +10,16 @@ class Player { //<>//
   float maxSpeed = 4;
   float speed = 0.6;
 
-  boolean canJump = true;
-  int colour = 255;
+  boolean canJump = true; //Check if ale to jump
+  int colour = 255; //White
+  
+  float left = x - radius; //Left side of player
+  float right = x + radius; //Right side of player
+  float top = y - radius; //Top side of player
+  float bottom = y + radius; //Bottom side of player
 
-  float left = x - radius;
-  float right = x + radius;
-  float top = y - radius;
-  float bottom = y + radius;
-
-  float nLeft = left + vx;
+  //Next positions
+  float nLeft = left + vx; 
   float nRight = right + vx;
   float nTop = top + vy;
   float nBottom = bottom + vy;
@@ -26,19 +27,18 @@ class Player { //<>//
   void run() {
     playerUpdatePosition();
     controls();
-    //stayInCanvas();
     drawPlayer();
   }
 
   void drawPlayer() {
-    noStroke();
-    fill(colour);
-    pushMatrix();
-    rectMode(CENTER);
-    translate(x, y);
-    rotate(angle);
+    noStroke(); //No outline
+    fill(colour); //Fill it white
+    pushMatrix(); //Create a drawing without affecting other objects
+    rectMode(CENTER); 
+    translate(x, y); //Move the box to the x and I position
+    rotate(angle); //For the jump mechanic
     rect(0, 0, diameter, diameter); // character
-    popMatrix();
+    popMatrix(); //End the drawing
   }
 
 
@@ -69,6 +69,14 @@ class Player { //<>//
     nRight = right + vx;
     nTop = top + vy;
     nBottom = bottom + vy;
+
+    if (y > height + 100) {
+      x = width/2;
+      y = height/2;
+
+      vx = 0;
+      vy = 0;
+    }
   }
 
   void controls() {
@@ -78,21 +86,9 @@ class Player { //<>//
     if (keys[1]) {
       vx += speed;
     }
-    if (keys[2]) {
-      vy = jumpSpeed;
-      canJump = false; // Jump is possible
-    }
+    //if (keys[2]) {
+    //  vy = jumpSpeed;
+    //  canJump = false; // Jump is possible
+    //}
   }
-
-  //void stayInCanvas() {
-  //  if (x > width - radius) { // If player is to far to the right then the speed should be 0 and to prevent the player from slightly bugging out of the level the position is reset
-  //    x = width - radius;
-  //    vx = 0;
-  //  }
-
-  //  if (x < 0 + radius) {
-  //    x = 0 + radius;
-  //    vx = 0;
-  //  }
-  //}
 }

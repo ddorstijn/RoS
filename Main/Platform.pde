@@ -12,8 +12,8 @@ class Platform { //<>//
     right = x + iWidth;
     top = y;
     bottom = y + iHeight;
-    
-    index = _index;
+
+    index = _index; //Giving an id
   }
 
   void run() {
@@ -39,6 +39,9 @@ class Platform { //<>//
         break;
       case 39:
         keys[1] = true;
+        break;
+      case 17:
+        keys[2] = true;
         break;
       case 38:
         if (player1.canJump == true) {
@@ -90,25 +93,68 @@ class Platform { //<>//
       if (player1.top > bottom && player1.nTop < bottom) {// If player collides from bottom side
         player1.vy = 0;
       }
-      if (player1.bottom < top && player1.nBottom > top) {// If player collides from top side
-        player1.vy = 0;
-        player1.bottom = top;
-        player1.canJump = true;
-        player1.angle = 0;
+      if (player1.vy > 0) {
+        player1.bottom -= player1.radius;
+        if (player1.bottom < top && player1.nBottom > top) {// If player collides from top side
+          player1.vy = 0;
+          player1.bottom = top;
+          player1.canJump = true;
+          player1.angle = 0;
 
-        //Create momentum. If player realeased arrow key let the player slowwly stop
-        if (player1.vx > 0) {
-          player1.vx -= friction;
-          if (player1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the player still moves a tiny bit
-            player1.vx = 0;
-          }
-        } else if (player1.vx < 0) {
-          player1.vx += friction;
-          if (player1.vx > -0.1) {
-            player1.vx = 0;
+          //Create momentum. If player realeased arrow key let the player slowwly stop
+          if (player1.vx > 0) {
+            player1.vx -= friction;
+            if (player1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the player still moves a tiny bit
+              player1.vx = 0;
+            }
+          } else if (player1.vx < 0) {
+            player1.vx += friction;
+            if (player1.vx > -0.1) {
+              player1.vx = 0;
+            }
           }
         }
       }
     }
+    
+    
+    if (rectRectIntersect(ara1.nLeft, ara1.nTop, ara1.nRight, ara1.nBottom, left, top, right, bottom)) {
+      if (ara1.vx > 0) {// If ara collides from right side
+        ara1.right -= ara1.radius;
+        if (ara1.right < left && ara1.nRight > left) {// If ara collides from left side
+          ara1.vx = 0;
+        }
+      }       
+      if (ara1.vx < 0) {// If ara collides from right side
+        ara1.left += ara1.radius;
+        if (ara1.left > right && ara1.nLeft < right) {// If ara collides from left side
+          ara1.vx = 0;
+        }
+      }
+      if (ara1.top > bottom && ara1.nTop < bottom) {// If ara collides from bottom side
+        ara1.vy = 0;
+      }
+      if (ara1.vy > 0) {
+        ara1.bottom -= ara1.radius;
+        if (ara1.bottom < top && ara1.nBottom > top) {// If ara collides from top side
+          ara1.vy = 0;
+          ara1.bottom = top;
+
+          //Create momentum. If ara realeased arrow key let the ara slowwly stop
+          if (ara1.vx > 0) {
+            ara1.vx -= friction;
+            if (ara1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the ara still moves a tiny bit
+              ara1.vx = 0;
+            }
+          } else if (ara1.vx < 0) {
+            ara1.vx += friction;
+            if (ara1.vx > -0.1) {
+              ara1.vx = 0;
+            }
+          }
+        }
+      }
+    }
+    
   }
 }
