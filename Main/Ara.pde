@@ -46,6 +46,20 @@ class Ara {
     nRight = right + vx;
     nTop = top + vy;
     nBottom = bottom + vy;
+    
+    
+    //Create momentum. If ara realeased arrow key let the ara slowwly stop
+    if (ara1.vx > 0) {
+      ara1.vx -= friction;
+      if (ara1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the ara still moves a tiny bit
+        ara1.vx = 0;
+      }
+    } else if (ara1.vx < 0) {
+      ara1.vx += friction;
+      if (ara1.vx > -0.1) {
+        ara1.vx = 0;
+      }
+    }
 
     if (y > height) {
       x = width/2;

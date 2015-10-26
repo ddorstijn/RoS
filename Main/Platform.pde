@@ -1,4 +1,4 @@
-class Platform { //<>//
+class Platform { //<>// //<>//
   float x, y, iWidth, iHeight, 
     left, right, top, bottom, index;
 
@@ -100,19 +100,6 @@ class Platform { //<>//
           player1.bottom = top;
           player1.canJump = true;
           player1.angle = 0;
-
-          //Create momentum. If player realeased arrow key let the player slowwly stop
-          if (player1.vx > 0) {
-            player1.vx -= friction;
-            if (player1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the player still moves a tiny bit
-              player1.vx = 0;
-            }
-          } else if (player1.vx < 0) {
-            player1.vx += friction;
-            if (player1.vx > -0.1) {
-              player1.vx = 0;
-            }
-          }
         }
       }
     }
@@ -139,22 +126,8 @@ class Platform { //<>//
         if (ara1.bottom < top && ara1.nBottom > top) {// If ara collides from top side
           ara1.vy = 0;
           ara1.bottom = top;
-
-          //Create momentum. If ara realeased arrow key let the ara slowwly stop
-          if (ara1.vx > 0) {
-            ara1.vx -= friction;
-            if (ara1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the ara still moves a tiny bit
-              ara1.vx = 0;
-            }
-          } else if (ara1.vx < 0) {
-            ara1.vx += friction;
-            if (ara1.vx > -0.1) {
-              ara1.vx = 0;
-            }
-          }
         }
       }
     }
-    
   }
 }
