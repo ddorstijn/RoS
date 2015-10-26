@@ -3,6 +3,14 @@ void keyPressed() {
     shiftKey = !shiftKey;
   }
 
+  //if (keyCode == 49 && ara1.aHeight == 40) {
+  //  ara1.y -= 40;
+  //  ara1.aHeight += 40;
+  //} else {     
+  //  ara1.y += 40;
+  //  ara1.aHeight -= 40;
+  //}
+
   //  if (keyCode == 83) {
   //   export();
   //}
@@ -44,7 +52,7 @@ void mouseReleased() {
     endY = Math.round((mouseY + gridSize/2-1)/ gridSize) * gridSize - beginY;
 
     platforms.add(new Platform(beginX, beginY, abs(endX), endY, 1));
-    
+
     System.out.println("platforms.add(new Platform(" + beginX + ", " + beginY + ", " + abs(endX) + ", " + endY + ", " + "1)); ");
   }
 }

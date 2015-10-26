@@ -1,16 +1,16 @@
 class Ara {
   //INIT
-  int diameter = 40; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
-  float radius = diameter / 2; //Radius is half the diameter
+  float aWidth = 40; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
+  float aHeight = 40; //Radius is half the diameter
   float x = width/2; // Postition of the ara on the x-axis
   float y = height/2 - 100; // Postition of the ara on the y-axis
   float vx, vy; //Horizontal and vertical speeds
 
   //Bounding box creation
-  float left = x - radius; //Left side of the box
-  float right = x + radius; //Right side of the box
-  float top = y - radius; //Top of the box
-  float bottom = y + radius; //Bottom of the box
+  float left = x; //Left side of the box
+  float right = x + aWidth; //Right side of the box
+  float top = y; //Top of the box
+  float bottom = y + aHeight; //Bottom of the box
 
   //Same as above but then calculated for the next frame. So de Next position
   float nLeft = left + vx;
@@ -27,8 +27,8 @@ class Ara {
   void display() {
     noStroke();
     fill(255, 0, 0);
-    rectMode(CENTER); //Starts in the middle of the rectangle and goes outwards instead of the left corner
-    rect(x, y, diameter, diameter); //Draw player
+    rectMode(CORNER); //Starts in the middle of the rectangle and goes outwards instead of the left corner
+    rect(x, y, aWidth, aHeight); //Draw player
   }
 
   void araUpdatePosition() {
@@ -36,10 +36,10 @@ class Ara {
     y += vy; // Vertical speed
     vy += gravity; // Gravity
 
-    left = x - radius;
-    right = x + radius;
-    top = y - radius;
-    bottom = y + radius;
+    left = x;
+    right = x + aWidth;
+    top = y;
+    bottom = y + aHeight;
 
     nLeft = left + vx;
     nRight = right + vx;

@@ -61,7 +61,7 @@ class Player {   //<>//
         player1.vx = 0;
       }
     }
-    
+
     //Border left side of the level
     if (x < 0 + radius) {
       x = 0 + radius;
@@ -113,71 +113,46 @@ class Player {   //<>//
     //  canJump = false; // Jump is possible
     //}
   }
-  
-    void collisionDetection() {
 
-    if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, player1.top, player1.right, player1.bottom)) {
+  void collisionDetection() {
 
-      if (ara1.vx > 0) {// If ara collides from right side
+    if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
+      if (vx > 0) {// If player collides from right side
         right -= radius;
-        if (right < player1.left && nRight > player1.left) {// If ara collides from left side
+        if (right < ara1.left && nRight > ara1.left) {// If player collides from left side
           vx = 0;
         }
       }       
-      if (vx < 0) {// If ara collides from right side
+      if (vx < 0) {// If player collides from right side
         left += radius;
-        if (left > right && nLeft < ara1.right) {// If ara collides from left side
+        if (left > ara1.right && nLeft < ara1.right) {// If player collides from left side
           vx = 0;
         }
       }
-      if (top > ara1.bottom && nTop < ara1.bottom) {// If ara collides from bottom side
+      if (top > ara1.bottom && nTop < ara1.bottom) {// If player collides from bottom side
         vy = 0;
       }
       if (vy > 0) {
         bottom -= radius;
-        if (bottom < ara1.top && nBottom > ara1.top) {// If ara collides from top side
+        if (bottom < ara1.top && nBottom > ara1.top) {// If player collides from top side
           vy = 0;
-          bottom = ara1.top;
-        }
-
-
-
-        //If ara has momentum and collides with the player
-        if (vx > 0) {// If ara collides from right side
-          right -= radius;
-          if (right < ara1.left && nRight > ara1.left) {// If ara collides from left side
-            vx = 0;
-          }
-        }       
-        if (vx < 0) {// If ara collides from right side
-          left += radius;
-          if (left > right && nLeft < ara1.right) {// If ara collides from left side
-            vx = 0;
-          }
-        }
-        if (top > ara1.bottom && nTop < ara1.bottom) {// If ara collides from bottom side
-          vy = 0;
-        }
-        if (vy > 0) {
-          bottom -= radius;
-          if (bottom < ara1.top && nBottom > ara1.top) {// If ara collides from top side
-            vy = 0;
-            bottom = ara1.top;
-          }
+          bottom = top;
+          canJump = true;
+          angle = 0;
         }
       }
+    }
 
-      //If ctrl is pressed stick to the player
-      if (keys[2]) { 
-        //stop moving
-        ara1.vx = 0;
-        ara1.vy = 0;
+    //If ctrl is pressed stick to the player
+    if (keys[2]) { 
+      //stop moving
+      ara1.vx = 0;
+      ara1.vy = 0;
 
-        //Move x to player x
-        ara1.x = player1.x;
-        ara1.y = player1.y;
-        isCarried = true;
-      }
+      //Move x to player x
+      ara1.x = player1.x;
+      ara1.y = player1.y;
+      isCarried = true;
     }
   }
 }
