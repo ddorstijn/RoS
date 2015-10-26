@@ -1,7 +1,7 @@
-class Platform{ //<>//
+class Platform { //<>//
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
-  
+
   int index;  
 
   Platform(float _x, float _y, float _width, float _height, int _index) {
@@ -15,7 +15,10 @@ class Platform{ //<>//
     top = y;
     bottom = y + iHeight;
 
-    index = _index; //Giving an id
+    //If index = 1 it's a normal platform
+    //If index = 2 it's a trap or stationary enemy
+    //If index = 3 it's the finish!
+    index = _index;
   }
 
   void run() {
@@ -24,20 +27,18 @@ class Platform{ //<>//
     controls();
   }
 
-  
-  
   void display() {
     noStroke();
-    switch (index){
-      case 1:     
-        fill(0, 0, 0);
-        break;
-      case 2:
-        fill(255, 0, 0);
-        break;
-      case 3:
-        fill(0, 255, 0);
-        break;
+    switch (index) {
+    case 1:     
+      fill(0, 0, 0);
+      break;
+    case 2:
+      fill(255, 0, 0);
+      break;
+    case 3:
+      fill(0, 255, 0);
+      break;
     }
     rectMode(CORNER);
     rect(x, y, iWidth, iHeight);
@@ -56,6 +57,15 @@ class Platform{ //<>//
   void collisionDetection() {
 
     if (rectRectIntersect(player1.nLeft, player1.nTop, player1.nRight, player1.nBottom, left, top, right, bottom)) {
+      if (player1.vy > 0) {
+        player1.bottom -= player1.radius;
+        if (player1.bottom < top && player1.nBottom > top) {// If player collides from top side
+          player1.vy = 0;
+          player1.bottom = top;
+          player1.canJump = true;
+          player1.angle = 0;
+        }
+      } 
       if (player1.vx > 0) {// If player collides from right side
         player1.right -= player1.radius;
         if (player1.right < left && player1.nRight > left) {// If player collides from left side
@@ -71,36 +81,27 @@ class Platform{ //<>//
       if (player1.top > bottom && player1.nTop < bottom) {// If player collides from bottom side
         player1.vy = 0;
       }
-      if (player1.vy > 0) {
-        player1.bottom -= player1.radius;
-        if (player1.bottom < top && player1.nBottom > top) {// If player collides from top side
-          player1.vy = 0;
-          player1.bottom = top;
-          player1.canJump = true;
-          player1.angle = 0;
-        }
-      }
-      
-      if (index == 2){
+
+      if (index == 2) {
         textAlign(CENTER);
         textFont(message);
         fill(255);
         text("You suck!", worldCamera.pos.x + width/2, height/2);
-        
+
         delay(500);
-        
+
         player1.x = player1.startX;
         player1.y = player1.startY;
       }
-      
-      if (index == 3){
+
+      if (index == 3) {
         textAlign(CENTER);
         textFont(message);
         fill(255);
         text("You win!", worldCamera.pos.x + width/2, height/2);
       }
     }
-    
+
     if (rectRectIntersect(ara1.nLeft, ara1.nTop, ara1.nRight, ara1.nBottom, left, top, right, bottom)) {
       if (ara1.vx > 0) {// If ara collides from right side
         ara1.right -= ara1.aWidth/2;
@@ -122,7 +123,7 @@ class Platform{ //<>//
         if (ara1.bottom < top && ara1.nBottom > top) {// If ara collides from top side
           ara1.vy = 0;
           ara1.bottom = top;
-        } 
+        }
       }
     }
   }

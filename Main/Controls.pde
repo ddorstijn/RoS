@@ -50,11 +50,6 @@ void controls() {
         player1.vy = player1.jumpSpeed;
         player1.canJump = false; // Jump is possible
       }
-
-      //if (player1.canJump == true) {
-      //  player1.canJump = false;
-      //  keys[2] = true;
-      //}
       break;
     }
   }
