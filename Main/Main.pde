@@ -42,9 +42,6 @@ void setup() {
   platforms.add(new Platform(1400.0, 360.0, 40.0, 40.0, 1)); // = platform + op level design
   platforms.add(new Platform(1560.0, 320.0, 80.0, 40.0, 1)); // = platorm 5 op level dsing
   platforms.add(new Platform(1760.0, 400.0, 240.0, 80.0, 1)); // = platform 6 op level desing
-<<<<<<< HEAD
-
-=======
   platforms.add(new Platform(2120.0, 360.0, 20.0, 20.0, 1)); // = platform + op level design
   platforms.add(new Platform(2320.0, 360.0, 20.0, 20.0, 1)); // = platform + op level design
   platforms.add(new Platform(2520.0, 360.0, 20.0, 20.0, 1)); // = platform + op level design
@@ -57,8 +54,8 @@ void setup() {
   platforms.add(new Platform(3560.0, 320.0, 160.0, 40.0, 1)); // = platform 10 op level design
   platforms.add(new Platform(3800.0, 280.0, 160.0, 40.0, 1)); 
 // = platform 11 op level design
+
   
->>>>>>> 7ccbfac58b5f4364f483c571f1016693ae9d3c37
   player1 = new Player();
   worldCamera = new Camera();
   ara1 = new Ara();
