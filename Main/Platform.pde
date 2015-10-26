@@ -34,6 +34,9 @@ class Platform { //<>// //<>// //<>// //<>//
       case 2:
         fill(255, 0, 0);
         break;
+      case 3:
+        fill(0, 255, 0);
+        break;
     }
     rectMode(CORNER);
     rect(x, y, iWidth, iHeight);
@@ -81,6 +84,12 @@ class Platform { //<>// //<>// //<>// //<>//
         System.out.println("you dead");
         player1.x = player1.startX;
         player1.y = player1.startY;
+      }
+      if (index == 3){
+        textAlign(CENTER);
+        textFont(message);
+        fill(255);
+        text("You win!", worldCamera.pos.x + width/2, height/2);
       }
     }
     

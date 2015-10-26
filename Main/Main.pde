@@ -1,6 +1,10 @@
 float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes //<>//
 float friction = 0.1; //Same goes for friction
 
+
+PFont message;
+
+
 ArrayList<Platform> platforms; //Create a list of platforms. Starts empty
 
 boolean[] keys = new boolean[3]; //Keys pressed and released doesn't always work if you just use the keyPressed command.
@@ -53,12 +57,16 @@ void setup() {
   platforms.add(new Platform(3560.0, 320.0, 160.0, 40.0, 1)); // = platform 10 op level design
   platforms.add(new Platform(3800.0, 280.0, 160.0, 40.0, 1)); // = platform 11 op level design
 
-  platforms.add(new Platform(1240.0, 360.0, 40.0, 40.0, 2)); //enemy/trap 
+  platforms.add(new Platform(1240.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
   platforms.add(new Platform(1320.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
+  
+  platforms.add(new Platform(4280.0, 400.0, 400.0, 80.0, 1)); //Finish
 
   player1 = new Player();
   worldCamera = new Camera();
   ara1 = new Ara();
+  
+  message = createFont("Arial", 72, true);
 }
 
 //Main
