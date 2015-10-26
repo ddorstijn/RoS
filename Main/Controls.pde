@@ -19,8 +19,11 @@ void keyReleased()
     break;
   case 17:
     keys[2] = false;
-    ara1.vx = player1.vx;
-    ara1.vy = player1.vy;
+    if (isCarried) {
+      ara1.vx = player1.vx;
+      ara1.vy = player1.vy;
+      isCarried = false;
+    }
     break;
   }
 }
