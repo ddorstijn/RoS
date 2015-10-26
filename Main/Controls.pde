@@ -6,7 +6,7 @@ void keyPressed() {
   if (key == 'a' && ara1.aHeight == 20) {
     ara1.y -= 20;
     ara1.aHeight += 20;
-  } else if (ara1.aHeight == 40) {     
+  } else if (key == 'a' && ara1.aHeight == 40 || keyCode == 17 && ara1.aHeight == 40) {     
     ara1.y += 20;
     ara1.aHeight -= 20;
   }
@@ -22,9 +22,9 @@ void keyReleased()
     keys[1] = false;
     break;
   case 17:
-    keys[2] = false;
+    keys[2] = false; //In case ctrl is pressed
     if (isCarried) {
-      ara1.vx = player1.vx;
+      ara1.vx = player1.vx; //ara's pos is player pos
       ara1.vy = player1.vy;
       isCarried = false;
     }

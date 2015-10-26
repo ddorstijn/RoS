@@ -1,15 +1,19 @@
-class Player { //<>//
+class Player { //<>// //<>//
+
   //player init
   int diameter = 40; // Diameter is used for the width of the player box. Because rectMode center is used radius is middle to right
   float radius = diameter / 2;
   float angle = 0;
+
+  //Start position
   final int startX = 80;
   final int startY = height/2 + 80;
+
   float x = startX; // Postition of the player on the x-axis
   float y = startY; // Postition of the player on the y-axis
   float vx, vy; //Horizontal and vertical accelerations
   float jumpSpeed = -4.1;
-  float maxSpeed = 2.5;
+  float maxSpeed = 3;
   float acceleration = 0.5;
 
   boolean canJump = true; //Check if ale to jump
@@ -31,6 +35,14 @@ class Player { //<>//
     collisionDetection();
     controls();
     drawPlayer();
+  }
+
+  void respawn() {
+    x = startX;
+    y = startY;
+
+    vx = 0;
+    vy = 0;
   }
 
   void drawPlayer() {
@@ -70,18 +82,18 @@ class Player { //<>//
     }
 
 
-    /*if (canJump == false && angle <= PI / 2 && vx >= 0) {
-     angle += 2 * PI / 360 * 8;
-     } else if (canJump == false && angle >= -(PI / 2) && vx < 0) {
-     angle -= 2 * PI / 360 * 8;
-     }
-     
-     if (angle > PI / 2) {
-     angle = PI / 2;
-     }
-     if (angle < -PI / 2){
-     angle = -PI / 2;
-     }*/
+    if (canJump == false && angle <= PI / 2 && vx >= 0 && angle > -(PI / 2)) {
+      angle += 2 * PI / 360 * 8;
+    } else if (canJump == false && angle >= -(PI / 2) && vx < 0 && angle < PI / 2) {
+      angle -= 2 * PI / 360 * 8;
+    }
+
+    if (angle > PI / 2) {
+      angle = PI / 2;
+    }
+    if (angle < -PI / 2) {
+      angle = -PI / 2;
+    }
 
     left = x - radius;
     right = x + radius;
@@ -94,11 +106,7 @@ class Player { //<>//
     nBottom = bottom + vy;
 
     if (y > height + 100) {
-      x = startX;
-      y = startY;
-
-      vx = 0;
-      vy = 0;
+      respawn();
     }
   }
 
@@ -111,6 +119,7 @@ class Player { //<>//
     }
     //If ctrl is pressed stick to the player
     if (keys[2]) { 
+
       //stop moving
       ara1.vx = 0;
       ara1.vy = 0;

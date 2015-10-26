@@ -1,4 +1,4 @@
-class Platform { //<>//
+class Platform { //<>// //<>//
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
 
@@ -24,7 +24,6 @@ class Platform { //<>//
   void run() {
     display();
     collisionDetection();
-    controls();
   }
 
   void display() {
@@ -42,16 +41,6 @@ class Platform { //<>//
     }
     rectMode(CORNER);
     rect(x, y, iWidth, iHeight);
-  }
-
-  void mouseReleased() {
-    // Removal of a box
-    if (mouseButton == RIGHT) {
-      System.out.println(worldCamera.pos.x + mouseX + " " + left + " " + right);
-      if (worldCamera.pos.x + mouseX > left && worldCamera.pos.x + mouseX < right && mouseY > top && mouseY < bottom) {
-        platforms.remove(index);
-      }
-    }
   }
 
   void collisionDetection() {
@@ -83,20 +72,12 @@ class Platform { //<>//
       }
 
       if (index == 2) {
-        textAlign(CENTER);
-        textFont(message);
         fill(255);
         text("You suck!", worldCamera.pos.x + width/2, height/2);
-
-        delay(500);
-
-        player1.x = player1.startX;
-        player1.y = player1.startY;
+        player1.respawn();
       }
 
       if (index == 3) {
-        textAlign(CENTER);
-        textFont(message);
         fill(255);
         text("You win!", worldCamera.pos.x + width/2, height/2);
       }

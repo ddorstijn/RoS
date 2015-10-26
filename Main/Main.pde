@@ -1,9 +1,8 @@
+//Global variable INIT //<>//
 float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes //<>//
 float friction = 0.1; //Same goes for friction
 
-
 PFont message;
-
 
 ArrayList<Platform> platforms; //Create a list of platforms. Starts empty
 
@@ -26,8 +25,8 @@ Ara ara1;
 
 void setup() {
   size(1000, 480);
-  //fullScreen();
   smooth(4);
+  textAlign(CENTER);
 
   //No key is pressed in the beginning
   keys[0] = false; //Left
@@ -59,18 +58,20 @@ void setup() {
 
   platforms.add(new Platform(1240.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
   platforms.add(new Platform(1320.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
-  
+
   platforms.add(new Platform(4280.0, 400.0, 400.0, 80.0, 3)); //Finish
 
   player1 = new Player();
   worldCamera = new Camera();
   ara1 = new Ara();
-  
+
   message = createFont("Arial", 72, true);
+  textFont(message);
 }
 
 //Main
 void draw() {
+
   //translate world with camera
   translate(-worldCamera.pos.x, -worldCamera.pos.y);
   worldCamera.draw();
@@ -82,9 +83,7 @@ void draw() {
   preview();
   ara1.run();
   controls();
-  
-  System.out.println(ara1.x + " " + ara1.y);
-  
+
   //Run platform for each object
   for (int i = 0; i < platforms.size(); i++) { 
     Platform platform = (Platform) platforms.get(i);
