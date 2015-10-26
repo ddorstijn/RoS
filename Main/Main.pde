@@ -32,8 +32,15 @@ void setup() {
 
   //Init classes
   platforms = new ArrayList<Platform>();
-  platforms.add(new Platform(0, Math.round((height - 21)/ 40.0) * 40.0, 2*gridSize, gridSize, 0)); //Create the floor
+  //Create the floor
+  platforms.add(new Platform(0.0, 0.0, 40.0, 440.0, 1));
+  platforms.add(new Platform(0.0, 400.0, 920.0, 120.0, 1));
+  platforms.add(new Platform(1000.0, 320.0, 80.0, 40.0, 1));
+  platforms.add(new Platform(720.0, 320.0, 80.0, 40.0, 1));
+  platforms.add(new Platform(1160.0, 400.0, 200.0, 120.0, 1)); 
+  platforms.add(new Platform(1160.0, 360.0, 40.0, 80.0, 1)); 
 
+  
   player1 = new Player();
   worldCamera = new Camera();
   ara1 = new Ara();
