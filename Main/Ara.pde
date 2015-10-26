@@ -1,6 +1,6 @@
 class Ara {
   //INIT
-  int diameter = 20; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
+  int diameter = 40; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
   float radius = diameter / 2; //Radius is half the diameter
   float x = width/2; // Postition of the ara on the x-axis
   float y = height/2 - 100; // Postition of the ara on the y-axis
@@ -21,7 +21,6 @@ class Ara {
   //SETUP
   void run() {
     display();
-    collisionDetection();
     araUpdatePosition();
   }
 
@@ -50,90 +49,24 @@ class Ara {
     
     //Create momentum. If ara realeased arrow key let the ara slowwly stop
     if (ara1.vx > 0) {
-      ara1.vx -= friction;
+      ara1.vx -= friction/2;
       if (ara1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the ara still moves a tiny bit
         ara1.vx = 0;
       }
     } else if (ara1.vx < 0) {
-      ara1.vx += friction;
+      ara1.vx += friction/2;
       if (ara1.vx > -0.1) {
         ara1.vx = 0;
       }
     }
 
+    //Respawn
     if (y > height) {
       x = width/2;
       y = height/2;
+      
       vx = 0;
       vy = 0;
-    }
-  }
-
-
-  void collisionDetection() {
-
-    if (rectRectIntersect(nLeft, nTop, nRight, nBottom, player1.left, player1.top, player1.right, player1.bottom)) {
-
-      if (player1.vx > 0) {// If ara collides from right side
-        right -= radius;
-        if (right < player1.left && nRight > player1.left) {// If ara collides from left side
-          vx = 0;
-        }
-      }       
-      if (vx < 0) {// If ara collides from right side
-        left += radius;
-        if (left > right && nLeft < player1.right) {// If ara collides from left side
-          vx = 0;
-        }
-      }
-      if (top > player1.bottom && nTop < player1.bottom) {// If ara collides from bottom side
-        vy = 0;
-      }
-      if (vy > 0) {
-        bottom -= radius;
-        if (bottom < player1.top && nBottom > player1.top) {// If ara collides from top side
-          vy = 0;
-          bottom = player1.top;
-        }
-
-
-
-        //If ara has momentum and collides with the player
-        if (vx > 0) {// If ara collides from right side
-          right -= radius;
-          if (right < player1.left && nRight > player1.left) {// If ara collides from left side
-            vx = 0;
-          }
-        }       
-        if (vx < 0) {// If ara collides from right side
-          left += radius;
-          if (left > right && nLeft < player1.right) {// If ara collides from left side
-            vx = 0;
-          }
-        }
-        if (top > player1.bottom && nTop < player1.bottom) {// If ara collides from bottom side
-          vy = 0;
-        }
-        if (vy > 0) {
-          bottom -= radius;
-          if (bottom < player1.top && nBottom > player1.top) {// If ara collides from top side
-            vy = 0;
-            bottom = player1.top;
-          }
-        }
-      }
-
-      //If ctrl is pressed stick to the player
-      if (keys[2]) { 
-        //stop moving
-        vx = 0;
-        vy = 0;
-
-        //Move x to player x
-        x = player1.x;
-        y = player1.y;
-        isCarried = true;
-      }
     }
   }
 }
