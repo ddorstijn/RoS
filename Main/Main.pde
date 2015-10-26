@@ -34,13 +34,14 @@ void setup() {
   platforms = new ArrayList<Platform>();
   //Create the floor
  
-  platforms.add(new Platform(0.0, 400.0, 920.0, 120.0, 1));
-  platforms.add(new Platform(1000.0, 320.0, 80.0, 40.0, 1));
-  platforms.add(new Platform(720.0, 320.0, 80.0, 40.0, 1));
-  platforms.add(new Platform(1160.0, 400.0, 280.0, 120.0, 1)); 
-  platforms.add(new Platform(1160.0, 360.0, 40.0, 80.0, 1));
-  platforms.add(new Platform(1400.0, 360.0, 40.0, 40.0, 1)); 
-
+  platforms.add(new Platform(0.0, 400.0, 920.0, 120.0, 1)); // = platform 1 op level design
+  platforms.add(new Platform(720.0, 320.0, 80.0, 40.0, 1)); // = platform 2 op level desing
+  platforms.add(new Platform(1000.0, 320.0, 80.0, 40.0, 1));// = platform 3 op level desing
+  platforms.add(new Platform(1160.0, 400.0, 280.0, 120.0, 1)); // = platform 4 op level design
+  platforms.add(new Platform(1160.0, 360.0, 40.0, 80.0, 1)); // = platform + op level design
+  platforms.add(new Platform(1400.0, 360.0, 40.0, 40.0, 1)); // = platform + op level design
+  platforms.add(new Platform(1560.0, 320.0, 80.0, 40.0, 1)); // = platorm 5 op level dsing
+  platforms.add(new Platform(1760.0, 400.0, 240.0, 80.0, 1)); // = platform 6 op level desing
 
   
   player1 = new Player();
