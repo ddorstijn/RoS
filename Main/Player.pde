@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>//
+class Player {  //<>//
   //player init
   int diameter = 40; // Diameter is used for the width of the player box. Because rectMode center is used radius is middle to right
   float radius = diameter / 2;
