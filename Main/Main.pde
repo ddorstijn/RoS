@@ -1,4 +1,4 @@
-float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes //<>// //<>// //<>// //<>// //<>//
+float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes //<>//
 float friction = 0.1; //Same goes for friction
 
 ArrayList<Platform> platforms; //Create a list of platforms. Starts empty
@@ -21,7 +21,7 @@ Camera worldCamera;
 Ara ara1;
 
 void setup() {
-  size(640, 480);
+  size(1000, 480);
   //fullScreen();
   smooth(4);
 
@@ -42,7 +42,23 @@ void setup() {
   platforms.add(new Platform(1400.0, 360.0, 40.0, 40.0, 1)); // = platform + op level design
   platforms.add(new Platform(1560.0, 320.0, 80.0, 40.0, 1)); // = platorm 5 op level dsing
   platforms.add(new Platform(1760.0, 400.0, 240.0, 80.0, 1)); // = platform 6 op level desing
+<<<<<<< HEAD
 
+=======
+  platforms.add(new Platform(2120.0, 360.0, 20.0, 20.0, 1)); // = platform + op level design
+  platforms.add(new Platform(2320.0, 360.0, 20.0, 20.0, 1)); // = platform + op level design
+  platforms.add(new Platform(2520.0, 360.0, 20.0, 20.0, 1)); // = platform + op level design
+  platforms.add(new Platform(2720.0, 360.0, 20.0, 20.0, 1)); // = platform + op level design
+  platforms.add(new Platform(2920.0, 400.0, 20.0, 20.0, 1)); // = platform + op level design
+  platforms.add(new Platform(3120.0, 400.0, 320.0, 80.0, 1)); // = platform 7 op level design
+  platforms.add(new Platform(3440.0, 440.0, 640.0, 40.0, 1));  // = platform 8 op level design
+  platforms.add(new Platform(4080.0, 400.0, 160.0, 120.0, 1)); 
+// = platform 9 op level design
+  platforms.add(new Platform(3560.0, 320.0, 160.0, 40.0, 1)); // = platform 10 op level design
+  platforms.add(new Platform(3800.0, 280.0, 160.0, 40.0, 1)); 
+// = platform 11 op level design
+  
+>>>>>>> 7ccbfac58b5f4364f483c571f1016693ae9d3c37
   player1 = new Player();
   worldCamera = new Camera();
   ara1 = new Ara();
