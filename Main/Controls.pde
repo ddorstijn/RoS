@@ -44,6 +44,8 @@ void mouseReleased() {
     endY = Math.round((mouseY + gridSize/2-1)/ gridSize) * gridSize - beginY;
 
     platforms.add(new Platform(beginX, beginY, abs(endX), endY, 1));
+    
+    System.out.println("platforms.add(new Platform(" + beginX + ", " + beginY + ", " + abs(endX) + ", " + endY + ", " + "1)); ");
   }
 }
 
