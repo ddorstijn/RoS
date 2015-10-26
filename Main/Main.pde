@@ -1,4 +1,4 @@
-float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes //<>//
+float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes //<>// //<>//
 float friction = 0.1; //Same goes for friction
 
 ArrayList<Platform> platforms; //Create a list of platforms. Starts empty
@@ -32,7 +32,7 @@ void setup() {
 
   //Init classes
   platforms = new ArrayList<Platform>();
-  platforms.add(new Platform(width/2-gridSize, Math.round((height - 21)/ 40.0) * 40.0, 2*gridSize, gridSize, 0)); //Create the floor
+  platforms.add(new Platform(0, Math.round((height - 21)/ 40.0) * 40.0, 2*gridSize, gridSize, 0)); //Create the floor
 
   player1 = new Player();
   worldCamera = new Camera();
