@@ -134,9 +134,23 @@ class Player { //<>// //<>//
   void collisionDetection() {
 
     if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
-      if (top > ara1.bottom && nTop < ara1.bottom) {// If player collides from bottom side
-        vy = 0;
+
+      if (vx > 0) {// If player collides from left side
+        right -= radius;        
+        if (right < ara1.left && nRight > ara1.left) {
+          ara1.x = x + radius; 
+          ara1.vx = vx; //Push ara
+        }
+      }       
+
+      if (vx < 0) {// If player collides from right side
+        left += radius;
+        if (left > ara1.right && nLeft < ara1.right) {
+          ara1.x = x - radius - ara1.aWidth;
+          ara1.vx = vx;
+        }
       }
+
       if (vy > 0) {
         bottom -= radius;
         if (bottom < ara1.top && nBottom > ara1.top) {// If player collides from top side

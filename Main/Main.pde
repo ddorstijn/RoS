@@ -1,5 +1,5 @@
-//Global variable INIT //<>//
-float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes //<>//
+//Global variable INIT //<>// //<>//
+float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes
 float friction = 0.1; //Same goes for friction
 
 PFont message;
@@ -55,6 +55,8 @@ void setup() {
   platforms.add(new Platform(4080.0, 400.0, 160.0, 120.0, 1)); // = platform 9 op level design
   platforms.add(new Platform(3560.0, 320.0, 160.0, 40.0, 1)); // = platform 10 op level design
   platforms.add(new Platform(3800.0, 280.0, 160.0, 40.0, 1)); // = platform 11 op level design
+  platforms.add(new Platform(4200.0, 240.0, 40.0, 160.0, 1)); // = basic use of ara 
+  platforms.add(new Platform(4160.0, 360.0, 40.0, 40.0, 1));  // = basic use of ara
 
   platforms.add(new Platform(1240.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
   platforms.add(new Platform(1320.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
