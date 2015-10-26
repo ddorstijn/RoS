@@ -46,6 +46,13 @@ class Ara {
     nRight = right + vx;
     nTop = top + vy;
     nBottom = bottom + vy;
+    
+    if (y > height){
+      x = width/2;
+      y = height/2;
+      vx = 0;
+      vy = 0;
+    }
   }
 
 
