@@ -36,6 +36,41 @@ void keyReleased()
   }
 }
 
+  void controls() {
+    // Keyboard control
+    if (keyPressed == true) {
+      switch (keyCode) {
+      case 37: // In case left arrow key is pressed and left is not obstructed move left
+        keys[0] = true;
+        break;
+      case 39:
+        keys[1] = true;
+        break;
+      case 17:
+        keys[2] = true;
+        break;
+      case 38:
+        if (player1.canJump == true) {
+          player1.vy = player1.jumpSpeed;
+          player1.canJump = false; // Jump is possible
+        }
+
+        //if (player1.canJump == true) {
+        //  player1.canJump = false;
+        //  keys[2] = true;
+        //}
+        break;
+      }
+    }
+
+    // Check if speed doesn't get to high
+    if (player1.vx > player1.maxSpeed) {
+      player1.vx = player1.maxSpeed;
+    } else if (player1.vx < -player1.maxSpeed) {
+      player1.vx = -player1.maxSpeed;
+    }
+  }
+
 //Level building!
 void mousePressed() {
   if (shiftKey == true && mouseButton == LEFT) {

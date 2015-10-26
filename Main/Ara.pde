@@ -26,7 +26,7 @@ class Ara {
 
   void display() {
     noStroke();
-    fill(255, 0, 0);
+    fill(0, 255, 0);
     rectMode(CORNER); //Starts in the middle of the rectangle and goes outwards instead of the left corner
     rect(x, y, aWidth, aHeight); //Draw player
   }

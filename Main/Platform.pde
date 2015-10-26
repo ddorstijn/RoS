@@ -1,6 +1,8 @@
-class Platform { //<>// //<>// //<>//
+class Platform { //<>// //<>// //<>// //<>//
   float x, y, iWidth, iHeight, 
-    left, right, top, bottom, index;
+    left, right, top, bottom;
+  
+  int index;  
 
   Platform(float _x, float _y, float _width, float _height, int _index) {
     x = _x;
@@ -25,44 +27,16 @@ class Platform { //<>// //<>// //<>//
 
   void display() {
     noStroke();
-    fill(0, 0, 0);
+    switch (index){
+      case 1:     
+        fill(0, 0, 0);
+        break;
+      case 2:
+        fill(255, 0, 0);
+        break;
+    }
     rectMode(CORNER);
     rect(x, y, iWidth, iHeight);
-  }
-
-  void controls() {
-    // Keyboard control
-    if (keyPressed == true) {
-      switch (keyCode) {
-      case 37: // In case left arrow key is pressed and left is not obstructed move left
-        keys[0] = true;
-        break;
-      case 39:
-        keys[1] = true;
-        break;
-      case 17:
-        keys[2] = true;
-        break;
-      case 38:
-        if (player1.canJump == true) {
-          player1.vy = player1.jumpSpeed;
-          player1.canJump = false; // Jump is possible
-        }
-
-        //if (player1.canJump == true) {
-        //  player1.canJump = false;
-        //  keys[2] = true;
-        //}
-        break;
-      }
-    }
-
-    // Check if speed doesn't get to high
-    if (player1.vx > player1.maxSpeed) {
-      player1.vx = player1.maxSpeed;
-    } else if (player1.vx < -player1.maxSpeed) {
-      player1.vx = -player1.maxSpeed;
-    }
   }
 
   void mouseReleased() {
@@ -102,8 +76,13 @@ class Platform { //<>// //<>// //<>//
           player1.angle = 0;
         }
       }
+      
+      if (index == 2){
+        System.out.println("you dead");
+        player1.x = player1.startX;
+        player1.y = player1.startY;
+      }
     }
-    
     
     if (rectRectIntersect(ara1.nLeft, ara1.nTop, ara1.nRight, ara1.nBottom, left, top, right, bottom)) {
       if (ara1.vx > 0) {// If ara collides from right side
@@ -126,7 +105,7 @@ class Platform { //<>// //<>// //<>//
         if (ara1.bottom < top && ara1.nBottom > top) {// If ara collides from top side
           ara1.vy = 0;
           ara1.bottom = top;
-        }
+        } 
       }
     }
   }
