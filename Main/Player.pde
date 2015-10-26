@@ -28,6 +28,7 @@ class Player { //<>//
 
   void run() {
     playerUpdatePosition();
+    collisionDetection();
     controls();
     drawPlayer();
   }
@@ -117,6 +118,7 @@ class Player { //<>//
   void collisionDetection() {
 
     if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
+      System.out.println("collision");
       if (vx > 0) {// If player collides from right side
         right -= radius;
         if (right < ara1.left && nRight > ara1.left) {// If player collides from left side

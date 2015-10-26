@@ -1,7 +1,7 @@
 class Ara {
   //INIT
-  float aWidth = 40; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
-  float aHeight = 40; //Radius is half the diameter
+  float aWidth = 20; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
+  float aHeight = 20; //Radius is half the diameter
   float x = width/2; // Postition of the ara on the x-axis
   float y = height/2 - 100; // Postition of the ara on the y-axis
   float vx, vy; //Horizontal and vertical speeds
