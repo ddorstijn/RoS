@@ -1,4 +1,4 @@
-class Player { //<>// //<>//
+class Player { //<>// //<>// //<>//
   //player init
   int diameter = 40; // Diameter is used for the width of the player box. Because rectMode center is used radius is middle to right
   float radius = diameter / 2;
@@ -12,7 +12,7 @@ class Player { //<>// //<>//
 
   boolean canJump = true; //Check if ale to jump
   int colour = 255; //White
-  
+
   float left = x - radius; //Left side of player
   float right = x + radius; //Right side of player
   float top = y - radius; //Top side of player
@@ -46,6 +46,26 @@ class Player { //<>// //<>//
     x += vx * 0.60; // Horizontal speed
     y += vy; // Vertical speed
     vy += gravity; // Gravity
+
+    //Create momentum. If player realeased arrow key let the player slowwly stop
+    if (player1.vx > 0) {
+      player1.vx -= friction;
+      if (player1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the player still moves a tiny bit
+        player1.vx = 0;
+      }
+    } else if (player1.vx < 0) {
+      player1.vx += friction;
+      if (player1.vx > -0.1) {
+        player1.vx = 0;
+      }
+    }
+    
+    
+    if (x < 0 + radius) {
+      x = 0 + radius;
+      vx = 0;
+    }
+
 
     /*if (canJump == false && angle <= PI / 2 && vx >= 0) {
      angle += 2 * PI / 360 * 8;
