@@ -24,7 +24,8 @@ class Platform{ //<>//
     controls();
   }
 
-
+  
+  
   void display() {
     noStroke();
     switch (index){

@@ -83,6 +83,8 @@ void draw() {
   ara1.run();
   controls();
   
+  System.out.println(ara1.x + " " + ara1.y);
+  
   //Run platform for each object
   for (int i = 0; i < platforms.size(); i++) { 
     Platform platform = (Platform) platforms.get(i);

@@ -109,28 +109,22 @@ class Player { //<>//
     if (keys[1]) {
       vx += acceleration;
     }
-    //if (keys[2]) {
-    //  vy = jumpSpeed;
-    //  canJump = false; // Jump is possible
-    //}
+    //If ctrl is pressed stick to the player
+    if (keys[2]) { 
+      //stop moving
+      ara1.vx = 0;
+      ara1.vy = 0;
+
+      //Move x to player x
+      ara1.x = player1.x - radius/2;
+      ara1.y = player1.y - radius/2;
+      isCarried = true;
+    }
   }
 
   void collisionDetection() {
 
     if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
-      System.out.println("collision");
-      if (vx > 0) {// If player collides from right side
-        right -= radius;
-        if (right < ara1.left && nRight > ara1.left) {// If player collides from left side
-          vx = 0;
-        }
-      }       
-      if (vx < 0) {// If player collides from right side
-        left += radius;
-        if (left > ara1.right && nLeft < ara1.right) {// If player collides from left side
-          vx = 0;
-        }
-      }
       if (top > ara1.bottom && nTop < ara1.bottom) {// If player collides from bottom side
         vy = 0;
       }
@@ -143,18 +137,6 @@ class Player { //<>//
           angle = 0;
         }
       }
-    }
-
-    //If ctrl is pressed stick to the player
-    if (keys[2]) { 
-      //stop moving
-      ara1.vx = 0;
-      ara1.vy = 0;
-
-      //Move x to player x
-      ara1.x = player1.x;
-      ara1.y = player1.y;
-      isCarried = true;
     }
   }
 }
