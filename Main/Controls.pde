@@ -10,10 +10,6 @@ void keyPressed() {
   //  ara1.y += 40;
   //  ara1.aHeight -= 40;
   //}
-
-  //  if (keyCode == 83) {
-  //   export();
-  //}
 }
 
 void keyReleased()

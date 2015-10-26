@@ -1,4 +1,4 @@
-class Platform { //<>// //<>// //<>// //<>//
+class Platform{ //<>//
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
   
@@ -81,14 +81,15 @@ class Platform { //<>// //<>// //<>// //<>//
       }
       
       if (index == 2){
-        System.out.println("you dead");
-        player1.x = player1.startX;
-        player1.y = player1.startY;
-        
         textAlign(CENTER);
         textFont(message);
         fill(255);
         text("You suck!", worldCamera.pos.x + width/2, height/2);
+        
+        delay(500);
+        
+        player1.x = player1.startX;
+        player1.y = player1.startY;
       }
       
       if (index == 3){

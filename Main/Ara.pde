@@ -24,6 +24,14 @@ class Ara {
     araUpdatePosition();
   }
 
+  void respawn() {
+    x = width/2;
+    y = height/2;
+
+    vx = 0;
+    vy = 0;
+  }
+
   void display() {
     noStroke();
     fill(255, 255, 0);
@@ -45,8 +53,8 @@ class Ara {
     nRight = right + vx;
     nTop = top + vy;
     nBottom = bottom + vy;
-    
-    
+
+
     //Create momentum. If ara realeased arrow key let the ara slowwly stop
     if (ara1.vx > 0) {
       ara1.vx -= friction/2;
@@ -62,11 +70,7 @@ class Ara {
 
     //Respawn
     if (y > height) {
-      x = width/2;
-      y = height/2;
-      
-      vx = 0;
-      vy = 0;
+      respawn();
     }
   }
 }
