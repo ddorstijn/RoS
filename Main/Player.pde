@@ -1,14 +1,14 @@
-class Player { //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>//
   //player init
   int diameter = 40; // Diameter is used for the width of the player box. Because rectMode center is used radius is middle to right
   float radius = diameter / 2;
   float angle = 0; 
   float x = 80; // Postition of the player on the x-axis
   float y = height/2; // Postition of the player on the y-axis
-  float vx, vy; //Horizontal and vertical speeds
+  float vx, vy; //Horizontal and vertical accelerations
   float jumpSpeed = -4.1;
   float maxSpeed = 4;
-  float speed = 0.6;
+  float acceleration = 0.6;
 
   boolean canJump = true; //Check if ale to jump
   int colour = 255; //White
@@ -43,8 +43,8 @@ class Player { //<>// //<>// //<>//
 
 
   void playerUpdatePosition() {
-    x += vx * 0.60; // Horizontal speed
-    y += vy; // Vertical speed
+    x += vx; // Horizontal acceleration
+    y += vy; // Vertical acceleration
     vy += gravity; // Gravity
 
     //Create momentum. If player realeased arrow key let the player slowwly stop
@@ -101,10 +101,10 @@ class Player { //<>// //<>// //<>//
 
   void controls() {
     if (keys[0]) {  
-      vx -= speed;
+      vx -= acceleration;
     }
     if (keys[1]) {
-      vx += speed;
+      vx += acceleration;
     }
     //if (keys[2]) {
     //  vy = jumpSpeed;
