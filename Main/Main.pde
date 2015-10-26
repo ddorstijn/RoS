@@ -60,7 +60,7 @@ void setup() {
   platforms.add(new Platform(1240.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
   platforms.add(new Platform(1320.0, 360.0, 40.0, 40.0, 2)); //enemy/trap
   
-  platforms.add(new Platform(4280.0, 400.0, 400.0, 80.0, 1)); //Finish
+  platforms.add(new Platform(4280.0, 400.0, 400.0, 80.0, 3)); //Finish
 
   player1 = new Player();
   worldCamera = new Camera();

@@ -84,7 +84,13 @@ class Platform { //<>// //<>// //<>// //<>//
         System.out.println("you dead");
         player1.x = player1.startX;
         player1.y = player1.startY;
+        
+        textAlign(CENTER);
+        textFont(message);
+        fill(255);
+        text("You suck!", worldCamera.pos.x + width/2, height/2);
       }
+      
       if (index == 3){
         textAlign(CENTER);
         textFont(message);
