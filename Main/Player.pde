@@ -125,8 +125,8 @@ class Player { //<>// //<>//
       ara1.vy = 0;
 
       //Move x to player x
-      ara1.x = player1.x - radius/2;
-      ara1.y = player1.y - radius/2;
+      ara1.x = x - radius/2;
+      ara1.y = y - radius/2;
       isCarried = true;
     }
   }
