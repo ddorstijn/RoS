@@ -2,9 +2,11 @@ class Platform {  //<>//
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
 
-  int index;  
+  int index;
+  
+  int pos;
 
-  Platform(float _x, float _y, float _width, float _height, int _index) {
+  Platform(float _x, float _y, float _width, float _height, int _index, int _i) {
     x = _x;
     y = _y;
     iWidth = _width;
@@ -19,6 +21,8 @@ class Platform {  //<>//
     //If index = 2 it's a trap or stationary enemy
     //If index = 3 it's the finish!
     index = _index;
+    
+    pos = _i;
   }
 
   void run() {

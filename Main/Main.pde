@@ -42,7 +42,6 @@ void setup() {
   loadLevel();
   
   worldCamera = new Camera();
-  ara1 = new Ara();
 
   message = createFont("Arial", 72, true);
   textFont(message);

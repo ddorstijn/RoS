@@ -2,8 +2,10 @@ class Ara {
   //INIT
   float aWidth = 20; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
   float aHeight = 20; //Radius is half the diameter
-  float x = width/2; // Postition of the ara on the x-axis
-  float y = height/2 - 100; // Postition of the ara on the y-axis
+  float startX;
+  float startY;
+  float x; // Postition of the ara on the x-axis
+  float y; // Postition of the ara on the y-axis
   float vx, vy; //Horizontal and vertical speeds
 
   //Bounding box creation
@@ -18,6 +20,14 @@ class Ara {
   float nTop = top + vy;
   float nBottom = bottom + vy;
 
+  Ara(float _x, float _y){
+    x = _x;
+    y = _y;
+    
+    startX = _x;
+    startY = _y;
+  }
+  
   //SETUP
   void run() {
     display();
@@ -25,8 +35,8 @@ class Ara {
   }
 
   void respawn() {
-    x = width/2;
-    y = height/2;
+    x = startX;
+    y = startY;
 
     vx = 0;
     vy = 0;

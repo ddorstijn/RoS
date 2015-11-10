@@ -1,12 +1,14 @@
 void loadLevel() {
   levels = loadJSONObject("level" + level + ".json");
-  println("level" + level + ".json");
+
   JSONArray levelData = levels.getJSONArray("platforms");
   JSONObject playerData = levels.getJSONObject("player");
-  
+  JSONObject araData = levels.getJSONObject("ara");
+   
   // The size of the array of Platform objects is determined by the total XML elements named "platforms"
   platforms = new Platform[levelData.size()];
   player1 = new Player(playerData.getInt("x"), playerData.getInt("y"));
+  ara1 = new Ara(araData.getInt("x"), araData.getInt("y"));
     
   for (int i = 0; i < levelData.size(); i++) {
     // Get each object in the array
@@ -23,6 +25,6 @@ void loadLevel() {
     int index = platform.getInt("index");
 
     // Put object in array
-    platforms[i] = new Platform(x, y, Pwidth, Pheight, index);
+    platforms[i] = new Platform(x, y, Pwidth, Pheight, index, i);
   }
 }
