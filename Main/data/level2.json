@@ -1,14 +1,12 @@
 {
-  "player": {
-    "x": 200,
-    "y": 200
-  },
-
   "ara": {
     "x": 250,
     "y": 200
   },
-  
+  "player": {
+    "x": 200,
+    "y": 200
+  },
   "platforms": [
     {
       "index": 1,
@@ -17,6 +15,42 @@
         "width": 100,
         "y": 220,
         "height": 80
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 320,
+        "width": 40,
+        "y": 240,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 320,
+        "width": 40,
+        "y": 200,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 320,
+        "width": 40,
+        "y": 160,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 320,
+        "width": 40,
+        "y": 120,
+        "height": 40
       }
     }
   ]

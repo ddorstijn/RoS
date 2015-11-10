@@ -7,8 +7,8 @@ JSONArray levelData;
 JSONObject playerData;
 
 //Gloal variable INIT
-float gravity = 0.1; //Gravity for physics objects. Global so it can be used by all classes
-float friction = 0.1; //Same goes for friction
+PVector gravity; //Gravity for physics objects. Global so it can be used by all classes
+float friction; //Same goes for friction
 
 PFont message;
 

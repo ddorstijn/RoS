@@ -9,6 +9,9 @@ class Player { //<>//
   int startX;
   int startY;
 
+  PVector location;
+  PVector velocity;
+
   float x; // Postition of the player on the x-axis
   float y; // Postition of the player on the y-axis
   float vx, vy; //Horizontal and vertical accelerations
@@ -29,13 +32,15 @@ class Player { //<>//
   float nRight = right + vx;
   float nTop = top + vy;
   float nBottom = bottom + vy;
-  
+
   Player(int _x, int _y) {
     startX = _x;
     startY = _y;    
-    
-    x = _x;
-    y = _y;
+
+    location = new PVector(_x, _y);
+    velocity = new PVector(0, 0);
+    gravity = new PVector(0, 0.1);
+    friction = 0.9;
   }
 
   void run() {
@@ -46,11 +51,10 @@ class Player { //<>//
   }
 
   void respawn() {
-    x = startX;
-    y = startY;
+    location.x = startX;
+    location.y = startY;
 
-    vx = 0;
-    vy = 0;
+    velocity.set(0, 0);
   }
 
   void drawPlayer() {
@@ -58,7 +62,7 @@ class Player { //<>//
     fill(colour); //Fill it white
     pushMatrix(); //Create a drawing without affecting other objects
     rectMode(CENTER); 
-    translate(x, y); //Move the box to the x and I position
+    translate(location.x, location.y); //Move the box to the x and I position
     rotate(angle); //For the jump mechanic
     rect(0, 0, diameter, diameter); // character
     popMatrix(); //End the drawing
@@ -66,64 +70,56 @@ class Player { //<>//
 
 
   void playerUpdatePosition() {
-    x += vx; // Horizontal acceleration
-    y += vy; // Vertical acceleration
-    vy += gravity; // Gravity
-
-    //Create momentum. If player realeased arrow key let the player slowwly stop
-    if (player1.vx > 0) {
-      player1.vx -= friction;
-      if (player1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the player still moves a tiny bit
-        player1.vx = 0;
-      }
-    } else if (player1.vx < 0) {
-      player1.vx += friction;
-      if (player1.vx > -0.1) {
-        player1.vx = 0;
-      }
-    }
+    location.add(velocity);
+    velocity.add(gravity);
+    velocity.x *= friction;
 
     //Border left side of the level
-    if (x < 0 + radius) {
-      x = 0 + radius;
-      vx = 0;
+    if (location.x < 0 + radius) {
+      location.x = 0 + radius;
+      velocity.limit(0);
+    }
+    
+    if (velocity.x > maxSpeed){
+      velocity.x = maxSpeed;
+    } else if (velocity.x < -maxSpeed){
+      velocity.x = -maxSpeed;
     }
 
-
     if (canJump == false && angle <= PI / 2 && vx >= 0 && angle > -(PI / 2)) {
-      angle += 2 * PI / 360 * 8;
+     angle += 2 * PI / 360 * 8;
     } else if (canJump == false && angle >= -(PI / 2) && vx < 0 && angle < PI / 2) {
-      angle -= 2 * PI / 360 * 8;
+     angle -= 2 * PI / 360 * 8;
     }
 
     if (angle > PI / 2) {
-      angle = PI / 2;
+     angle = PI / 2;
     }
     if (angle < -PI / 2) {
-      angle = -PI / 2;
+     angle = -PI / 2;
     }
 
-    left = x - radius;
-    right = x + radius;
-    top = y - radius;
-    bottom = y + radius;
+    left = location.x - radius;
+    right = location.x + radius;
+    top = location.y - radius;
+    bottom = location.y + radius;
 
-    nLeft = left + vx;
-    nRight = right + vx;
-    nTop = top + vy;
-    nBottom = bottom + vy;
+    nLeft = left + velocity.x;
+    nRight = right + velocity.x;
+    nTop = top + velocity.y;
+    nBottom = bottom + velocity.y;
 
-    if (y > height + 100) {
+    if (location.y > height + 100) {
       respawn();
     }
   }
 
   void controls() {
     if (keys[0]) {  
-      vx -= acceleration;
+      velocity.x -= acceleration;
     }
     if (keys[1]) {
-      vx += acceleration;
+      velocity.x += acceleration;
     }
     //If ctrl is pressed stick to the player
     if (keys[2]) { 
@@ -141,33 +137,33 @@ class Player { //<>//
 
   void collisionDetection() {
 
-    if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
+    //if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
 
-      if (vx > 0) {// If player collides from left side
-        right -= radius;        
-        if (right < ara1.left && nRight > ara1.left) {
-          ara1.x = x + radius; 
-          ara1.vx = vx; //Push ara
-        }
-      }       
+    //  if (vx > 0) {// If player collides from left side
+    //    right -= radius;        
+    //    if (right < ara1.left && nRight > ara1.left) {
+    //      ara1.x = x + radius; 
+    //      ara1.vx = vx; //Push ara
+    //    }
+    //  }       
 
-      if (vx < 0) {// If player collides from right side
-        left += radius;
-        if (left > ara1.right && nLeft < ara1.right) {
-          ara1.x = x - radius - ara1.aWidth;
-          ara1.vx = vx;
-        }
-      }
+    //  if (vx < 0) {// If player collides from right side
+    //    left += radius;
+    //    if (left > ara1.right && nLeft < ara1.right) {
+    //      ara1.x = x - radius - ara1.aWidth;
+    //      ara1.vx = vx;
+    //    }
+    //  }
 
-      if (vy > 0) {
-        bottom -= radius;
-        if (bottom < ara1.top && nBottom > ara1.top) {// If player collides from top side
-          vy = 0;
-          bottom = top;
-          canJump = true;
-          angle = 0;
-        }
-      }
-    }
+    //  if (vy > 0) {
+    //    bottom -= radius;
+    //    if (bottom < ara1.top && nBottom > ara1.top) {// If player collides from top side
+    //      vy = 0;
+    //      bottom = top;
+    //      canJump = true;
+    //      angle = 0;
+    //    }
+    //  }
+    //}
   }
 }
