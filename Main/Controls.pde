@@ -10,6 +10,15 @@ void keyPressed() {
     ara1.y += 20;
     ara1.aHeight -= 20;
   }
+  
+  if (key == 's' && level != 1) { 
+    level = 1;
+    loadLevel();
+  }
+  if (key == 'd' && level != 2) { 
+    level = 2;
+    loadLevel();
+  }
 }
 
 void keyReleased()
@@ -73,13 +82,32 @@ void mousePressed() {
 
 void mouseReleased() {
   if (shiftKey == true && mouseButton == LEFT) {
+
+    // Create a new JSON platform object
+    JSONObject newPlatform = new JSONObject();
+
     //Take position of the mouse when released and allign it to the grid
     endX = Math.round((worldCamera.pos.x + mouseX + gridSize/2-1)/ gridSize) * gridSize - beginX;
     endY = Math.round((mouseY + gridSize/2-1)/ gridSize) * gridSize - beginY;
 
-    platforms.add(new Platform(beginX, beginY, abs(endX), endY, 1));
+    // Create a new JSON position object
+    JSONObject position = new JSONObject();
+    position.setFloat("x", beginX);
+    position.setFloat("y", beginY);
+    position.setFloat("width", endX);
+    position.setFloat("height", endY);
 
-    System.out.println("platforms.add(new Platform(" + beginX + ", " + beginY + ", " + abs(endX) + ", " + endY + ", " + "1)); ");
+    // Add position to bubble
+    newPlatform.setJSONObject("position", position);
+    newPlatform.setInt("index", 1);
+
+    // Append the new JSON bubble object to the array
+    JSONArray platformData = levels.getJSONArray("platforms");
+    platformData.append(newPlatform);
+
+    // Save new data
+    saveJSONObject(levels, "data/level" + level + ".json");
+    loadLevel();
   }
 }
 

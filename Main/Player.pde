@@ -1,4 +1,4 @@
-class Player { //<>// //<>//
+class Player { //<>//
 
   //player init
   int diameter = 40; // Diameter is used for the width of the player box. Because rectMode center is used radius is middle to right
@@ -6,11 +6,11 @@ class Player { //<>// //<>//
   float angle = 0;
 
   //Start position
-  final int startX = 80;
-  final int startY = height/2 + 80;
+  int startX;
+  int startY;
 
-  float x = startX; // Postition of the player on the x-axis
-  float y = startY; // Postition of the player on the y-axis
+  float x; // Postition of the player on the x-axis
+  float y; // Postition of the player on the y-axis
   float vx, vy; //Horizontal and vertical accelerations
   float jumpSpeed = -4.1;
   float maxSpeed = 3;
@@ -29,6 +29,14 @@ class Player { //<>// //<>//
   float nRight = right + vx;
   float nTop = top + vy;
   float nBottom = bottom + vy;
+  
+  Player(int _x, int _y) {
+    startX = _x;
+    startY = _y;    
+    
+    x = _x;
+    y = _y;
+  }
 
   void run() {
     playerUpdatePosition();

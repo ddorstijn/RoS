@@ -1,0 +1,17 @@
+{
+  "player": {
+    "x": 200,
+    "y": 200
+  },
+  "platforms": [
+    {
+      "index": 1,
+      "position": {
+        "x": 150,
+        "width": 100,
+        "y": 220,
+        "height": 80
+      }
+    }
+  ]
+}

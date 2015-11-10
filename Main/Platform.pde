@@ -1,4 +1,4 @@
-class Platform { //<>// //<>//
+class Platform {  //<>//
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
 
