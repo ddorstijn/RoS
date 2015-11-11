@@ -1,12 +1,13 @@
-class Platform {  //<>//
+class Platform { //<>//
+  
+  //INITIALIZE
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
 
-  int index;
-  
-  int pos;
+  int index, pos;
 
   Platform(float _x, float _y, float _width, float _height, int _index, int _i) {
+    //DECLARE
     x = _x;
     y = _y;
     iWidth = _width;
@@ -25,6 +26,7 @@ class Platform {  //<>//
     pos = _i;
   }
 
+  //FUNCTIONS
   void run() {
     display();
     collisionDetection();

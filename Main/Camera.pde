@@ -1,4 +1,5 @@
 class Camera {
+  
   PVector pos; //Camera's position
 
   Camera() {

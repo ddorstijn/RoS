@@ -1,4 +1,5 @@
 void loadLevel(boolean objectsToo) {
+  
   levels = loadJSONObject("level" + level + ".json");
 
   JSONArray levelData = levels.getJSONArray("platforms");

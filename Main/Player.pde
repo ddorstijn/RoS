@@ -1,38 +1,40 @@
-class Player { //<>//
+class Player {  //<>//
 
-  //player init
-  int diameter = 40; // Diameter is used for the width of the player box. Because rectMode center is used radius is middle to right
-  float radius = diameter / 2;
-  float angle = 0;
+  //INITIALIZEZ
+  int diameter; 
+  float radius, angle;
 
   //Start position
-  int startX;
-  int startY;
+  int startX, startY;
 
-  PVector location;
-  PVector velocity;
+  //Vectors
+  PVector location, velocity;
 
-  float jumpSpeed = -4.1;
-  float maxSpeed = 3;
-  float acceleration = 0.5;
-
+  //Properties
+  float jumpSpeed, maxSpeed, acceleration;
   boolean canJump = true; //Check if ale to jump
-  int colour = 255; //White
+  int colour;
 
-  float left; //Left side of player
-  float right; //Right side of player
-  float top; //Top side of player
-  float bottom; //Bottom side of player
+  //Bounding box
+  float left, right, top, bottom;
 
-  //Next positions
-  float nLeft; 
-  float nRight;
-  float nTop;
-  float nBottom;
+  //Bounding box for the next frame
+  float nLeft, nRight, nTop, nBottom;
 
   Player(int _x, int _y) {
     startX = _x;
     startY = _y;    
+
+    jumpSpeed = -4.1;
+    maxSpeed = 3;
+    acceleration = 0.5;
+
+    canJump = true; //Check if ale to jump
+    colour = 255; //White
+
+    diameter = 40; 
+    radius = diameter / 2;
+    angle = 0;
 
     location = new PVector(_x, _y);
     velocity = new PVector(0, 0);
@@ -144,7 +146,7 @@ class Player { //<>//
 
   void collisionDetection() {
 
-    if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
+    if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom) && ara1.aHeight == 20) {
       if (velocity.y > 0) {
         bottom -= radius;
         if (bottom < ara1.top && nBottom > ara1.top && location.x > ara1.location.x - radius + 1 && location.x < ara1.location.x + ara1.aWidth + radius - 1) {// If player collides from top side
@@ -166,6 +168,34 @@ class Player { //<>//
         if (left > ara1.right && nLeft < ara1.right && location.y > ara1.location.y - radius) {// If player collides from left side
           ara1.location.x = location.x - radius - ara1.aWidth;
           ara1.velocity.x = velocity.x;
+        }
+      }
+    } else {
+
+      
+      if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom) && ara1.aHeight == 40) {
+        if (velocity.y > 0) {
+          bottom -= radius;
+          if (bottom < ara1.top && nBottom > ara1.top && location.x > ara1.location.x - radius + 1 && location.x < ara1.location.x + ara1.aWidth + radius - 1) {// If player collides from top side
+            velocity.y = 0;
+            bottom = top;
+            canJump = true;
+            angle = 0;
+          }
+        } 
+        if (velocity.x > 0) {// If player collides from right side
+          right -= radius;
+          if (right < ara1.left && nRight > ara1.left && location.y > ara1.location.y - radius) {
+            velocity.x = 0;
+            location.x = ara1.left - radius;
+    }
+        }       
+        if (velocity.x < 0) {// If player collides from right side
+          left += radius;
+          if (left > ara1.right && nLeft < ara1.right && location.y > ara1.location.y - radius) {
+            velocity.x = 0;
+            location.x = ara1.right + radius;
+          }
         }
       }
     }

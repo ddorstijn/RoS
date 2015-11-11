@@ -1,4 +1,5 @@
 void keyPressed() {
+  
   if (keyCode == 16) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
   }

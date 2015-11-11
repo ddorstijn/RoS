@@ -1,13 +1,11 @@
-Platform[] platforms; //<>//
-
+//Gloal variable INIT //<>//
 JSONObject levels;
 int level = 1;
 
 JSONArray levelData;
 JSONObject playerData;
 
-//Gloal variable INIT
-PVector gravity; //Gravity for physics objects. Global so it can be used by all classes
+PVector gravity;
 float friction; //Same goes for friction
 
 PFont message;
@@ -25,6 +23,7 @@ float beginX, endX, beginY, endY;
 float gridSize = 40; //Size of the grid the game is built around
 
 //Call every class
+Platform[] platforms; 
 Player player1;
 Camera worldCamera;
 Ara ara1;

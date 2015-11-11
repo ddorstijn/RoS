@@ -223,6 +223,42 @@
         "y": 240,
         "height": 40
       }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 4160,
+        "width": 40,
+        "y": 320,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 4160,
+        "width": 40,
+        "y": 280,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 4200,
+        "width": 40,
+        "y": 160,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 4200,
+        "width": 40,
+        "y": 200,
+        "height": 40
+      }
     }
   ]
 }

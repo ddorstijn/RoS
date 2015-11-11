@@ -313,6 +313,51 @@
         "y": 280,
         "height": 40
       }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 1240,
+        "width": 40,
+        "y": 240,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 1280,
+        "width": 40,
+        "y": 240,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 1280,
+        "width": 40,
+        "y": 200,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 1280,
+        "width": 40,
+        "y": 160,
+        "height": 40
+      }
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 1280,
+        "width": 40,
+        "y": 120,
+        "height": 40
+      }
     }
   ]
 }
