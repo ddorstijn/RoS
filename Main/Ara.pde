@@ -2,32 +2,47 @@ class Ara {
   //INIT
   float aWidth = 20; // Diameter is used for the width of the ara box. Because rectMode center is used radius is middle to right
   float aHeight = 20; //Radius is half the diameter
+
   float startX;
   float startY;
-  float x; // Postition of the ara on the x-axis
-  float y; // Postition of the ara on the y-axis
-  float vx, vy; //Horizontal and vertical speeds
+
+  PVector location;
+  PVector velocity;
 
   //Bounding box creation
-  float left = x; //Left side of the box
-  float right = x + aWidth; //Right side of the box
-  float top = y; //Top of the box
-  float bottom = y + aHeight; //Bottom of the box
+  float left; //Left side of the box
+  float right; //Right side of the box
+  float top; //Top of the box
+  float bottom; //Bottom of the box
 
   //Same as above but then calculated for the next frame. So de Next position
-  float nLeft = left + vx;
-  float nRight = right + vx;
-  float nTop = top + vy;
-  float nBottom = bottom + vy;
+  float nLeft;
+  float nRight;
+  float nTop;
+  float nBottom;
 
-  Ara(float _x, float _y){
-    x = _x;
-    y = _y;
+  Ara(float _x, float _y) {
     
+    location = new PVector(_x, _y);
+    velocity = new PVector(0, 0);
+    gravity = new PVector(0, 0.1);
+
     startX = _x;
     startY = _y;
+
+    //Bounding box creation
+    left = location.x; //Left side of the box
+    right = location.x + aWidth; //Right side of the box
+    top = location.y; //Top of the box
+    bottom = location.y + aHeight; //Bottom of the box
+
+    //Same as above but then calculated for the next frame. So de Next position
+    nLeft = left + velocity.x;
+    nRight = right + velocity.x;
+    nTop = top + velocity.y;
+    nBottom = bottom + velocity.y;
   }
-  
+
   //SETUP
   void run() {
     display();
@@ -35,51 +50,36 @@ class Ara {
   }
 
   void respawn() {
-    x = startX;
-    y = startY;
-
-    vx = 0;
-    vy = 0;
+    location.x = startX;
+    location.y = startY;
+    
+    velocity.mult(0);
   }
 
   void display() {
     noStroke();
     fill(255, 255, 0);
-    rectMode(CORNER); //Starts in the middle of the rectangle and goes outwards instead of the left corner
-    rect(x, y, aWidth, aHeight); //Draw player
+    rectMode(CORNER); 
+    rect(location.x, location.y, aWidth, aHeight); //Draw player
   }
 
   void araUpdatePosition() {
-    x += vx; // Horizontal speed
-    y += vy; // Vertical speed
-    //vy += gravity; // Gravity
+    location.add(velocity); //Speed
+    velocity.add(gravity); //Gravity
+    velocity.x *= friction;
 
-    left = x;
-    right = x + aWidth;
-    top = y;
-    bottom = y + aHeight;
+    left = location.x;
+    right = location.x + aWidth;
+    top = location.y;
+    bottom = location.y + aHeight;
 
-    nLeft = left + vx;
-    nRight = right + vx;
-    nTop = top + vy;
-    nBottom = bottom + vy;
-
-
-    //Create momentum. If ara realeased arrow key let the ara slowwly stop
-    if (ara1.vx > 0) {
-      //ara1.vx -= friction/2;
-      if (ara1.vx < 0.1) { // This is to prevent sliding if the float becomes so close to zero it counts as a zero and the code stops but the ara still moves a tiny bit
-        ara1.vx = 0;
-      }
-    } else if (ara1.vx < 0) {
-      //ara1.vx += friction/2;
-      if (ara1.vx > -0.1) {
-        ara1.vx = 0;
-      }
-    }
-
+    nLeft = left + velocity.x;
+    nRight = right + velocity.x;
+    nTop = top + velocity.y;
+    nBottom = bottom + velocity.y;
+    
     //Respawn
-    if (y > height) {
+    if (location.y > height) {
       respawn();
     }
   }

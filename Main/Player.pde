@@ -12,9 +12,6 @@ class Player { //<>//
   PVector location;
   PVector velocity;
 
-  float x; // Postition of the player on the x-axis
-  float y; // Postition of the player on the y-axis
-  float vx, vy; //Horizontal and vertical accelerations
   float jumpSpeed = -4.1;
   float maxSpeed = 3;
   float acceleration = 0.5;
@@ -22,16 +19,16 @@ class Player { //<>//
   boolean canJump = true; //Check if ale to jump
   int colour = 255; //White
 
-  float left = x - radius; //Left side of player
-  float right = x + radius; //Right side of player
-  float top = y - radius; //Top side of player
-  float bottom = y + radius; //Bottom side of player
+  float left; //Left side of player
+  float right; //Right side of player
+  float top; //Top side of player
+  float bottom; //Bottom side of player
 
   //Next positions
-  float nLeft = left + vx; 
-  float nRight = right + vx;
-  float nTop = top + vy;
-  float nBottom = bottom + vy;
+  float nLeft; 
+  float nRight;
+  float nTop;
+  float nBottom;
 
   Player(int _x, int _y) {
     startX = _x;
@@ -41,6 +38,16 @@ class Player { //<>//
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
     friction = 0.9;
+
+    left = location.x - radius; //Left side of player
+    right = location.x + radius; //Right side of player
+    top = location.y - radius; //Top side of player
+    bottom = location.y + radius; //Bottom side of player
+
+    nLeft = left + velocity.x;
+    nRight = right + velocity.x;
+    nTop = top + velocity.y;
+    nBottom = bottom + velocity.y;
   }
 
   void run() {
@@ -79,24 +86,24 @@ class Player { //<>//
       location.x = 0 + radius;
       velocity.limit(0);
     }
-    
-    if (velocity.x > maxSpeed){
+
+    if (velocity.x > maxSpeed) {
       velocity.x = maxSpeed;
-    } else if (velocity.x < -maxSpeed){
+    } else if (velocity.x < -maxSpeed) {
       velocity.x = -maxSpeed;
     }
 
-    if (canJump == false && angle <= PI / 2 && vx >= 0 && angle > -(PI / 2)) {
-     angle += 2 * PI / 360 * 8;
-    } else if (canJump == false && angle >= -(PI / 2) && vx < 0 && angle < PI / 2) {
-     angle -= 2 * PI / 360 * 8;
+    if (canJump == false && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
+      angle += 2 * PI / 360 * 8;
+    } else if (canJump == false && angle >= -(PI / 2) && velocity.x < 0 && angle < PI / 2) {
+      angle -= 2 * PI / 360 * 8;
     }
 
     if (angle > PI / 2) {
-     angle = PI / 2;
+      angle = PI / 2;
     }
     if (angle < -PI / 2) {
-     angle = -PI / 2;
+      angle = -PI / 2;
     }
 
     left = location.x - radius;
@@ -125,45 +132,42 @@ class Player { //<>//
     if (keys[2]) { 
 
       //stop moving
-      ara1.vx = 0;
-      ara1.vy = 0;
+      ara1.velocity.x = 0;
+      ara1.velocity.y = 0;
 
       //Move x to player x
-      ara1.x = x - radius/2;
-      ara1.y = y - radius/2;
+      ara1.location.x = location.x - radius/2;
+      ara1.location.y = location.y - radius/2;
       isCarried = true;
     }
   }
 
   void collisionDetection() {
 
-    //if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
-
-    //  if (vx > 0) {// If player collides from left side
-    //    right -= radius;        
-    //    if (right < ara1.left && nRight > ara1.left) {
-    //      ara1.x = x + radius; 
-    //      ara1.vx = vx; //Push ara
-    //    }
-    //  }       
-
-    //  if (vx < 0) {// If player collides from right side
-    //    left += radius;
-    //    if (left > ara1.right && nLeft < ara1.right) {
-    //      ara1.x = x - radius - ara1.aWidth;
-    //      ara1.vx = vx;
-    //    }
-    //  }
-
-    //  if (vy > 0) {
-    //    bottom -= radius;
-    //    if (bottom < ara1.top && nBottom > ara1.top) {// If player collides from top side
-    //      vy = 0;
-    //      bottom = top;
-    //      canJump = true;
-    //      angle = 0;
-    //    }
-    //  }
-    //}
+    if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom)) {
+      if (velocity.y > 0) {
+        bottom -= radius;
+        if (bottom < ara1.top && nBottom > ara1.top && location.x > ara1.location.x - radius + 1 && location.x < ara1.location.x + ara1.aWidth + radius - 1) {// If player collides from top side
+          velocity.y = 0;
+          bottom = top;
+          canJump = true;
+          angle = 0;
+        }
+      } 
+      if (velocity.x > 0) {// If player collides from right side
+        right -= radius;
+        if (right < ara1.left && nRight > ara1.left && location.y > ara1.location.y - radius) {// If player collides from left side
+          ara1.location.x = location.x + radius; 
+          ara1.velocity.x = velocity.x; //Push ara
+        }
+      }       
+      if (velocity.x < 0) {// If player collides from right side
+        left += radius;
+        if (left > ara1.right && nLeft < ara1.right && location.y > ara1.location.y - radius) {// If player collides from left side
+          ara1.location.x = location.x - radius - ara1.aWidth;
+          ara1.velocity.x = velocity.x;
+        }
+      }
+    }
   }
 }

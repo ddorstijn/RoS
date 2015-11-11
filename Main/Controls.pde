@@ -4,20 +4,20 @@ void keyPressed() {
   }
 
   if (key == 'a' && ara1.aHeight == 20) {
-    ara1.y -= 20;
+    ara1.location.y -= 20;
     ara1.aHeight += 20;
   } else if (key == 'a' && ara1.aHeight == 40 || keyCode == 17 && ara1.aHeight == 40) {     
-    ara1.y += 20;
+    ara1.location.y += 20;
     ara1.aHeight -= 20;
   }
   
   if (key == 's' && level != 1) { 
     level = 1;
-    loadLevel();
+    loadLevel(true);
   }
   if (key == 'd' && level != 2) { 
     level = 2;
-    loadLevel();
+    loadLevel(true);
   }
 }
 
@@ -33,8 +33,8 @@ void keyReleased()
   case 17:
     keys[2] = false; //In case ctrl is pressed
     if (isCarried) {
-      ara1.vx = player1.vx; //ara's pos is player pos
-      ara1.vy = player1.vy;
+      ara1.velocity.x = player1.velocity.x; //ara's pos is player pos
+      ara1.velocity.y = player1.velocity.y;
       isCarried = false;
     }
     break;
@@ -61,13 +61,6 @@ void controls() {
       }
       break;
     }
-  }
-
-  // Check if speed doesn't get to high
-  if (player1.vx > player1.maxSpeed) {
-    player1.vx = player1.maxSpeed;
-  } else if (player1.vx < -player1.maxSpeed) {
-    player1.vx = -player1.maxSpeed;
   }
 }
 
@@ -107,7 +100,7 @@ void mouseReleased() {
 
     // Save new data
     saveJSONObject(levels, "data/level" + level + ".json");
-    loadLevel();
+    loadLevel(false);
   }
 }
 

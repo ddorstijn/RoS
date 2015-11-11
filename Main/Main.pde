@@ -39,7 +39,7 @@ void setup() {
   keys[1] = false; //Right
   keys[2] = false; //Ctrl
 
-  loadLevel();
+  loadLevel(true);
   
   worldCamera = new Camera();
 

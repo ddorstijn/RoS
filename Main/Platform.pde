@@ -88,25 +88,25 @@ class Platform {  //<>//
     }
 
     if (rectRectIntersect(ara1.nLeft, ara1.nTop, ara1.nRight, ara1.nBottom, left, top, right, bottom)) {
-      if (ara1.vx > 0) {// If ara collides from right side
+      if (ara1.velocity.x > 0) {// If ara collides from right side
         ara1.right -= ara1.aWidth/2;
         if (ara1.right < left && ara1.nRight > left) {// If ara collides from left side
-          ara1.vx = 0;
+          ara1.velocity.x = 0;
         }
       }       
-      if (ara1.vx < 0) {// If ara collides from right side
+      if (ara1.velocity.x < 0) {// If ara collides from right side
         ara1.left += ara1.aWidth/2;
         if (ara1.left > right && ara1.nLeft < right) {// If ara collides from left side
-          ara1.vx = 0;
+          ara1.velocity.x = 0;
         }
       }
       if (ara1.top > bottom && ara1.nTop < bottom) {// If ara collides from bottom side
-        ara1.vy = 0;
+        ara1.velocity.y = 0;
       }
-      if (ara1.vy > 0) {
+      if (ara1.velocity.y > 0) {
         ara1.bottom -= ara1.aWidth/2;
         if (ara1.bottom < top && ara1.nBottom > top) {// If ara collides from top side
-          ara1.vy = 0;
+          ara1.velocity.y = 0;
           ara1.bottom = top;
         }
       }
