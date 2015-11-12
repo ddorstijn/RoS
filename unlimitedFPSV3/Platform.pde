@@ -43,17 +43,6 @@ class Platform {
   void display() {
 
     noStroke();
-    //switch (index) {
-    //case 1:     
-    //  fill(0, 0, 0);
-    //  break;
-    //case 2:
-    //  fill(255, 0, 0);
-    //  break;
-    //case 3:
-    //  fill(0, 255, 0);
-    //  break;
-    //}
 
     if (isOver() && shiftKey) {
       fill(0, 0, 255);

@@ -25,11 +25,6 @@ boolean shiftKey = false;  //Check Shift-key
 
 boolean isCarried = false; //For ara
 
-// Basic collision detection method
-boolean rectRectIntersect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
-  return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
-}  
-
 float beginX, endX, beginY, endY; 
 float gridSize = 40; //Size of the grid the game is built around
 
