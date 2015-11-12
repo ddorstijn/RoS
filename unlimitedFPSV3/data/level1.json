@@ -11,15 +11,6 @@
     {
       "index": 1,
       "position": {
-        "x": 0,
-        "width": 920,
-        "y": 400,
-        "height": 120
-      }
-    },
-    {
-      "index": 1,
-      "position": {
         "x": 720,
         "width": 80,
         "y": 320,
@@ -263,47 +254,12 @@
     {
       "index": 1,
       "position": {
-        "x": 4640,
-        "width": 1200,
-        "y": 440,
-        "height": 40
-      }
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 5920,
-        "width": 1040,
-        "y": 440,
-        "height": 40
-      }
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 7200,
-        "width": 840,
-        "y": 440,
-        "height": 40
-      }
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 8320,
-        "width": 840,
-        "y": 440,
-        "height": 40
-      }
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 560,
-        "width": 40,
-        "y": 440,
-        "height": 40
-      }
+        "x": 0,
+        "width": 880,
+        "y": 400,
+        "height": 80
+      },
+      "value": 28
     }
   ]
 }

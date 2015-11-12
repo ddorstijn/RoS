@@ -16,7 +16,10 @@ JSONObject playerData;
 PVector gravity;
 float friction; //Same goes for friction
 
-PFont message;
+PVector pos; //Camera's position
+
+PFont popUpFont;
+PFont statsFont;
 
 boolean[] keys = new boolean[3]; //Keys Pressed
 boolean shiftKey = false;  //Check Shift-key
@@ -31,8 +34,10 @@ boolean rectRectIntersect(float playerLeft, float playerTop, float playerRight, 
 float beginX, endX, beginY, endY; 
 float gridSize = 40; //Size of the grid the game is built around
 
+ArrayList<Platform> platforms;
+
 //Call every class
-Platform[] platforms; 
+//Platform[] platforms; 
 Player player1;
 Camera worldCamera;
 Ara ara1;
@@ -48,12 +53,14 @@ void setup() {
   keys[1] = false; //Right
   keys[2] = false; //Ctrl
 
+  platforms = new ArrayList<Platform>();
+
   loadLevel(true);
 
   worldCamera = new Camera();
-
-  message = createFont("Arial", 72, true);
-  textFont(message);
+  
+  popUpFont = createFont("Arial", 72, true);
+  statsFont = createFont("Arial", 14, true);
 }
 
 void draw() {
@@ -71,7 +78,7 @@ void draw() {
 
 void update_game() {
   worldCamera.drawWorld();
-  
+
   player1.update();
   ara1.update();
 
@@ -84,9 +91,9 @@ void update_game() {
 }
 
 void draw_game() {
-  
-  translate(-worldCamera.pos.x, -worldCamera.pos.y);
-  
+
+  translate(-pos.x, -pos.y);
+
   //setup
   drawBackground();
   grid();
@@ -99,7 +106,8 @@ void draw_game() {
   for (Platform b : platforms) {
     b.display();
   }
-  
-  textSize(14);
-  text(frameRate, worldCamera.pos.x + 40, 20);
+
+  textFont(statsFont);
+  fill(255);
+  text(frameRate, pos.x + 40, 20);
 }

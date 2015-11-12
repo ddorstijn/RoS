@@ -4,9 +4,15 @@ class Platform {
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
 
-  int index, pos;
+  int index, value;
+  
+  float mousex;
 
-  Platform(float _x, float _y, float _width, float _height, int _index, int _i) {
+  boolean isOver() {
+    return mousex >= x  && mousex < x + iWidth && mouseY >= y && mouseY < y + iHeight;
+  }
+
+  Platform(float _x, float _y, float _width, float _height, int _index, int _value) {
     //DECLARE
     x = _x;
     y = _y;
@@ -22,30 +28,57 @@ class Platform {
     //If index = 2 it's a trap or stationary enemy
     //If index = 3 it's the finish!
     index = _index;
-
-    pos = _i;
+    
+    //position int the arrayList
+    value = _value;
   }
 
   //FUNCTIONS
   void update() {
     collisionDetection();
+    
+    mousex = mouseX + pos.x;
   }
 
   void display() {
+
     noStroke();
-    switch (index) {
-    case 1:     
-      fill(0, 0, 0);
-      break;
-    case 2:
-      fill(255, 0, 0);
-      break;
-    case 3:
-      fill(0, 255, 0);
-      break;
+    //switch (index) {
+    //case 1:     
+    //  fill(0, 0, 0);
+    //  break;
+    //case 2:
+    //  fill(255, 0, 0);
+    //  break;
+    //case 3:
+    //  fill(0, 255, 0);
+    //  break;
+    //}
+
+    if (isOver() && shiftKey) {
+      fill(0, 0, 255);
+    } else { 
+      switch (index) {
+      case 1:     
+        fill(0, 0, 0);
+        break;
+      case 2:
+        fill(255, 0, 0);
+        break;
+      case 3:
+        fill(0, 255, 0);
+        break;
+      }
     }
+
     rectMode(CORNER);
     rect(x, y, iWidth, iHeight);
+  }
+
+  void drawText(String text) {
+    textFont(popUpFont);
+    fill(255);
+    text(text, pos.x + width/2, height/2);
   }
 
   void collisionDetection() {
@@ -78,13 +111,13 @@ class Platform {
 
       if (index == 2) {
         fill(255);
-        text("You suck!", worldCamera.pos.x + width/2, height/2);
+        drawText("You suck!");
         player1.respawn();
       }
 
       if (index == 3) {
         fill(255);
-        text("You win!", worldCamera.pos.x + width/2, height/2);
+        drawText("You win!");
       }
     }
 

@@ -89,9 +89,9 @@ class Player {
     }
 
     if (velocity.x > maxSpeed) {
-      velocity.x = maxSpeed;
+    velocity.x = maxSpeed;
     } else if (velocity.x < -maxSpeed) {
-      velocity.x = -maxSpeed;
+    velocity.x = -maxSpeed;
     }
 
     if (canJump == false && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
@@ -118,7 +118,7 @@ class Player {
     nBottom = bottom + velocity.y;
 
     if (location.y > height + 100) {
-      respawn();
+    respawn();
     }
   }
 

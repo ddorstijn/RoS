@@ -1,0 +1,20 @@
+{
+  "ara": {
+    "x": 250,
+    "y": 200
+  },
+  "player": {
+    "x": 200,
+    "y": 200
+  },
+  "platforms": [{
+    "index": 1,
+    "position": {
+      "x": 160,
+      "width": 160,
+      "y": 240,
+      "height": 80
+    },
+    "value": 1
+  }]
+}
