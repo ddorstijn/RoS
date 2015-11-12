@@ -36,7 +36,7 @@ class Player {
     radius = diameter / 2;
     angle = 0;
 
-    location = new PVector(_x, _y - 100);
+    location = new PVector(_x, _y);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
     friction = 0.9;
@@ -85,7 +85,7 @@ class Player {
     //Border left side of the level
     if (location.x < 0 + radius) {
       location.x = 0 + radius;
-      velocity.limit(0);
+      velocity.x = 0;
     }
 
     if (velocity.x > maxSpeed) {

@@ -99,4 +99,7 @@ void draw_game() {
   for (Platform b : platforms) {
     b.display();
   }
+  
+  textSize(14);
+  text(frameRate, worldCamera.pos.x + 40, 20);
 }

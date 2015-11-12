@@ -1,5 +1,5 @@
 class Platform {
-  
+
   //INITIALIZE
   float x, y, iWidth, iHeight, 
     left, right, top, bottom;
@@ -22,7 +22,7 @@ class Platform {
     //If index = 2 it's a trap or stationary enemy
     //If index = 3 it's the finish!
     index = _index;
-    
+
     pos = _i;
   }
 
