@@ -1,16 +1,9 @@
 void keyPressed() {
-
+  
   keysPressed[keyCode] = true;
+  
   if (keyCode == 16) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
-  }
-
-  if (key == 'a' && ara1.aHeight == 20) {
-    ara1.location.y -= 20;
-    ara1.aHeight += 20;
-  } else if (key == 'a' && ara1.aHeight == 40 || keyCode == 17 && ara1.aHeight == 40) {     
-    ara1.location.y += 20;
-    ara1.aHeight -= 20;
   }
 
   if (key == 's' && level != 1) { 
@@ -24,45 +17,7 @@ void keyPressed() {
 }
 
 void keyReleased() {
-  switch (keyCode) {
-  case 37: // In case left arrow key is pressed 
-    keysPressed[0] = false;
-    break;
-  case 39: //In case the right arrow key is pressed
-    keysPressed[1] = false;
-    break;
-  case 17:
-    keysPressed[2] = false; //In case ctrl is pressed
-    if (ara1.isCarried) {
-      ara1.velocity.x = player1.velocity.x; //ara's pos is player pos
-      ara1.velocity.y = player1.velocity.y;
-      ara1.isCarried = false;
-    }
-    break;
-  }
-}
-
-void controls() {
-  // Keyboard control
-  if (keyPressed) {
-    switch (keyCode) {
-    case 37: // In case left arrow key is pressed and left is not obstructed move left
-      keysPressed[0] = true;
-      break;
-    case 39:
-      keysPressed[1] = true;
-      break;
-    case 17:
-      keysPressed[2] = true;
-      break;
-    case 38:
-      if (player1.canJump == true) {
-        player1.velocity.y = player1.jumpSpeed;
-        player1.canJump = false; // Jump is possible
-      }
-      break;
-    }
-  }
+  keysPressed[keyCode] = false;
 }
 
 //Level building!

@@ -9,15 +9,14 @@ void grid() {
       stroke(255, 0, 0);
       line(pos.x - width, i * gridSize, pos.x + width, i * gridSize);
     }
-
-    for (int i = 0; i < width; i ++) {
-      float drawLine = i + width % gridSize;
-      line(pos.x + drawLine, 0, pos.x + drawLine, height);
+    //vertical lines
+    for (int i = 0; i < width / gridSize + 1; i ++) {
+      float lx;
+      pushMatrix();
+      translate(pos.x, 0);
+      lx = i * gridSize - (pos.x % gridSize);
+      line(lx, 0, lx, height);
+      popMatrix();
     }
-    //Vertical lines
-    //for (int i = 0; i < width/gridSize + pos.x; i++) {
-    //  stroke(255, 0, 0);
-    //  line (i * gridSize, 0, i * gridSize, height);
-    //}
   }
 }

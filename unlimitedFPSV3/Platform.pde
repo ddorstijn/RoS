@@ -72,36 +72,36 @@ class Platform {
 
   void collisionDetection() {
 
-    //if (rectRectIntersect(player1.nLeft, player1.nTop, player1.nRight, player1.nBottom, left, top, right, bottom)) {
-    //  if (player1.velocity.y > 0) {
-    //    player1.bottom -= player1.radius;
-    //    if (player1.bottom < top && player1.nBottom > top && player1.location.x > x - player1.radius + 1 && player1.location.x < x + iWidth + player1.radius - 1) {// If player collides from top side
-    //      player1.velocity.y = 0;
-    //      player1.bottom = top;
-    //      player1.canJump = true;
-    //      player1.angle = 0;
-    //    }
-    //  } 
-    //  if (player1.velocity.x > 0) {// If player collides from right side
-    //    player1.right -= player1.radius;
-    //    if (player1.right < left && player1.nRight > left && player1.location.y > y - player1.radius) {// If player collides from left side
-    //      player1.velocity.x = 0;
-    //    }
-    //  }       
-    //  if (player1.velocity.x < 0) {// If player collides from right side
-    //    player1.left += player1.radius;
-    //    if (player1.left > right && player1.nLeft < right && player1.location.y > y - player1.radius) {// If player collides from left side
-    //      player1.velocity.x = 0;
-    //    }
-    //  }
-    //  if (player1.top >= bottom && player1.nTop <= bottom && player1.location.x > x - player1.radius + 1 && player1.location.x < x + iWidth + player1.radius - 1) {// If player collides from bottom side
-    //    player1.velocity.y = 0;
-    //  }
+    if (rectRectIntersect(player1.nLeft, player1.nTop, player1.nRight, player1.nBottom, left, top, right, bottom)) {
+     if (player1.velocity.y > 0) {
+       player1.bottom -= player1.radius;
+       if (player1.bottom < top && player1.nBottom > top && player1.location.x > x - player1.radius + 1 && player1.location.x < x + iWidth + player1.radius - 1) {// If player collides from top side
+         player1.velocity.y = 0;
+         player1.bottom = top;
+         player1.canJump = true;
+         player1.angle = 0;
+       }
+     } 
+     if (player1.velocity.x > 0) {// If player collides from right side
+       player1.right -= player1.radius;
+       if (player1.right < left && player1.nRight > left && player1.location.y > y - player1.radius) {// If player collides from left side
+         player1.velocity.x = 0;
+       }
+     }       
+     if (player1.velocity.x < 0) {// If player collides from right side
+       player1.left += player1.radius;
+       if (player1.left > right && player1.nLeft < right && player1.location.y > y - player1.radius) {// If player collides from left side
+         player1.velocity.x = 0;
+       }
+     }
+     if (player1.top >= bottom && player1.nTop <= bottom && player1.location.x > x - player1.radius + 1 && player1.location.x < x + iWidth + player1.radius - 1) {// If player collides from bottom side
+       player1.velocity.y = 0;
+     }
 
-    //  if (index == 2) {
-    //    player1.respawn();
-    //  }
-    //}
+     if (index == 2) {
+       player1.respawn();
+     }
+    }
 
     if (rectRectIntersect(ara1.nLeft, ara1.nTop, ara1.nRight, ara1.nBottom, left, top, right, bottom)) {
       if (ara1.velocity.x > 0) {// If ara collides from right side

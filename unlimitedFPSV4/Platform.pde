@@ -6,12 +6,13 @@ class Platform {
   PVector location;
 
   float iWidth, iHeight;
+  float left, right, top, bottom, mousex;
 
   int index, value;
 
-  float mousex;
-
-  boolean isOver() { return mousex >= location.x  && mousex < location.x + iWidth && mouseY >= location.y && mouseY < location.y + iHeight; }
+  boolean isOver() { 
+    return mousex >= location.x  && mousex < location.x + iWidth && mouseY >= location.y && mouseY < location.y + iHeight;
+  }
 
   Platform(float _x, float _y, float _width, float _height, int _index, int _value) {
     //DECLARE 
@@ -24,6 +25,11 @@ class Platform {
     //If index = 2 it's a trap or stationary enemy
     //If index = 3 it's the finish!
     index = _index;
+    
+    left = location.x;
+    right = location.x + iWidth;
+    top = location.y;
+    bottom = location.y + iHeight;
 
     //position int the arrayList
     value = _value;

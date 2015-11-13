@@ -18,7 +18,12 @@ float friction; //Same goes for friction
 PFont popUpFont, statsFont;
 
 boolean[] keysPressed; //Keys Pressed
-boolean shiftKey = false;  //Check Shift-key
+boolean shiftKey;  //Check Shift-key
+
+// Basic collision detection method
+boolean rectRectIntersect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
+  return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
+}  
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
 
@@ -32,6 +37,7 @@ Ara ara1;
 
 void setup() {
   size(1650, 480);
+  surface.setResizable(true);
   frameRate(-1);
 
   textAlign(CENTER);
@@ -66,8 +72,6 @@ void update_game() {
 
   player1.update();
   ara1.update();
-
-  controls();
 
   // Display all bubbles
   for (Platform b : platforms) {
