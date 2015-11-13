@@ -95,4 +95,9 @@ void draw() {
   point(v3.x, v3.y);
   strokeWeight(1);
   line(0, 0, v3.x, v3.y);
+  
+  text("1: normailize vector 1/n" +
+  "2: invert vector 1" +
+  "3: "
+  , 10, 20);
 }

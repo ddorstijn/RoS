@@ -1,17 +1,20 @@
 class Ara {
-  
+
   //INIT
   //Starting proportions
   float aWidth, aHeight, startX, startY;
-  
+
   //Bounding box
   float left, right, top, bottom;
-  
+
   //Bounding box for the next frame
   float nLeft, nRight, nTop, nBottom;
-  
+
   //Vectors
   PVector location, velocity;
+
+  //Booleans
+  boolean isCarried;
 
   //OBJECT
   Ara(float _x, float _y) {
@@ -22,10 +25,10 @@ class Ara {
 
     startX = _x;
     startY = _y;
-    
+
     aWidth = 20;
     aHeight = 20; 
-  
+
     //Bounding box creation
     left = location.x; //Left side of the box
     right = location.x + aWidth; //Right side of the box
@@ -37,19 +40,32 @@ class Ara {
     nRight = right + velocity.x;
     nTop = top + velocity.y;
     nBottom = bottom + velocity.y;
+
+    isCarried = false; //For ara
   }
-  
+
   //FUNCTIONS
-  
+
   //SETUP
   void update() {
     araUpdatePosition();
+    powerUps();
+  }
+
+  void powerUps() {
+    if (keysPressed[65] && aHeight == 20) {
+      location.y -= 20;
+      aHeight += 20;
+    } else if (keysPressed[65] && aHeight == 40 || keysPressed[' '] && aHeight == 40) {     
+      location.y += 20;
+      aHeight -= 20;
+    }
   }
 
   void respawn() {
     location.x = startX;
     location.y = startY;
-    
+
     velocity.mult(0);
   }
 
@@ -57,7 +73,7 @@ class Ara {
     noStroke();
     fill(255, 255, 0);
     rectMode(CORNER); 
-    rect(location.x, location.y, aWidth, aHeight); 
+    rect(location.x, location.y, aWidth, aHeight);
   }
 
   void araUpdatePosition() {
@@ -74,7 +90,7 @@ class Ara {
     nRight = right + velocity.x;
     nTop = top + velocity.y;
     nBottom = bottom + velocity.y;
-    
+
     //Respawn
     if (location.y > height) {
       respawn();

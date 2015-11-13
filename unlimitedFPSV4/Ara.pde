@@ -12,6 +12,9 @@ class Ara {
   
   //Vectors
   PVector location, velocity;
+  
+  //Booleans
+  boolean isCarried; //For ara
 
   //OBJECT
   Ara(float _x, float _y) {
@@ -25,6 +28,8 @@ class Ara {
     
     aWidth = 20;
     aHeight = 20; 
+    
+    isCarried = false;
   
     //Bounding box creation
     left = location.x; //Left side of the box

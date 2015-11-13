@@ -17,26 +17,21 @@ float friction; //Same goes for friction
 
 PVector pos; //Camera's position
 
-PFont popUpFont;
-PFont statsFont;
+PFont popUpFont, statsFont;
 
-boolean[] keys = new boolean[3]; //Keys Pressed
+boolean[] keysPressed; //Keys Pressed
 boolean shiftKey = false;  //Check Shift-key
-
-boolean isCarried = false; //For ara
 
 // Basic collision detection method
 boolean rectRectIntersect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
   return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
 }  
 
-float beginX, endX, beginY, endY; 
-float gridSize = 40; //Size of the grid the game is built around
+float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
 
 ArrayList<Platform> platforms;
 
 //Call every class
-//Platform[] platforms; 
 Player player1;
 Camera worldCamera;
 Ara ara1;
@@ -47,20 +42,18 @@ void setup() {
 
   textAlign(CENTER);
 
-  //No key is pressed in the beginning
-  keys[0] = false; //Left
-  keys[1] = false; //Right
-  keys[2] = false; //Ctrl
+  keysPressed = new boolean[256];
 
   platforms = new ArrayList<Platform>();
-
   loadLevel(true);
 
   worldCamera = new Camera();
   
   popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);
+  gridSize = 40;
 }
+
 
 void draw() {
   loops = 0;
@@ -77,11 +70,8 @@ void draw() {
 
 void update_game() {
   worldCamera.drawWorld();
-
   player1.update();
   ara1.update();
-
-  controls();
 
   // Display all bubbles
   for (Platform b : platforms) {

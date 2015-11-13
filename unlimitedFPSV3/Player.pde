@@ -52,6 +52,7 @@ class Player {
     nBottom = bottom + velocity.y;
   }
 
+
   void update() {
     playerUpdatePosition();
     collisionDetection();
@@ -62,7 +63,7 @@ class Player {
     location.x = startX;
     location.y = startY;
 
-    velocity.set(0, 0);
+    velocity.setMag(0);
   }
 
   void display() {
@@ -89,9 +90,9 @@ class Player {
     }
 
     if (velocity.x > maxSpeed) {
-    velocity.x = maxSpeed;
+      velocity.x = maxSpeed;
     } else if (velocity.x < -maxSpeed) {
-    velocity.x = -maxSpeed;
+      velocity.x = -maxSpeed;
     }
 
     if (canJump == false && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
@@ -118,19 +119,25 @@ class Player {
     nBottom = bottom + velocity.y;
 
     if (location.y > height + 100) {
-    respawn();
+      respawn();
     }
   }
 
   void controls() {
-    if (keys[0]) {  
+    if (keysPressed[LEFT]) {  
       velocity.x -= acceleration;
     }
-    if (keys[1]) {
+    if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
     }
-    //If ctrl is pressed stick to the player
-    if (keys[2]) { 
+    if (keysPressed[UP]) {
+      if (canJump == true) {
+        velocity.y = jumpSpeed;
+        canJump = false; // Jump is possible
+      }
+    }
+    //If space is pressed stick to the player
+    if (keysPressed[' ']) { 
 
       //stop moving
       ara1.velocity.x = 0;
@@ -139,7 +146,7 @@ class Player {
       //Move x to player x
       ara1.location.x = location.x - radius/2;
       ara1.location.y = location.y - radius/2;
-      isCarried = true;
+      ara1.isCarried = true;
     }
   }
 
@@ -171,7 +178,7 @@ class Player {
       }
     } else {
 
-      
+
       if (rectRectIntersect(nLeft, nTop, nRight, nBottom, ara1.left, ara1.top, ara1.right, ara1.bottom) && ara1.aHeight == 40) {
         if (velocity.y > 0) {
           bottom -= radius;
@@ -187,7 +194,7 @@ class Player {
           if (right < ara1.left && nRight > ara1.left && location.y > ara1.location.y - radius) {
             velocity.x = 0;
             location.x = ara1.left - radius;
-    }
+          }
         }       
         if (velocity.x < 0) {// If player collides from right side
           left += radius;

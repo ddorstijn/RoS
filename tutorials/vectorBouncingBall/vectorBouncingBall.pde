@@ -5,7 +5,7 @@ float friction = 0.99;
 int radius = 10;
 
 void setup() {
-  size(800, 800);
+  size(400, 400);
   surface.setResizable(true);
   frameRate(60);
 }

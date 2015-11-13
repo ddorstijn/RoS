@@ -10,10 +10,14 @@ void grid() {
       line(pos.x - width, i * gridSize, pos.x + width, i * gridSize);
     }
 
-    //Vertical lines
-    for (int i = 0; i < width/gridSize + pos.x; i++) {
-      stroke(255, 0, 0);
-      line (i * gridSize, 0, i * gridSize, height);
+    for (int i = 0; i < width; i ++) {
+      float drawLine = i + width % gridSize;
+      line(pos.x + drawLine, 0, pos.x + drawLine, height);
     }
+    //Vertical lines
+    //for (int i = 0; i < width/gridSize + pos.x; i++) {
+    //  stroke(255, 0, 0);
+    //  line (i * gridSize, 0, i * gridSize, height);
+    //}
   }
 }
