@@ -46,6 +46,8 @@ void setup() {
   keysPressed = new boolean[256];
   platforms = new ArrayList<Platform>();
 
+  pos = new PVector(0, 0);
+
   loadLevel(true);
 
   worldCamera = new Camera();
@@ -68,25 +70,30 @@ void draw() {
 }
 
 void update_game() {
-  worldCamera.drawWorld();
 
   player1.update();
   ara1.update();
 
-  mousex = mouseX + pos.x;
+  for (Platform b : platforms) {
+    b.update();
+  }
 
-  //for (Platform b : platforms) {
-  //  b.update();
-  //}
+  worldCamera.drawWorld();
 }
 
 void draw_game() {
 
+  drawBackground();
+
+  //UI
+  //Everything that must stay in one place relative to the screen position Doesn't need to be translated wich will make it stay in the same place
+  grid();
+
+  //LEVEL
+  pushMatrix();
   translate(-pos.x, -pos.y);
 
   //setup
-  drawBackground();
-  grid();
   preview();
 
   player1.display();
@@ -98,8 +105,12 @@ void draw_game() {
       b.display();
     }
   }
+  popMatrix();
 
   textFont(statsFont);
   fill(255);
-  text(frameRate, pos.x + 40, 20);
+  text("fps: " + frameRate, 40, 20);
+
+  //textFont(popUpFont);
+  //text("You lose", width/2, height/2);
 }

@@ -7,14 +7,56 @@
     "x": 200,
     "y": 200
   },
-  "platforms": [{
-    "index": 1,
-    "position": {
-      "x": 200,
-      "width": 40,
-      "y": 280,
-      "height": 40
+  "platforms": [
+    {
+      "index": 1,
+      "position": {
+        "x": 200,
+        "width": 40,
+        "y": 280,
+        "height": 40
+      },
+      "value": 1
     },
-    "value": 1
-  }]
+    {
+      "index": 1,
+      "position": {
+        "x": 360,
+        "width": 160,
+        "y": 280,
+        "height": 80
+      },
+      "value": 2
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 200,
+        "width": 40,
+        "y": 280,
+        "height": 40
+      },
+      "value": 3
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 80,
+        "width": 80,
+        "y": 280,
+        "height": 80
+      },
+      "value": 4
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 680,
+        "width": 400,
+        "y": 280,
+        "height": 80
+      },
+      "value": 5
+    }
+  ]
 }

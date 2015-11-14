@@ -1,6 +1,6 @@
 class Ara {
 
-  //INIT
+  //DECLARE
   //Starting proportions
   float aWidth, aHeight, startX, startY;
 
@@ -16,9 +16,10 @@ class Ara {
   //Booleans
   boolean isCarried; //For ara
 
+  
   //OBJECT
   Ara(float _x, float _y) {
-    //DECLARATION
+    //INITIALIZE
     location = new PVector(_x, _y);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
@@ -43,10 +44,9 @@ class Ara {
     nTop = top + velocity.y;
     nBottom = bottom + velocity.y;
   }
+  
 
   //FUNCTIONS
-
-  //SETUP
   void update() {
     araUpdatePosition();
     collisionDetection();
