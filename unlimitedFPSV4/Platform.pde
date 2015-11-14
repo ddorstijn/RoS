@@ -36,9 +36,8 @@ class Platform {
   }
 
   //FUNCTIONS
-  void update() {  
-    mousex = mouseX + pos.x;
-  }
+  //void update() {  
+  //}
 
   void display() {
 

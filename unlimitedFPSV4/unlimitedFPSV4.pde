@@ -25,7 +25,7 @@ boolean rectRectIntersect(float playerLeft, float playerTop, float playerRight, 
   return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
 }  
 
-float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
+float beginX, endX, beginY, endY, gridSize, mousex; //Size of the grid the game is built around
 
 ArrayList<Platform> platforms;
 
@@ -41,7 +41,7 @@ void setup() {
   frameRate(-1);
 
   textAlign(CENTER);
-  
+
   gridSize = 40;
   keysPressed = new boolean[256];
   platforms = new ArrayList<Platform>();
@@ -49,7 +49,7 @@ void setup() {
   loadLevel(true);
 
   worldCamera = new Camera();
-  
+
   popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);
 }
@@ -73,10 +73,11 @@ void update_game() {
   player1.update();
   ara1.update();
 
-  // Display all bubbles
-  for (Platform b : platforms) {
-    b.update();
-  }
+  mousex = mouseX + pos.x;
+
+  //for (Platform b : platforms) {
+  //  b.update();
+  //}
 }
 
 void draw_game() {
@@ -93,7 +94,9 @@ void draw_game() {
 
   // Display all bubbles
   for (Platform b : platforms) {
-    b.display();
+    if (b.right > pos.x && b.left < pos.x + width) { 
+      b.display();
+    }
   }
 
   textFont(statsFont);
