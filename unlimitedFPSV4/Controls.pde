@@ -1,16 +1,21 @@
 void keyPressed() {
-  
+
   keysPressed[keyCode] = true;
-  
+
+  if (keysPressed[65]) {
+    ara.powerUpActivated[0] = !ara.powerUpActivated[0];
+    ara.powerUps();
+  }
+
   if (keyCode == 16) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
   }
 
-  if (key == 's' && level != 1) { 
+  if (keysPressed[83] && level != 1) { 
     level = 1;
     loadLevel(true);
   }
-  if (key == 'd' && level != 2) { 
+  if (keysPressed[68] && level != 2) { 
     level = 2;
     loadLevel(true);
   }
@@ -30,8 +35,8 @@ void mousePressed() {
 }
 
 void mouseReleased() {
-  if (shiftKey && mouseButton == LEFT) {
-
+  println(mouseButton);
+  if (shiftKey == true && mouseButton == LEFT) { 
     // Create a new JSON platform object
     JSONObject newPlatform = new JSONObject();
 
@@ -59,7 +64,7 @@ void mouseReleased() {
     saveJSONObject(levels, "data/level" + level + ".json");
     loadLevel(false);
   }
-  
+
   if (shiftKey && mouseButton == RIGHT) {
     for (Platform b : platforms) {
       if (b.isOver()) {
@@ -72,6 +77,7 @@ void mouseReleased() {
     }
   }
 }
+
 
 void preview() {
   if (mousePressed && mouseButton == LEFT && shiftKey == true) {

@@ -15,8 +15,9 @@ class Ara {
 
   //Booleans
   boolean isCarried; //For ara
+  boolean[] powerUpActivated;
 
-  
+
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
@@ -31,6 +32,7 @@ class Ara {
     aHeight = 20; 
 
     isCarried = false;
+    powerUpActivated = new boolean[2];
 
     //Bounding box creation
     left = location.x; //Left side of the box
@@ -44,30 +46,12 @@ class Ara {
     nTop = top + velocity.y;
     nBottom = bottom + velocity.y;
   }
-  
+
 
   //FUNCTIONS
   void update() {
     araUpdatePosition();
     collisionDetection();
-    powerUps();
-  }
-  
-  void powerUps() {
-    if (keysPressed[65] && aHeight == 20) {
-      location.y -= 20;
-      aHeight += 20;
-    } else if (keysPressed[65] && aHeight == 40 || keysPressed[' '] && aHeight == 40) {     
-      location.y += 20;
-      aHeight -= 20;
-    }
-  }
-
-  void respawn() {
-    location.x = startX;
-    location.y = startY;
-
-    velocity.mult(0);
   }
 
   void display() {
@@ -98,11 +82,28 @@ class Ara {
     }
   }
 
+  void respawn() {
+    location.x = startX;
+    location.y = startY;
+
+    velocity.mult(0);
+  }
+
+  void powerUps() {
+    if (powerUpActivated[0]) { //<>//
+      location.y -= 20;
+      aHeight = 40;
+    } else {     
+      location.y += 20;
+      aHeight = 20;
+    } //<>//
+  }
+
   void collisionDetection() {
     // Display all bubbles
     for (Platform other : platforms) {
 
-      if (rectRectIntersect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
+      if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
         if (velocity.y > 0) {
           bottom -= aHeight /2;
           if (bottom < other.top && nBottom > other.top && location.x > other.location.x - aHeight/2 + 1 && location.x < other.location.x + other.iWidth + aHeight/2 - 1) {// If player collides from top side

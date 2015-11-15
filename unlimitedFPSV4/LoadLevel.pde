@@ -7,8 +7,8 @@ void loadLevel(boolean objectsToo) {
   JSONObject araData = levels.getJSONObject("ara");
 
   if (objectsToo == true) {
-    player1 = new Player(playerData.getInt("x"), playerData.getInt("y"));
-    ara1 = new Ara(araData.getInt("x"), araData.getInt("y"));
+    player = new Player(playerData.getInt("x"), playerData.getInt("y"));
+    ara = new Ara(araData.getInt("x"), araData.getInt("y"));
   }
 
   platforms.removeAll(platforms);

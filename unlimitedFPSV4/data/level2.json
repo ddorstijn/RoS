@@ -57,6 +57,26 @@
         "height": 80
       },
       "value": 5
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 280,
+        "width": 440,
+        "y": 280,
+        "height": -160
+      },
+      "value": 8
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 840,
+        "width": 40,
+        "y": 80,
+        "height": 40
+      },
+      "value": 9
     }
   ]
 }

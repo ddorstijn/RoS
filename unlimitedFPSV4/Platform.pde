@@ -1,7 +1,6 @@
 class Platform {
 
-  //INITIALIZE
-
+  //DECLARE
   //Vectors
   PVector location;
 
@@ -13,9 +12,11 @@ class Platform {
   boolean isOver() { 
     return mousex >= location.x  && mousex < location.x + iWidth && mouseY >= location.y && mouseY < location.y + iHeight;
   }
+  
 
   Platform(float _x, float _y, float _width, float _height, int _index, int _value) {
-    //DECLARE 
+    
+    //INITIALIZE 
     location = new PVector(_x, _y);
 
     iWidth = _width;

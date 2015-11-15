@@ -4,7 +4,6 @@ void drawBackground() {
 
 void grid() {
   if (shiftKey == true) {  //If in buildmode 
-    
     //horizontal gridlines
     for (int i = 0; i < height/gridSize; i++) { //Number of lines that have to be drawn is calculated by dividing the height by the gridsize. eg; 800 / 40 = 20 lines
       stroke(255, 0, 0);

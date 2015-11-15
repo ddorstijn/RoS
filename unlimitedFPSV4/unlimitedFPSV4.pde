@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -21,7 +21,7 @@ boolean[] keysPressed; //Keys Pressed
 boolean shiftKey;  //Check Shift-key
 
 // Basic collision detection method
-boolean rectRectIntersect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
+boolean collisionDetect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
   return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
 }  
 
@@ -30,17 +30,13 @@ float beginX, endX, beginY, endY, gridSize, mousex; //Size of the grid the game 
 ArrayList<Platform> platforms;
 
 //Call every class
-//Platform[] platforms; 
-Player player1;
+Player player;
 Camera worldCamera;
-Ara ara1;
+Ara ara;
 
 void setup() {
   size(1650, 480);
-  surface.setResizable(true);
-  frameRate(-1);
-
-  textAlign(CENTER);
+  frameRate(999);
 
   gridSize = 40;
   keysPressed = new boolean[256];
@@ -71,8 +67,8 @@ void draw() {
 
 void update_game() {
 
-  player1.update();
-  ara1.update();
+  player.update();
+  ara.update();
 
   for (Platform b : platforms) {
     b.update();
@@ -86,7 +82,6 @@ void draw_game() {
   drawBackground();
 
   //UI
-  //Everything that must stay in one place relative to the screen position Doesn't need to be translated wich will make it stay in the same place
   grid();
 
   //LEVEL
@@ -96,8 +91,8 @@ void draw_game() {
   //setup
   preview();
 
-  player1.display();
-  ara1.display();
+  player.display();
+  ara.display();
 
   // Display all bubbles
   for (Platform b : platforms) {
@@ -107,9 +102,12 @@ void draw_game() {
   }
   popMatrix();
 
+  pushStyle();
+  textAlign(LEFT);
   textFont(statsFont);
   fill(255);
-  text("fps: " + frameRate, 40, 20);
+  text("fps: " + (int) frameRate, 10, 20);
+  popStyle();
 
   //textFont(popUpFont);
   //text("You lose", width/2, height/2);
