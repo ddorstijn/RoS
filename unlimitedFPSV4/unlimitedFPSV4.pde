@@ -103,7 +103,11 @@ void update_game() {
 }
 
 void draw_game() {
-  drawBackground();//UIgrid();
+  drawBackground(); //UIgrid();
+  
+  grid();
+  preview();
+  
   //LEVEL
   pushMatrix();
   translate(-pos.x, -pos.y);
