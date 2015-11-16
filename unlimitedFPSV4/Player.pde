@@ -202,6 +202,39 @@ class Player {
         }
       }
     }
+    
+    // Display all platforms
+    for (Turret other : turrets) {
+
+      if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
+        if (velocity.y > 0) {
+          if (bottom < other.top && nBottom > other.top && location.x > other.location.x - radius + 1 && location.x < other.location.x + other.twidth + radius - 1) {// If player collides from top side
+            velocity.y = 0;
+            bottom = top;
+            canJump = true;
+            angle = 0;
+          }
+        } 
+        if (velocity.x > 0) {// If player collides from right side
+          right -= radius;
+          if (right < other.left && nRight > other.left && location.y > other.location.y - radius) {// If player collides from left side
+            velocity.x = 0;
+            location.x = other.location.x - radius;
+          }
+        }       
+        if (velocity.x < 0) {// If player collides from right side
+          left += radius;
+          if (left > other.right && nLeft < other.right && location.y > other.location.y - radius) {// If player collides from left side
+            velocity.x = 0;
+            location.x = other.right + radius;
+          }
+        }
+        if (top > other.bottom && nTop <= other.bottom && location.x > other.location.x - radius + 1 && location.x < other.location.x + other.twidth + radius - 1) {// If player collides from bottom side
+          velocity.y = 0;
+        }
+
+      }
+    }
 
     ///////////////////////////////////////////// ARA  /////////////////////////////////////////////
 
