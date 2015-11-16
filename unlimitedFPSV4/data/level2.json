@@ -8,6 +8,25 @@
     "y": 200
   },
   "platforms": [
-    
+    {
+      "index": 1,
+      "position": {
+        "x": 160,
+        "width": 120,
+        "y": 280,
+        "height": 40
+      },
+      "value": 1
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 360,
+        "width": 80,
+        "y": 280,
+        "height": 40
+      },
+      "value": 2
+    }
   ]
 }
