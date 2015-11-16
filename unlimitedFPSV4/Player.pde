@@ -25,7 +25,7 @@ class Player {
 
   //OBJECT
   Player(int _x, int _y) {
-    
+
     //INITIALIZE
     startX = _x;
     startY = _y;    
@@ -52,15 +52,15 @@ class Player {
     top = location.y - radius; //Top side of player
     bottom = location.y + radius; //Bottom side of player
   }
-  
-  
+
+
   //FUNCTIOMS
   void update() {
     playerUpdatePosition();
     collisionDetection();
     controls();
   }
-  
+
   void display() {
     noStroke(); //No outline
     fill(colour); //Fill it white
@@ -74,7 +74,7 @@ class Player {
     fill(0, 255, 0);
     rect(otherX, otherY, otherwidth, otherheight);
   }
-  
+
   void playerUpdatePosition() {
     location.add(velocity);
     velocity.add(gravity);
@@ -160,11 +160,18 @@ class Player {
 
     canJump = false;
 
+    for (Collectable coin : coins) {
+      if (collisionDetect(nLeft, nTop, nRight, nBottom, coin.left, coin.top, coin.right, coin.bottom)) {
+        score += 100;
+        coin.location.set(-100, 0);
+      }
+    }
+
     // Display all platforms
     for (Platform other : platforms) {
 
       if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
-       if (velocity.y > 0) {
+        if (velocity.y > 0) {
           if (bottom < other.top && nBottom > other.top && location.x > other.location.x - radius + 1 && location.x < other.location.x + other.iWidth + radius - 1) {// If player collides from top side
             velocity.y = 0;
             bottom = top;
@@ -196,7 +203,7 @@ class Player {
       }
     }
 
-///////////////////////////////////////////// ARA  /////////////////////////////////////////////
+    ///////////////////////////////////////////// ARA  /////////////////////////////////////////////
 
     if (collisionDetect(nLeft, nTop, nRight, nBottom, ara.left, ara.top, ara.right, ara.bottom) && ara.aHeight == 20) {
       if (velocity.y > 0) {
