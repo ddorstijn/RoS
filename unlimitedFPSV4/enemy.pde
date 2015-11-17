@@ -11,11 +11,8 @@ class MovEnemy{
 
   //Vectors
   PVector location, velocity;
-
-
-  //enemy object
   
-
+  //enemy object
 }
 
 class Turret{
@@ -29,8 +26,15 @@ class Turret{
   //Vectors
   PVector location;
   
+  //Position in array
+  int value;
+  
+  boolean isOver() { 
+    return mousex >= location.x  && mousex < location.x + twidth && mouseY >= location.y && mouseY < location.y + theight;
+  }
+  
   // Turret object
-  Turret (float _x, float _y, float _width, float _height) {
+  Turret (float _x, float _y, float _width, float _height, int i) {
 
     //INITIALIZE 
     location = new PVector(_x, _y);
@@ -42,6 +46,8 @@ class Turret{
     right = location.x + twidth;
     top = location.y;
     bottom = location.y + theight;
+    
+    value = i;
   }
 
 

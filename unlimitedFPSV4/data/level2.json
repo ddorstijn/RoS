@@ -3,6 +3,47 @@
     "x": 250,
     "y": 200
   },
+  "turrets": [
+    {
+      "position": {
+        "x": 800,
+        "width": 40,
+        "y": 200,
+        "height": 40
+      },
+      "value": 1
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 400,
+        "width": 40,
+        "y": 280,
+        "height": 40
+      },
+      "value": 2
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 400,
+        "width": 40,
+        "y": 240,
+        "height": 40
+      },
+      "value": 3
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 520,
+        "width": 40,
+        "y": 320,
+        "height": 40
+      },
+      "value": 4
+    }
+  ],
   "player": {
     "x": 200,
     "y": 200
@@ -12,19 +53,39 @@
       "index": 1,
       "position": {
         "x": 160,
-        "width": 120,
+        "width": 40,
         "y": 280,
         "height": 40
       },
       "value": 1
     },
     {
-      "index": 1,
+      "index": 4,
       "position": {
-        "x": 360,
+        "x": 560,
+        "width": 40,
+        "y": 240,
+        "height": 40
+      },
+      "value": 2
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 280,
         "width": 80,
         "y": 280,
         "height": 40
+      },
+      "value": 2
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 280,
+        "width": 80,
+        "y": 320,
+        "height": 80
       },
       "value": 2
     }

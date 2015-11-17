@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -13,6 +13,7 @@ int time;
 int score;
 
 JSONArray levelData;
+JSONArray turretData;
 JSONObject playerData;
 
 PVector gravity, pos;
@@ -21,6 +22,7 @@ float friction; //Same goes for friction
 PFont popUpFont, statsFont, timerFont;
 boolean[] keysPressed; //Keys Pressed
 boolean shiftKey;  //Check Shift-key
+int setIndex = 1; //While building check index that needs to be set
 
 // Basic collision detection method
 boolean collisionDetect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
@@ -49,6 +51,7 @@ void setup() {
   keysPressed = new boolean[256];
 
   platforms = new ArrayList<Platform>();
+  turrets = new ArrayList<Turret>();
 
   time = millis() / 1000;
   score = 0;
@@ -63,11 +66,7 @@ void setup() {
 
   coins = new ArrayList<Collectable>();
   coins.add(new Collectable (width/2 + 70, 300, 10, 10));
-  coins.add(new Collectable (70, 300, 10, 10));
-  
-  turrets = new ArrayList<Turret>();
-  turrets.add(new Turret (width/2 + 20, 200, 30, 30));
-  
+  coins.add(new Collectable (70, 300, 10, 10));  
 
   popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);
@@ -108,7 +107,7 @@ void draw_game() {
   drawBackground(); //UIgrid();
   
   grid();
-  preview();
+  levelBuild();
   
   //LEVEL
   pushMatrix();
