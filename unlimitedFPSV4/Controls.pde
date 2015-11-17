@@ -13,10 +13,12 @@ void keyPressed() {
 
   if (keysPressed[83] && level != 1) { 
     level = 1;
+    setIndex = 0; 
     loadLevel(true);
   }
   if (keysPressed[68] && level != 2) { 
     level = 2;
+    setIndex = 0;
     loadLevel(true);
   }
 }

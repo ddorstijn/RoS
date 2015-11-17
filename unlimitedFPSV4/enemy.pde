@@ -1,8 +1,8 @@
-class MovEnemy{
-    //DECLARE
-    //Starting proportions
+class MovEnemy {
+  //DECLARE
+  //Starting proportions
   float aWidth, aHeight, startX, startY; 
-  
+
   //Bounding box
   float left, right, top, bottom;
 
@@ -11,28 +11,28 @@ class MovEnemy{
 
   //Vectors
   PVector location, velocity;
-  
+
   //enemy object
 }
 
-class Turret{
-    //DECLARE
-    //Starting proportions
-  float twidth, theight, startX, startY;
-  
+class Turret {
+  //DECLARE
+  //Starting proportions
+  float twidth, theight, startX, startY, mousex;
+
   //Bounding box
   float left, right, top, bottom;
 
   //Vectors
   PVector location;
-  
+
   //Position in array
   int value;
-  
+
   boolean isOver() { 
     return mousex >= location.x  && mousex < location.x + twidth && mouseY >= location.y && mouseY < location.y + theight;
   }
-  
+
   // Turret object
   Turret (float _x, float _y, float _width, float _height, int i) {
 
@@ -46,7 +46,7 @@ class Turret{
     right = location.x + twidth;
     top = location.y;
     bottom = location.y + theight;
-    
+
     value = i;
   }
 
@@ -57,10 +57,17 @@ class Turret{
     right = location.x + twidth;
     top = location.y;
     bottom = location.y + theight;
+
+    mousex = mouseX + pos.x;
   }
 
   void display() {
-    fill(0, 0, 255);
+
+    if (isOver() && shiftKey) {
+      fill(255, 0, 0);
+    } else { 
+      fill(0, 0, 255);
+    }
     rectMode(CORNER);
     rect(location.x, location.y, twidth, theight);
   }

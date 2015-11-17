@@ -22,14 +22,14 @@ float friction; //Same goes for friction
 PFont popUpFont, statsFont, timerFont;
 boolean[] keysPressed; //Keys Pressed
 boolean shiftKey;  //Check Shift-key
-int setIndex = 1; //While building check index that needs to be set
+int setIndex; //While building check index that needs to be set
 
 // Basic collision detection method
 boolean collisionDetect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
   return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
 }
 
-float beginX, endX, beginY, endY, gridSize, mousex; //Size of the grid the game is built around
+float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
 
 ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
@@ -59,6 +59,7 @@ void setup() {
   pos = new PVector(0, 0);
 
   level = 1;
+  setIndex = 0;
 
   loadLevel(true);
 
