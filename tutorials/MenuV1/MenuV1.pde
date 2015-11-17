@@ -10,11 +10,9 @@ void setup() {
 
 void draw() {
   background(255);
-
-  if (drawMenu) {
-    menu.update();
-    menu.display();
-  }
+  
+  menu.update();
+  menu.display();
 }
 
 void keyPressed() {
