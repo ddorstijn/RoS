@@ -31,6 +31,8 @@ float beginX, endX, beginY, endY, gridSize, mousex; //Size of the grid the game 
 
 ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
+ArrayList<MovEnemy> enemies;
+ArrayList<Turret> turrets;
 
 //Call every class
 Player player;
@@ -60,6 +62,10 @@ void setup() {
   coins = new ArrayList<Collectable>();
   coins.add(new Collectable (width/2 + 70, 300, 10, 10));
   coins.add(new Collectable (70, 300, 10, 10));
+  
+  turrets = new ArrayList<Turret>();
+  turrets.add(new Turret (width/2 + 20, 200, 30, 30));
+  
 
   popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);
@@ -82,6 +88,10 @@ void update_game() {
 
   for (Collectable coin : coins) {
     coin.update();
+  }
+  
+   for (Turret turret : turrets) {
+    turret.update();
   }
 
   for (Platform b : platforms) {
@@ -106,6 +116,12 @@ void draw_game() {
   player.display();
   ara.display();
   for (Collectable b : coins) {
+    if (b.right > pos.x && b.left < pos.x + width) {
+      b.display();
+    }
+  }
+  
+  for (Turret b : turrets) {
     if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
     }
