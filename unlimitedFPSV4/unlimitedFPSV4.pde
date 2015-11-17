@@ -7,7 +7,7 @@ int loops;
 
 //Gloal variable INIT
 JSONObject levels;
-int level = 1;
+int level;
 
 int time;
 int score;
@@ -54,6 +54,8 @@ void setup() {
   score = 0;
 
   pos = new PVector(0, 0);
+
+  level = 1;
 
   loadLevel(true);
 

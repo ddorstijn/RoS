@@ -35,7 +35,6 @@ void mousePressed() {
 }
 
 void mouseReleased() {
-  println(mouseButton);
   if (shiftKey == true && mouseButton == LEFT) { 
     // Create a new JSON platform object
     JSONObject newPlatform = new JSONObject();
