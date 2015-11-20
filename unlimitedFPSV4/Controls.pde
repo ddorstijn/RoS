@@ -91,7 +91,31 @@ void mouseReleased() {
       saveJSONObject(levels, "data/level" + level + ".json");
       loadLevel(false);
       println("level loaded");
-    }
+    }else if (setIndex == 5) {
+      // Create a new JSON platform object
+      JSONObject newMovEnemy = new JSONObject();
+
+
+      // Create a new JSON position object
+      JSONObject position = new JSONObject();
+      position.setFloat("x", beginX);
+      position.setFloat("y", beginY);
+      position.setFloat("width", endX);
+      position.setFloat("height", endY);
+
+      // Add position to platform
+      newMovEnemy.setJSONObject("position", position);
+      newMovEnemy.setInt("index", setIndex);
+      newMovEnemy.setInt("value", movEnemyData.size() + 1);
+
+      // Append the new JSON bubble object to the array
+      JSONArray movEnemyData = levels.getJSONArray("MovEnemy");
+      movEnemyData.append(newMovEnemy);
+
+      // Save new data
+      saveJSONObject(levels, "data/level" + level + ".json");
+      loadLevel(false);
+      println("level loaded");
   }
 
   if (shiftKey && mouseButton == RIGHT) {
@@ -115,8 +139,19 @@ void mouseReleased() {
           break;
         }
       }
+    }else if (setIndex == 5) {
+      for (MovEnemy t : movEnemy) {
+        if (t.isOver()) {
+          movEnemy.remove(t);
+          movEnemyData.remove(t.value);
+          saveJSONObject(levels, "data/level" + level + ".json");
+          loadLevel(false);
+          break;
+        }    
+      }
     }
   }
+ }
 }
 
 
@@ -142,5 +177,9 @@ void levelBuild() {
   if (keysPressed['4']) {
     setIndex = 4;
     println("4");
+  }
+  if (keysPressed['5']) {
+    setIndex = 5;
+    println("5");
   }
 }

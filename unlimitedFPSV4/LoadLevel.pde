@@ -6,6 +6,7 @@ void loadLevel(boolean objectsToo) {
 
     levelData = levels.getJSONArray("platforms");
     turretData = levels.getJSONArray("turrets");
+    movEnemyData = levels.getJSONArray("MovEnemy");
     JSONObject playerData = levels.getJSONObject("player");
     JSONObject araData = levels.getJSONObject("ara");
 
@@ -36,7 +37,7 @@ void loadLevel(boolean objectsToo) {
       }
     } 
     
-    if (setIndex == 4 || setIndex == 0) {
+    if (setIndex == 4) {
       turrets.removeAll(turrets);
 
       for (int i = 0; i < turretData.size(); i++) {
@@ -52,6 +53,29 @@ void loadLevel(boolean objectsToo) {
 
         // Put object in array
         turrets.add(new Turret(x, y, Twidth, Theight, i));
+      }
+      
+      /*if (setIndex == 0) {
+        setIndex = 1;
+      }*/
+    }
+    
+    if (setIndex == 5 || setIndex == 0) {
+      movEnemy.removeAll(movEnemy);
+
+      for (int i = 0; i < movEnemyData.size(); i++) {
+        // Get each object in the array
+        JSONObject movEnemy = movEnemyData.getJSONObject(i); 
+        // Get a position object
+        JSONObject position = movEnemy.getJSONObject("position");
+        // Get properties from position
+        float x = position.getFloat("x");
+        float y = position.getFloat("y");
+        float aWidth = position.getFloat("width");
+        float aHeight = position.getFloat("height");
+
+        // Put object in array
+        //movEnemy.add(new MovEnemy(x, y, aWidth, aHeight, i));
       }
       
       if (setIndex == 0) {

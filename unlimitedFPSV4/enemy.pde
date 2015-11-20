@@ -19,7 +19,7 @@ class MovEnemy {
     return mousex >= location.x  && mousex < location.x + aWidth && mouseY >= location.y && mouseY < location.y + aHeight;
   }
 
-  // Turret object
+  // Enemy object
   MovEnemy (float _x, float _y, float _width, float _height, int i) {
 
     //INITIALIZE 

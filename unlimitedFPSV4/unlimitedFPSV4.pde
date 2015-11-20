@@ -14,6 +14,7 @@ int score;
 
 JSONArray levelData;
 JSONArray turretData;
+JSONArray movEnemyData;
 JSONObject playerData;
 
 PVector gravity, pos;
@@ -33,8 +34,8 @@ float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built
 
 ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
-ArrayList<MovEnemy> movEnemy;
 ArrayList<Turret> turrets;
+ArrayList<MovEnemy> movEnemy;
 
 //Call every class
 Player player;
@@ -51,8 +52,8 @@ void setup() {
   keysPressed = new boolean[256];
 
   platforms = new ArrayList<Platform>();
-  movEnemy = new ArrayList<MovEnemy>();
   turrets = new ArrayList<Turret>();
+  movEnemy = new ArrayList<MovEnemy>();
 
   time = millis() / 1000;
   score = 0;
@@ -92,15 +93,15 @@ void update_game() {
   for (Collectable coin : coins) {
     coin.update();
   }
-  
-  for (MovEnemy o : movEnemy){
-    o.update();
-  }
-  
+    
   for (Turret turret : turrets) {
     turret.update();
   }
 
+  for (MovEnemy o : movEnemy){
+    o.update();
+  }
+  
   for (Platform b : platforms) {
     b.update();
   }
@@ -127,19 +128,19 @@ void draw_game() {
       b.display();
     }
   }
-  
-  for (MovEnemy o : movEnemy){
-    if (o.right > pos.x && o.left < pos.x + width){
-      o.display();
-    }
-  }
-  
+    
   for (Turret b : turrets) {
     if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
     }
   }
 
+  for (MovEnemy o : movEnemy){
+    if (o.right > pos.x && o.left < pos.x + width){
+      o.display();
+    }
+  }
+  
   // Display all platforms
   for (Platform b : platforms) {
     if (b.right > pos.x && b.left < pos.x + width) {
