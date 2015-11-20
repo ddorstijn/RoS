@@ -4,6 +4,7 @@
     "y": 200
   },
   "turrets": [],
+  "MovEnemy": [],
   "player": {
     "x": 200,
     "y": 200

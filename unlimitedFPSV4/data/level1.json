@@ -4,14 +4,16 @@
     "y": 200
   },
   "turrets": [{
+    "index": 4,
     "position": {
-      "x": 800,
+      "x": 720,
       "width": 40,
-      "y": 200,
+      "y": 240,
       "height": 40
     },
-    "value": 1
+    "value": 6
   }],
+  "MovEnemy": [],
   "player": {
     "x": 200,
     "y": 320
