@@ -9,7 +9,7 @@ void grid() {
       stroke(255, 0, 0);
       line(0, i * gridSize, width, i * gridSize);
     }
-    
+
     //vertical lines
     for (int i = 0; i < width / gridSize + 1; i ++) {
       float lx;

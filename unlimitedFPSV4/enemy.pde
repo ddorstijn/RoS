@@ -170,7 +170,7 @@ class Turret {
   }
 
   void display() {
-    
+
     if (isOver() && shiftKey) {
       fill(255, 0, 0);
     } else { 

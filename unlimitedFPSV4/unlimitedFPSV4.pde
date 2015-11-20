@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -120,33 +120,33 @@ void draw_game() {
   translate(-pos.x, -pos.y);
 
   levelBuild();
-  
+
   //setuppreview();
   player.display();
   ara.display();
   for (Collectable b : coins) {
- //   if (b.right > pos.x && b.left < pos.x + width) {
-      b.display();
-  //  }
+    //   if (b.right > pos.x && b.left < pos.x + width) {
+    b.display();
+    //  }
   }
 
   for (Turret b : turrets) {
-  //  if (b.right > pos.x && b.left < pos.x + width) {
-      b.display();
-   // }
+    //  if (b.right > pos.x && b.left < pos.x + width) {
+    b.display();
+    // }
   }
 
   for (MovEnemy o : movEnemy) {
-  //  if (o.right > pos.x && o.left < pos.x + width) {
-      o.display();
-  //  }
+    //  if (o.right > pos.x && o.left < pos.x + width) {
+    o.display();
+    //  }
   }
 
   // Display all platforms
   for (Platform b : platforms) {
     //if (b.right > pos.x && b.left < pos.x + width) {
-      b.display();
-   // }
+    b.display();
+    // }
   }
 
   popMatrix();
@@ -162,7 +162,4 @@ void draw_game() {
   textFont(timerFont);
   text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
   popStyle();
-
-
-  //////////////////////////////SUPER QUICK EASY LAZY FUCKING FIX
 }

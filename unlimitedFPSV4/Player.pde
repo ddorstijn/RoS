@@ -200,12 +200,13 @@ class Player {
         if (other.index == 2) {
           respawn();
         }
-        
+
         if (other.index == 5) {
           respawn();
+        }
       }
     }
-    
+
     // Display all platforms
     for (Turret other : turrets) {
 
@@ -235,7 +236,6 @@ class Player {
         if (top > other.bottom && nTop <= other.bottom && location.x > other.location.x - radius + 1 && location.x < other.location.x + other.twidth + radius - 1) {// If player collides from bottom side
           velocity.y = 0;
         }
-
       }
     }
 
