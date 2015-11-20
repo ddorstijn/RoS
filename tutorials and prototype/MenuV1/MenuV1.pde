@@ -1,11 +1,11 @@
 Button menu;
 boolean keysPressed[] = new boolean[256];
-boolean drawMenu;
+int level;
 
 void setup() {
   size(600, 600, P2D);
   menu = new Button("Start", "Level Select", "Credits", "Exit");
-  drawMenu = true;
+  level = 0;
 }
 
 void draw() {
