@@ -65,9 +65,9 @@ void loadLevel(boolean objectsToo) {
 
       for (int i = 0; i < movEnemyData.size(); i++) {
         // Get each object in the array
-        JSONObject movEnemy = movEnemyData.getJSONObject(i); 
+        JSONObject movEnemyObject = movEnemyData.getJSONObject(i); 
         // Get a position object
-        JSONObject position = movEnemy.getJSONObject("position");
+        JSONObject position = movEnemyObject.getJSONObject("position");
         // Get properties from position
         float x = position.getFloat("x");
         float y = position.getFloat("y");
@@ -75,7 +75,7 @@ void loadLevel(boolean objectsToo) {
         float aHeight = position.getFloat("height");
 
         // Put object in array
-        //movEnemy.add(new MovEnemy(x, y, aWidth, aHeight, i));
+        movEnemy.add(new MovEnemy(x, y, aWidth, aHeight, i));
       }
       
       if (setIndex == 0) {
