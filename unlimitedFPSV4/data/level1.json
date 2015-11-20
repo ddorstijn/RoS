@@ -13,7 +13,16 @@
     },
     "value": 6
   }],
-  "MovEnemy": [],
+  "MovEnemy": [{
+    "index": 5,
+    "position": {
+      "x": 520,
+      "width": 40,
+      "y": 320,
+      "height": 40
+    },
+    "value": 1
+  }],
   "player": {
     "x": 200,
     "y": 320
@@ -275,6 +284,26 @@
         "height": 240
       },
       "value": 28
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 640,
+        "width": 40,
+        "y": 360,
+        "height": 40
+      },
+      "value": 29
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 320,
+        "width": 40,
+        "y": 360,
+        "height": 40
+      },
+      "value": 30
     }
   ]
 }
