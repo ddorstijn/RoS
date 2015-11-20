@@ -29,6 +29,40 @@ void keyReleased() {
 
 //Level building!
 void mousePressed() {
+  if (shiftKey && mouseButton == RIGHT) {
+    if (setIndex < 4) {
+      for (Platform b : platforms) {
+        if (b.isOver()) {
+          platforms.remove(b);
+          levelData.remove(b.value);
+          saveJSONObject(levels, "data/level" + level + ".json");
+          loadLevel(false);
+          break;
+        }
+      }
+    } else if (setIndex == 4) {
+      for (Turret t : turrets) {
+        if (t.isOver()) {
+          turrets.remove(t);
+          turretData.remove(t.value);
+          saveJSONObject(levels, "data/level" + level + ".json");
+          loadLevel(false);
+          break;
+        }
+      }
+    } else if (setIndex == 5) {
+      for (MovEnemy t : movEnemy) {
+        if (t.isOver()) {
+          movEnemy.remove(t);
+          movEnemyData.remove(t.value);
+          saveJSONObject(levels, "data/level" + level + ".json");
+          loadLevel(false);
+          break;
+        }
+      }
+    }
+  }
+
   if (shiftKey && mouseButton == LEFT) {
     //Take first mouse position after clicked and allign it to the grid
     beginX = Math.round((pos.x + mouseX - gridSize/2-1)/ gridSize) * gridSize;
@@ -127,7 +161,7 @@ void levelBuild() {
     pushMatrix();
     rectMode(CORNER);
     fill(0);
-    rect(beginX, beginY, abs(pos.x + mouseX-beginX), mouseY-beginY);
+    rect(beginX, beginY, abs(pos.x+mouseX-beginX), mouseY-beginY);
     popMatrix();
   }
 
@@ -142,10 +176,8 @@ void levelBuild() {
   }
   if (keysPressed['4']) {
     setIndex = 4;
-    println("4");
   }
   if (keysPressed['5']) {
     setIndex = 5;
-    println("5");
   }
 }

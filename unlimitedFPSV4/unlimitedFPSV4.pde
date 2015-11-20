@@ -114,38 +114,39 @@ void draw_game() {
   drawBackground(); //UIgrid();
 
   grid();
-  levelBuild();
 
   //LEVEL
   pushMatrix();
   translate(-pos.x, -pos.y);
 
+  levelBuild();
+  
   //setuppreview();
   player.display();
   ara.display();
   for (Collectable b : coins) {
-    if (b.right > pos.x && b.left < pos.x + width) {
+ //   if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
-    }
+  //  }
   }
 
   for (Turret b : turrets) {
-    if (b.right > pos.x && b.left < pos.x + width) {
+  //  if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
-    }
+   // }
   }
 
   for (MovEnemy o : movEnemy) {
-    if (o.right > pos.x && o.left < pos.x + width) {
+  //  if (o.right > pos.x && o.left < pos.x + width) {
       o.display();
-    }
+  //  }
   }
 
   // Display all platforms
   for (Platform b : platforms) {
-    if (b.right > pos.x && b.left < pos.x + width) {
+    //if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
-    }
+   // }
   }
 
   popMatrix();
@@ -164,37 +165,4 @@ void draw_game() {
 
 
   //////////////////////////////SUPER QUICK EASY LAZY FUCKING FIX
-  if (shiftKey && mouseButton == RIGHT) {
-    if (setIndex < 4) {
-      for (Platform b : platforms) {
-        if (b.isOver()) {
-          platforms.remove(b);
-          levelData.remove(b.value);
-          saveJSONObject(levels, "data/level" + level + ".json");
-          loadLevel(false);
-          break;
-        }
-      }
-    } else if (setIndex == 4) {
-      for (Turret t : turrets) {
-        if (t.isOver()) {
-          turrets.remove(t);
-          turretData.remove(t.value);
-          saveJSONObject(levels, "data/level" + level + ".json");
-          loadLevel(false);
-          break;
-        }
-      }
-    } else if (setIndex == 5) {
-      for (MovEnemy t : movEnemy) {
-        if (t.isOver()) {
-          movEnemy.remove(t);
-          movEnemyData.remove(t.value);
-          saveJSONObject(levels, "data/level" + level + ".json");
-          loadLevel(false);
-          break;
-        }
-      }
-    }
-  }
 }
