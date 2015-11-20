@@ -51,7 +51,7 @@ class MovEnemy {
     if (isOver() && shiftKey) {
       fill(255, 0, 0);
     } else { 
-      fill(0, 0, 0);
+      fill(113, 8, 151);
     }
     rectMode(CORNER);
     rect(location.x, location.y, aWidth, aHeight);
