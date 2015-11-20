@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -93,15 +93,15 @@ void update_game() {
   for (Collectable coin : coins) {
     coin.update();
   }
-    
+
   for (Turret turret : turrets) {
     turret.update();
   }
 
-  for (MovEnemy o : movEnemy){
+  for (MovEnemy o : movEnemy) {
     o.update();
   }
-  
+
   for (Platform b : platforms) {
     b.update();
   }
@@ -112,10 +112,10 @@ void update_game() {
 
 void draw_game() {
   drawBackground(); //UIgrid();
-  
+
   grid();
   levelBuild();
-  
+
   //LEVEL
   pushMatrix();
   translate(-pos.x, -pos.y);
@@ -128,37 +128,73 @@ void draw_game() {
       b.display();
     }
   }
-    
+
   for (Turret b : turrets) {
     if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
     }
   }
 
-  for (MovEnemy o : movEnemy){
-    if (o.right > pos.x && o.left < pos.x + width){
+  for (MovEnemy o : movEnemy) {
+    if (o.right > pos.x && o.left < pos.x + width) {
       o.display();
     }
   }
-  
+
   // Display all platforms
   for (Platform b : platforms) {
     if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
     }
   }
-  
+
   popMatrix();
-  
+
   pushStyle();
   textAlign(LEFT);
   textFont(statsFont);
   fill(255);
   text("fps: " + (int) frameRate, 10, 20);
   text("score: " + score, 10, 40);
-  
+
   textAlign(CENTER, TOP);
   textFont(timerFont);
   text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
   popStyle();
+
+
+  //////////////////////////////SUPER QUICK EASY LAZY FUCKING FIX
+  if (shiftKey && mouseButton == RIGHT) {
+    if (setIndex < 4) {
+      for (Platform b : platforms) {
+        if (b.isOver()) {
+          platforms.remove(b);
+          levelData.remove(b.value);
+          saveJSONObject(levels, "data/level" + level + ".json");
+          loadLevel(false);
+          break;
+        }
+      }
+    } else if (setIndex == 4) {
+      for (Turret t : turrets) {
+        if (t.isOver()) {
+          turrets.remove(t);
+          turretData.remove(t.value);
+          saveJSONObject(levels, "data/level" + level + ".json");
+          loadLevel(false);
+          break;
+        }
+      }
+    } else if (setIndex == 5) {
+      for (MovEnemy t : movEnemy) {
+        if (t.isOver()) {
+          movEnemy.remove(t);
+          movEnemyData.remove(t.value);
+          saveJSONObject(levels, "data/level" + level + ".json");
+          loadLevel(false);
+          break;
+        }
+      }
+    }
+  }
 }

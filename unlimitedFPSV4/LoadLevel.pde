@@ -36,7 +36,7 @@ void loadLevel(boolean objectsToo) {
         platforms.add(new Platform(x, y, Pwidth, Pheight, index, i));
       }
     } 
-    
+
     if (setIndex == 4) {
       turrets.removeAll(turrets);
 
@@ -54,12 +54,12 @@ void loadLevel(boolean objectsToo) {
         // Put object in array
         turrets.add(new Turret(x, y, Twidth, Theight, i));
       }
-      
-      /*if (setIndex == 0) {
+
+      if (setIndex == 0) {
         setIndex = 1;
-      }*/
+      }
     }
-    
+
     if (setIndex == 5 || setIndex == 0) {
       movEnemy.removeAll(movEnemy);
 
@@ -77,7 +77,7 @@ void loadLevel(boolean objectsToo) {
         // Put object in array
         movEnemy.add(new MovEnemy(x, y, aWidth, aHeight, i));
       }
-      
+
       if (setIndex == 0) {
         setIndex = 1;
       }

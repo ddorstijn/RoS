@@ -91,7 +91,7 @@ void mouseReleased() {
       saveJSONObject(levels, "data/level" + level + ".json");
       loadLevel(false);
       println("level loaded");
-    }else if (setIndex == 5) {
+    } else if (setIndex == 5) {
       // Create a new JSON platform object
       JSONObject newMovEnemy = new JSONObject();
 
@@ -116,42 +116,8 @@ void mouseReleased() {
       saveJSONObject(levels, "data/level" + level + ".json");
       loadLevel(false);
       println("level loaded");
-  }
-
-  if (shiftKey && mouseButton == RIGHT) {
-    if (setIndex < 4) {
-      for (Platform b : platforms) {
-        if (b.isOver()) {
-          platforms.remove(b);
-          levelData.remove(b.value);
-          saveJSONObject(levels, "data/level" + level + ".json");
-          loadLevel(false);
-          break;
-        }
-      }
-    } else if (setIndex == 4) {
-      for (Turret t : turrets) {
-        if (t.isOver()) {
-          turrets.remove(t);
-          turretData.remove(t.value);
-          saveJSONObject(levels, "data/level" + level + ".json");
-          loadLevel(false);
-          break;
-        }
-      }
-    }else if (setIndex == 5) {
-      for (MovEnemy t : movEnemy) {
-        if (t.isOver()) {
-          movEnemy.remove(t);
-          movEnemyData.remove(t.value);
-          saveJSONObject(levels, "data/level" + level + ".json");
-          loadLevel(false);
-          break;
-        }    
-      }
     }
   }
- }
 }
 
 

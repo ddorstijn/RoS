@@ -370,16 +370,6 @@
     {
       "index": 1,
       "position": {
-        "x": 440,
-        "width": 80,
-        "y": 80,
-        "height": 80
-      },
-      "value": 29
-    },
-    {
-      "index": 1,
-      "position": {
         "x": 200,
         "width": 40,
         "y": 40,
