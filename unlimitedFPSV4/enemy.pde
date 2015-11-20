@@ -1,5 +1,8 @@
 class MovEnemy {
   //DECLARE
+  int diameter; 
+  float radius, angle, acceleration;
+
   //Starting proportions
   float aWidth, aHeight, startX, startY, mousex; 
 
@@ -10,11 +13,11 @@ class MovEnemy {
   float nLeft, nRight, nTop, nBottom;
 
   //Vectors
-  PVector location, velocity;
-  
+  PVector location, velocity, nlocation;
+
   //Position in array
   int value;
-  
+
   boolean isOver() { 
     return mousex >= location.x  && mousex < location.x + aWidth && mouseY >= location.y && mouseY < location.y + aHeight;
   }
@@ -24,6 +27,16 @@ class MovEnemy {
 
     //INITIALIZE 
     location = new PVector(_x, _y);
+
+    location = new PVector(_x, _y);
+    velocity = new PVector(0, 0);
+    gravity = new PVector(0, 0.1);
+    nlocation = PVector.add(location, velocity);
+    acceleration = 0.5;
+
+    diameter = 40; 
+    radius = diameter;
+    angle = 0;
 
     aWidth = _width;
     aHeight = _height;
@@ -35,17 +48,13 @@ class MovEnemy {
 
     value = i;
   }
-    
-    //FUNCTIONS
-  void update() {  
-    left = location.x;
-    right = location.x + aWidth;
-    top = location.y;
-    bottom = location.y + aHeight;
 
-    mousex = mouseX + pos.x;
+  //FUNCTIONS
+  void update() {  
+    enemyUpdatePosition();
+    collisionDetection();
   }
-  
+
   void display() {
 
     if (isOver() && shiftKey) {
@@ -56,7 +65,63 @@ class MovEnemy {
     rectMode(CORNER);
     rect(location.x, location.y, aWidth, aHeight);
   }
+
+  void enemyUpdatePosition() {
+    location.add(velocity);
+    velocity.add(gravity);
+    nlocation = PVector.add(location, velocity);
+    velocity.x = acceleration;
+
+    left = location.x;
+    right = location.x + radius;
+    top = location.y - radius;
+    bottom = location.y + radius;
+
+    nLeft = nlocation.x;
+    nRight = nlocation.x + radius;
+    nTop = nlocation.y - radius;
+    nBottom = nlocation.y + radius;
+
+    for (Platform other : platforms) {
+      if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
+        if (velocity.x > 0) {// If enemy collides from right side
+          right -= radius;
+          if (right < other.left && nRight > other.left && location.y > other.location.y - radius) {// If enemy collides from left side
+            velocity.x = acceleration;
+            location.x -= acceleration;
+            acceleration = -acceleration;
+            System.out.println("left side");
+          }
+        }       
+        if (velocity.x < 0) {// If enemy collides from right side
+          left += radius;
+          if (left > other.right && nLeft < other.right && location.y > other.location.y - radius) {// If enemy collides from left side
+            velocity.x = acceleration;
+            location.x -= acceleration;
+            acceleration = 0.5;
+            System.out.println("right side");
+          }
+        }
+      }
+    }
+  }
+
+  void collisionDetection() {
+    for (Platform other : platforms) {
+
+      if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
+        if (velocity.y > 0) {
+          if (bottom < other.top && nBottom > other.top && location.x > other.location.x - radius + 1 && location.x < other.location.x + other.iWidth + radius - 1) {// If enemy collides from top side
+            velocity.y = 0;
+            bottom = top;
+          }
+        }
+      }
+    }
+  }
 }
+
+
 
 class Turret {
   //DECLARE
@@ -105,7 +170,7 @@ class Turret {
   }
 
   void display() {
-
+    
     if (isOver() && shiftKey) {
       fill(255, 0, 0);
     } else { 

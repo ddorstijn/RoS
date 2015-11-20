@@ -12,7 +12,7 @@ class Player {
 
   //Properties
   float jumpSpeed, maxSpeed, acceleration;
-  boolean canJump = true; //Check if ale to jump
+  boolean canJump = true; //Check if able to jump
   int colour;
 
   //Bounding box
@@ -200,6 +200,9 @@ class Player {
         if (other.index == 2) {
           respawn();
         }
+        
+        if (other.index == 5) {
+          respawn();
       }
     }
     
