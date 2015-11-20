@@ -3,6 +3,7 @@ class Button {
 
   float Width, Height;
   String[] menu;
+  String[] levelselect = new String[3];
   PFont menuFont, menuPopup;
   int menuFontSize, mpos, space;
 
@@ -13,7 +14,11 @@ class Button {
     menuFontSize = 24;
     menuFont = createFont("Linux Libertine G Semibold", menuFontSize);
     menuPopup = createFont("Linux Libertine G Semibold", 72);
-
+    
+    levelselect[0] = "Level 1";   
+    levelselect[1] = "Level 2";
+    levelselect[2] = "Level 3";
+    
     mpos = 0;
     space = 50;
 
@@ -32,8 +37,26 @@ class Button {
     }
 
     if (keysPressed[' ']) {
-      drawMenu = false;
-      text("Start Game", width/2, height/2);
+      switch (mpos) {
+      case 0:
+        level = 1;
+        break;
+      case 1:
+        level = 0;
+        for (int i = 0; i < levelselect.length; i++) {
+          fill(0);
+          text(levelselect[i], location.x, location.y + i * space);
+        }
+        break;
+      case 2:
+        level = 1;
+        text("Start Game", width/2, height/2);
+        break;
+      case 3:
+        level = 1;
+        text("Start Game", width/2, height/2);
+        break;
+      }
     }
   }
 
@@ -44,27 +67,14 @@ class Button {
     text("R O S", location.x, location.y - 100);
     textFont(menuFont);
 
-    if (drawMenu) {
+    if (level == 0) {
       for (int i = 0; i < menu.length; i++) {
-        //fill(50);
-        //rect(location.x - textWidth(menu[i]), location.y - menuFontSize - 20 + i * space, location.x + textWidth(menu[i]) + 10, menuFontSize + 20 + i * space);
         fill(0);
         text(menu[i], location.x, location.y + i * space);
       }
     }
 
-    noFill();
-    stroke(0);
-
-    //curve that I want an object/sprite to move down
-    bezier(location.x - textWidth(menu[1])/2, location.y + mpos * space, location.x, location.y + mpos * space + 10, location.x + textWidth(menu[1])/2, location.y + mpos * space - 10, location.x - textWidth(menu[1])/2, location.y + mpos * space);
-
-
-    float t =  (frameCount/100.0)%1;
-    float x = bezierPoint(location.x - textWidth(menu[1])/2, location.x, location.x + textWidth(menu[1])/2, location.x - textWidth(menu[1])/2, t);
-    float y = bezierPoint(location.y + mpos * space, location.y + mpos * space + 10, location.y + mpos * space - 10, location.y + mpos * space, t);
-
     fill(255, 0, 0);
-    ellipse(x, y, 5, 5);
+    ellipse(location.x - 100, location.y + mpos * space, 15, 15);
   }
 }
