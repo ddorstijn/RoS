@@ -3,108 +3,17 @@
     "x": 250,
     "y": 200
   },
-  "turrets": [
-    {
-      "position": {
-        "x": 800,
-        "width": 40,
-        "y": 200,
-        "height": 40
-      },
-      "value": 1
+  "turrets": [{
+    "index": 4,
+    "position": {
+      "x": 720,
+      "width": 40,
+      "y": 240,
+      "height": 40
     },
-    {
-      "index": 4,
-      "position": {
-        "x": 320,
-        "width": 40,
-        "y": 40,
-        "height": 80
-      },
-      "value": 2
-    },
-    {
-      "index": 4,
-      "position": {
-        "x": 40,
-        "width": 80,
-        "y": 40,
-        "height": 40
-      },
-      "value": 3
-    },
-    {
-      "index": 4,
-      "position": {
-        "x": 80,
-        "width": 40,
-        "y": 80,
-        "height": 40
-      },
-      "value": 4
-    },
-    {
-      "index": 4,
-      "position": {
-        "x": 120,
-        "width": 80,
-        "y": 80,
-        "height": 40
-      },
-      "value": 5
-    }
-  ],
-  "MovEnemy": [
-    {
-      "index": 5,
-      "position": {
-        "x": 300,
-        "width": 80,
-        "y": 350,
-        "height": 40
-      }
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 600,
-        "width": 80,
-        "y": 40,
-        "height": 80
-      },
-      "value": 2
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 600,
-        "width": 80,
-        "y": 80,
-        "height": 80
-      },
-      "value": 3
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 640,
-        "width": 80,
-        "y": 120,
-        "height": 40
-      },
-      "value": 4
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 280,
-        "width": 40,
-        "y": 80,
-        "height": 40
-      },
-      "value": 5
-    }
-  ],
+    "value": 6
+  }],
+  "MovEnemy": [],
   "player": {
     "x": 200,
     "y": 320
@@ -366,26 +275,6 @@
         "height": 240
       },
       "value": 28
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 200,
-        "width": 40,
-        "y": 40,
-        "height": 40
-      },
-      "value": 30
-    },
-    {
-      "index": 2,
-      "position": {
-        "x": 120,
-        "width": 80,
-        "y": 40,
-        "height": 40
-      },
-      "value": 31
     }
   ]
 }
