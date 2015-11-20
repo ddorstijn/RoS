@@ -33,7 +33,7 @@ float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built
 
 ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
-ArrayList<MovEnemy> enemies;
+ArrayList<MovEnemy> movEnemy;
 ArrayList<Turret> turrets;
 
 //Call every class
@@ -51,6 +51,7 @@ void setup() {
   keysPressed = new boolean[256];
 
   platforms = new ArrayList<Platform>();
+  movEnemy = new ArrayList<MovEnemy>();
   turrets = new ArrayList<Turret>();
 
   time = millis() / 1000;
@@ -67,7 +68,7 @@ void setup() {
 
   coins = new ArrayList<Collectable>();
   coins.add(new Collectable (width/2 + 70, 300, 10, 10));
-  coins.add(new Collectable (70, 300, 10, 10));  
+  coins.add(new Collectable (70, 300, 10, 10));
 
   popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);
@@ -92,7 +93,11 @@ void update_game() {
     coin.update();
   }
   
-   for (Turret turret : turrets) {
+  for (MovEnemy o : movEnemy){
+    o.update();
+  }
+  
+  for (Turret turret : turrets) {
     turret.update();
   }
 
@@ -120,6 +125,12 @@ void draw_game() {
   for (Collectable b : coins) {
     if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
+    }
+  }
+  
+  for (MovEnemy o : movEnemy){
+    if (o.right > pos.x && o.left < pos.x + width){
+      o.display();
     }
   }
   
