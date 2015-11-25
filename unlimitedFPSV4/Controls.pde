@@ -21,6 +21,11 @@ void keyPressed() {
     setIndex = 0;
     loadLevel(true);
   }
+  if (keysPressed[70] && level != 3) { 
+    level = 3;
+    setIndex = 0;
+    loadLevel(true);
+  }
 }
 
 void keyReleased() {

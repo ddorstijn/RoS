@@ -1,0 +1,22 @@
+{
+  "ara": {
+    "x": 250,
+    "y": 200
+  },
+  "turrets": [],
+  "MovEnemy": [],
+  "player": {
+    "x": 200,
+    "y": 200
+  },
+  "platforms": [{
+    "index": 1,
+    "position": {
+      "x": 160,
+      "width": 160,
+      "y": 320,
+      "height": 40
+    },
+    "value": 2
+  }]
+}
