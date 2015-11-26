@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -9,14 +9,8 @@ int loops;
 JSONObject levels;
 int level;
 
-int accumTime;   // total time accumulated in previous intervals
-int startTime;   // time when this interval started
-int displayTime;   // value to display on the clock face
-
+int time;
 int score;
-int lives;
-
-boolean paused;
 
 JSONArray levelData;
 JSONArray turretData;
@@ -42,18 +36,16 @@ ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
 ArrayList<Turret> turrets;
 ArrayList<MovEnemy> movEnemy;
-ArrayList<bullet> bullet;
+ArrayList<Bullet> bullets;
 
 //Call every class
 Player player;
 Camera worldCamera;
 Ara ara;
-Boss boss;
 Button menu;
 
 void setup() {
   size(1200, 600, P2D);
-  surface.setResizable(true);
   smooth(8);
   frameRate(1000);
 
@@ -64,11 +56,10 @@ void setup() {
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
   movEnemy = new ArrayList<MovEnemy>();
-  bullet = new ArrayList<bullet>();
-  boss = new Boss(6, 170, 180, 5);
+  bullets = new ArrayList<Bullet>();
 
+  time = millis() / 1000;
   score = 0;
-  lives = 3;
 
   pos = new PVector(0, 0);
 
@@ -82,28 +73,18 @@ void setup() {
 
   coins = new ArrayList<Collectable>();
 
+  popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);
-  timerFont = createFont("Segoe UI Semibold", 50, true);
+  timerFont = createFont("Segoe UI Semibold", 50);
 }
 
 void draw() {
   loops = 0;
   while (millis () > next_game_tick && loops < MAX_FRAMESKIP) {
-    if (!paused) { 
-      update_game();
-    }
-
+    update_game();
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-
-  if (paused == false) { //<>//
-    displayTime = accumTime + millis() - startTime;
-  }
-  if (paused == true) {
-    startTime = millis();
-  }
-
   draw_game();
 }
 
@@ -127,21 +108,16 @@ void update_game() {
     for (Platform b : platforms) {
       b.update();
     }
-
-    for (bullet b : bullet) {
-      b.move();
+    
+    for (Bullet b : bullets) {
+      b.update();
     }
 
     worldCamera.drawWorld();
+    time = millis() / 1000;
   }
 
   menu.update();
-
-  if (lives < 1) {
-    menu.subMenu = 0;
-    level = 0;
-    lives = 3;
-  }
 }
 
 void draw_game() {
@@ -159,6 +135,7 @@ void draw_game() {
     //setuppreview();
     player.display();
     ara.display();
+    
     for (Collectable b : coins) {
       b.display();
     }
@@ -175,9 +152,9 @@ void draw_game() {
     for (Platform b : platforms) {
       b.display();
     }
-
-    for (bullet b : bullet) {
-     b.display();
+    
+    for (Bullet b : bullets) {
+      b.display();
     }
 
     popMatrix();
@@ -185,18 +162,13 @@ void draw_game() {
     pushStyle();
     textAlign(LEFT);
     textFont(statsFont);
-    textSize(14);
     fill(255);
     text("fps: " + (int) frameRate, 10, 20);
     text("score: " + score, 10, 40);
 
     textAlign(CENTER, TOP);
     textFont(timerFont);
-    text(displayTime / 1000/ 60 + ":" + nf(displayTime / 1000 % 60, 2), width/2, 0);
-    text(lives, width - 100, 0);
-    if (paused) {
-      text("Paused", width/2, height/2);
-    }
+    text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
     popStyle();
   }
 

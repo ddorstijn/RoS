@@ -69,7 +69,7 @@ class Button {
       break;
     }
 
-    if (keysPressed[10] && !enteredMenu) {
+    if (keysPressed[' '] && !enteredMenu) {
       switch (subMenu) {
         //If in main menu
       case 0:
@@ -77,22 +77,17 @@ class Button {
           //If cursor is on Start Game set level to 1
         case 0:
           level = 1;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;
           //If cursor is on Level Select go to Level Select menu
         case 1:
           subMenu = 1;
-          mpos = 0;
           enteredMenu = true;
           break;
           //If on Credits fo to credits
         case 2:
           subMenu = 2;
-          mpos = 0;
           enteredMenu = true;
           break;
           //If on Exit exit game
@@ -106,31 +101,21 @@ class Button {
         switch (mpos) {
         case 0:
           level = 1;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;
         case 1:
           level = 2;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;
         case 2:
           level = 3;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;
         case 3:
           subMenu = 0;
-          mpos = 0;
           enteredMenu = true;
           break;
         }
