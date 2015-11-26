@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -9,7 +9,10 @@ int loops;
 JSONObject levels;
 int level;
 
-int time;
+int accumTime;   // total time accumulated in previous intervals
+int startTime;   // time when this interval started
+int displayTime;   // value to display on the clock face
+
 int score;
 int lives;
 
@@ -61,9 +64,8 @@ void setup() {
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
   movEnemy = new ArrayList<MovEnemy>();
-  boss = new Boss(6,170,180,5);
+  boss = new Boss(6, 170, 180, 5);
 
-  time = millis() / 1000;
   score = 0;
   lives = 3;
 
@@ -89,12 +91,20 @@ void draw() {
     if (!paused) { 
       update_game();
     }
-    
+
     next_game_tick += SKIP_TICKS;
     loops++;
   }
 
+  if (paused == false) {
+    displayTime = accumTime + millis() - startTime;
+  }
+
   draw_game();
+
+  if (paused == true) {
+    startTime = millis();
+  }
 }
 
 void update_game() {
@@ -117,13 +127,12 @@ void update_game() {
     for (Platform b : platforms) {
       b.update();
     }
-    
-    for (bullet b : bullet) {
-      b.move();
-    }
+
+    //for (bullet b : bullet) {
+    //  b.move();
+    //}
 
     worldCamera.drawWorld();
-    time = millis() / 1000;
   }
 
   menu.update();
@@ -166,10 +175,10 @@ void draw_game() {
     for (Platform b : platforms) {
       b.display();
     }
-    
-    for (bullet b : bullet) {
-      b.display();
-    }
+
+    //for (bullet b : bullet) {
+    //  b.display();
+    //}
 
     popMatrix();
 
@@ -183,7 +192,7 @@ void draw_game() {
 
     textAlign(CENTER, TOP);
     textFont(timerFont);
-    text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
+    text(displayTime / 1000/ 60 + ":" + nf(displayTime / 1000 % 60, 2), width/2, 0);
     text(lives, width - 100, 0);
     if (paused) {
       text("Paused", width/2, height/2);

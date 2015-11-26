@@ -12,8 +12,9 @@ void keyPressed() {
   }
 
   if (keyCode == 80) {
-    println("pause!");
     paused = !paused;
+
+    accumTime = accumTime + millis() - startTime;
   }
 
   if (keysPressed[83] && level != 1) { 
