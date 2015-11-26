@@ -45,6 +45,7 @@ ArrayList<bullet> bullet;
 Player player;
 Camera worldCamera;
 Ara ara;
+Boss boss;
 Button menu;
 
 void setup() {
@@ -59,6 +60,7 @@ void setup() {
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
   movEnemy = new ArrayList<MovEnemy>();
+  boss = new Boss(6,170,180,5);
 
   time = millis() / 1000;
   score = 0;
