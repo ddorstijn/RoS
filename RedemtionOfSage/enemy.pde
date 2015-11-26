@@ -53,6 +53,7 @@ class MovEnemy {
   void update() {  
     enemyUpdatePosition();
     collisionDetection();
+    
   }
 
   void display() {
@@ -167,17 +168,12 @@ class Turret {
     bottom = location.y + theight;
 
     mousex = mouseX + pos.x;
-
-    if (millis() % 20 == 0) {
-      float a;
-      if (player.location.y < location.y) {
-        a = atan((player.location.x-location.x) / (location.y-player.location.y));
-      } else {
-        a = -(atan((player.location.x-location.x) / (location.y-player.location.y)));
-      }
-      bullets.add(new Bullet(location.x, location.y, a));
-      println("bullet");
-    }
+    
+    
+    if (millis() % 2000 >= 0 && millis() % 2000 <= MAX_FRAMESKIP) {
+      float angle =  atan((player.location.x-location.x) / (player.location.y-location.y));
+      bullet.add(new bullet(location.x, location.y, 3, angle));
+    } 
   }
 
   void display() {
@@ -190,7 +186,26 @@ class Turret {
     rectMode(CORNER);
     rect(location.x, location.y, twidth, theight);
   }
+}
 
-  void keyPressed() {
+class Boss {
+
+  int n;
+  float cx, cy, r, angle;
+  Boss(int n, float cx, float cy, float r) {
+    this.angle = 360.0 / n;
+    this.n = n;
+    this.cx = cx;
+    this.cy = cy;
+    this.r =r;
+  }
+
+  void display() {
+    beginShape();
+    for (int i = 0; i < n; i++) {
+      vertex(cx + r * cos(radians(angle * i)), 
+        cy + r * sin(radians(angle * i)));
+    }
+    endShape(CLOSE);
   }
 }
