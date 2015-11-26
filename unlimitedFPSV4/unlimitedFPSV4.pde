@@ -89,7 +89,7 @@ void draw() {
     if (!paused) { 
       update_game();
     }
-
+    
     next_game_tick += SKIP_TICKS;
     loops++;
   }
@@ -176,6 +176,9 @@ void draw_game() {
     textFont(timerFont);
     text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
     text(lives, width - 100, 0);
+    if (paused) {
+      text("Paused", width/2, height/2);
+    }
     popStyle();
   }
 
