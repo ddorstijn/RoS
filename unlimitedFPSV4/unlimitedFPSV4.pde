@@ -41,6 +41,7 @@ ArrayList<MovEnemy> movEnemy;
 Player player;
 Camera worldCamera;
 Ara ara;
+Boss boss;
 
 void setup() {
   fullScreen(P2D);
@@ -54,6 +55,7 @@ void setup() {
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
   movEnemy = new ArrayList<MovEnemy>();
+  boss = new Boss(1,2,3,4); ///// lsdkhbflnsjkdnv;lansdv;lansdkjvnkjlsndljkvnalkjsdbvjaskdnasjdna;jsdnv;laksnvdansdkjvnas
 
   time = millis() / 1000;
   score = 0;

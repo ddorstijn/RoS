@@ -180,3 +180,25 @@ class Turret {
     rect(location.x, location.y, twidth, theight);
   }
 }
+
+class Boss {
+
+  int n;
+  float cx, cy, r, angle;
+  Boss(int n, float cx, float cy, float r) {
+    this.angle = 360.0 / n;
+    this.n = n;
+    this.cx = cx;
+    this.cy = cy;
+    this.r =r;
+  }
+
+  void display() {
+    beginShape();
+    for (int i = 0; i < n; i++) {
+      vertex(cx + r * cos(radians(angle * i)), 
+        cy + r * sin(radians(angle * i)));
+    }
+    endShape(CLOSE);
+  }
+}
