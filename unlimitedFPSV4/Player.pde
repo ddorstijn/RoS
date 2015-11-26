@@ -167,6 +167,34 @@ class Player {
       }
     }
 
+    for (MovEnemy other : movEnemy) {
+
+      if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
+        if (velocity.y > 0) {
+          if (bottom < other.top && nBottom > other.top && location.x > other.location.x - radius + 1 && location.x < other.location.x + other.aWidth + radius - 1) {// If player collides from top side
+            velocity.y = 0;
+            bottom = top;
+            canJump = true;
+            angle = 0;
+          }
+        } 
+        if (velocity.x > 0) {// If player collides from right side
+          right -= radius;
+          if (right < other.left && nRight > other.left && location.y > other.location.y - radius) {// If player collides from left side
+            respawn();
+            System.out.println("collision left side");
+          }
+        }       
+        if (velocity.x < 0) {// If player collides from right side
+          left += radius;
+          if (left > other.right && nLeft < other.right && location.y > other.location.y - radius) {// If player collides from left side
+            respawn();
+            System.out.println("collision right side");
+          }
+        }
+      }
+    }
+
     // Display all platforms
     for (Platform other : platforms) {
 
