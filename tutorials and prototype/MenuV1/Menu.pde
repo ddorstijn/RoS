@@ -3,16 +3,15 @@ class Button {
 
   float Width, Height;
   String[] mainMenu, levelSelect, credits;
+  String currentMenu;
   PFont menuFont, menuPopup;
-  int menuFontSize, mpos, space;
-
-  int subMenu;
+  int menuFontSize, mpos, space, subMenu;
 
   Button() {
     location = new PVector(width/2, height/2);
 
     mainMenu = new String[4];
-    levelSelect = new String[3];
+    levelSelect = new String[4];
     credits = new String[5];
 
     menuFontSize = 24;
@@ -23,6 +22,9 @@ class Button {
     space = 50;
 
     subMenu = 0;
+    enteredMenu = false;
+
+    currentMenu = "mainMenu";
 
     mainMenu[0] = "Start";
     mainMenu[1] = "Level Select";
@@ -32,6 +34,7 @@ class Button {
     levelSelect[0] = "Level 1";   
     levelSelect[1] = "Level 2";
     levelSelect[2] = "Level 3";
+    levelSelect[3] = "Go Back";
 
     credits[0] = "Koen";
     credits[1] = "Jamy";
@@ -42,30 +45,54 @@ class Button {
 
   void update() {
     if (mpos < 0 ) {
-      mpos = mainMenu.length - 1;
+      switch (currentMenu) {
+      case "mainMenu":
+        mpos = mainMenu.length - 1;
+        break;
+      case "levelSelect":
+        mpos = levelSelect.length - 1;
+        break;
+      }
     }
-    if (mpos > mainMenu.length - 1) {
-      mpos = 0;
+    switch (currentMenu) {
+    case "mainMenu":
+      if (mpos > mainMenu.length - 1) {
+        mpos = 0;
+        break;
+      }
+    case "levelSelect":
+      if (mpos > levelSelect.length - 1) {
+        mpos = 0;
+      }
+      break;
     }
 
-    if (keysPressed[' ']) {
+    if (keysPressed[' '] && !enteredMenu) {
       switch (subMenu) {
+        //If in main menu
       case 0:
         switch (mpos) {
+          //If cursor is on Start Game set level to 1
         case 0:
           level = 1;
           break;
+          //If cursor is on Level Select go to Level Select menu
         case 1:
           subMenu = 1;
+          enteredMenu = true;
           break;
+          //If on Credits fo to credits
         case 2:
           subMenu = 2;
+          enteredMenu = true;
           break;
+          //If on Exit exit game
         case 3:
           exit();
           break;
         }
         break;
+        //If in levelSelect
       case 1:
         switch (mpos) {
         case 0:
@@ -79,12 +106,14 @@ class Button {
           break;
         case 3:
           subMenu = 0;
+          enteredMenu = true;
           break;
         }
         break;
       case 2:
         if (keyPressed) {
           subMenu = 0;
+          enteredMenu = true;
         }
         break;
       }
@@ -92,10 +121,16 @@ class Button {
   }
 
   void display() {
-    fill(0);
-    textFont(menuPopup);
-    textAlign(CENTER, CENTER);
-    text("R O S", location.x, location.y - 100);
+    if (level == 0 && subMenu < 2) {
+      fill(255, 0, 0);
+      ellipse(location.x - 100, location.y + mpos * space, 15, 15);
+      
+      fill(0);
+      textFont(menuPopup);
+      textAlign(CENTER, CENTER);
+      text("R O S", location.x, location.y - 100);
+    }
+
     textFont(menuFont);
 
     if (level == 0 && subMenu == 0) {
@@ -114,9 +149,5 @@ class Button {
         text(credits[i], location.x, location.y + i * space);
       }
     }
-
-
-    fill(255, 0, 0);
-    ellipse(location.x - 100, location.y + mpos * space, 15, 15);
   }
 }

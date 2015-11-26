@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -36,15 +36,19 @@ ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
 ArrayList<Turret> turrets;
 ArrayList<MovEnemy> movEnemy;
-
+ArrayList<bullet> bullet;
 //Call every class
 Player player;
 Camera worldCamera;
 Ara ara;
+<<<<<<< HEAD
 Boss boss;
+=======
+Button menu;
+>>>>>>> ef1b7ba4181f68cefdd5ecc0cd520407cb3f48a9
 
 void setup() {
-  fullScreen(P2D);
+  size(1200, 600, P2D);
   smooth(8);
   frameRate(1000);
 
@@ -55,19 +59,20 @@ void setup() {
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
   movEnemy = new ArrayList<MovEnemy>();
-  boss = new Boss(1,2,3,4); ///// lsdkhbflnsjkdnv;lansdv;lansdkjvnkjlsndljkvnalkjsdbvjaskdnasjdna;jsdnv;laksnvdansdkjvnas
+  boss = new Boss(6,170,180,5);
 
   time = millis() / 1000;
   score = 0;
 
   pos = new PVector(0, 0);
 
-  level = 1;
+  level = 0;
   setIndex = 0;
 
   loadLevel(true);
 
   worldCamera = new Camera();
+  menu = new Button();
 
   coins = new ArrayList<Collectable>();
 
@@ -87,79 +92,87 @@ void draw() {
 }
 
 void update_game() {
-  player.update();
-  ara.update();
+  if (level != 0) {
+    player.update();
+    ara.update();
 
-  for (Collectable coin : coins) {
-    coin.update();
+    for (Collectable coin : coins) {
+      coin.update();
+    }
+
+    for (Turret turret : turrets) {
+      turret.update();
+    }
+
+    for (MovEnemy o : movEnemy) {
+      o.update();
+    }
+
+    for (Platform b : platforms) {
+      b.update();
+    }
+
+    worldCamera.drawWorld();
+    time = millis() / 1000;
   }
 
-  for (Turret turret : turrets) {
-    turret.update();
-  }
-
-  for (MovEnemy o : movEnemy) {
-    o.update();
-  }
-
-  for (Platform b : platforms) {
-    b.update();
-  }
-
-  worldCamera.drawWorld();
-  time = millis() / 1000;
+  menu.update();
 }
 
 void draw_game() {
   drawBackground(); //UIgrid();
 
-  grid();
+  if (level != 0) {
+    grid();
 
-  //LEVEL
-  pushMatrix();
-  translate(-pos.x, -pos.y);
+    //LEVEL
+    pushMatrix();
+    translate(-pos.x, -pos.y);
 
-  levelBuild();
+    levelBuild();
 
-  //setuppreview();
-  player.display();
-  ara.display();
-  for (Collectable b : coins) {
-    //   if (b.right > pos.x && b.left < pos.x + width) {
-    b.display();
-    //  }
+    //setuppreview();
+    player.display();
+    ara.display();
+    for (Collectable b : coins) {
+      //   if (b.right > pos.x && b.left < pos.x + width) {
+      b.display();
+      //  }
+    }
+
+    for (Turret b : turrets) {
+      //  if (b.right > pos.x && b.left < pos.x + width) {
+      b.display();
+      // }
+    }
+
+    for (MovEnemy o : movEnemy) {
+      //  if (o.right > pos.x && o.left < pos.x + width) {
+      o.display();
+      //  }
+    }
+
+    // Display all platforms
+    for (Platform b : platforms) {
+      //if (b.right > pos.x && b.left < pos.x + width) {
+      b.display();
+      // }
+    }
+
+    popMatrix();
+
+    pushStyle();
+    textAlign(LEFT);
+    textFont(statsFont);
+    fill(255);
+    text("fps: " + (int) frameRate, 10, 20);
+    text("score: " + score, 10, 40);
+
+    textAlign(CENTER, TOP);
+    textFont(timerFont);
+    text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
+    popStyle();
   }
 
-  for (Turret b : turrets) {
-    //  if (b.right > pos.x && b.left < pos.x + width) {
-    b.display();
-    // }
-  }
-
-  for (MovEnemy o : movEnemy) {
-    //  if (o.right > pos.x && o.left < pos.x + width) {
-    o.display();
-    //  }
-  }
-
-  // Display all platforms
-  for (Platform b : platforms) {
-    //if (b.right > pos.x && b.left < pos.x + width) {
-    b.display();
-    // }
-  }
-
-  popMatrix();
-
-  pushStyle();
-  textAlign(LEFT);
-  textFont(statsFont);
-  fill(255);
-  text("fps: " + (int) frameRate, 10, 20);
-  text("score: " + score, 10, 40);
-
-  textAlign(CENTER, TOP);
-  textFont(timerFont);
-  text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
-  popStyle();
+  menu.display();
 }

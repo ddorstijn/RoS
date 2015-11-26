@@ -13,69 +13,16 @@
     },
     "value": 6
   }],
-  "MovEnemy": [
-    {
-      "index": 5,
-      "position": {
-        "x": 3760,
-        "width": 40,
-        "y": 200,
-        "height": 40
-      },
-      "value": 3
+  "MovEnemy": [{
+    "index": 5,
+    "position": {
+      "x": 480,
+      "width": 40,
+      "y": 320,
+      "height": 40
     },
-    {
-      "index": 5,
-      "position": {
-        "x": 3440,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 4
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 960,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 3
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 1680,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 5
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 1600,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 5
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 4440,
-        "width": 40,
-        "y": 240,
-        "height": 40
-      },
-      "value": 6
-    },
-    
-  ],
+    "value": 1
+  }],
   "player": {
     "x": 200,
     "y": 320
@@ -867,6 +814,26 @@
         "height": 40
       },
       "value": 79
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 360,
+        "width": 40,
+        "y": 360,
+        "height": 40
+      },
+      "value": 80
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 600,
+        "width": 40,
+        "y": 360,
+        "height": 40
+      },
+      "value": 81
     }
   ]
 }

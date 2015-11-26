@@ -26,10 +26,20 @@ void keyPressed() {
     setIndex = 0;
     loadLevel(true);
   }
+
+  if (level == 0) {
+    if (keyCode == DOWN) {
+      menu.mpos++;
+    }
+    if (keyCode == UP) {
+      menu.mpos--;
+    }
+  }
 }
 
 void keyReleased() {
   keysPressed[keyCode] = false;
+  menu.enteredMenu = false;
 }
 
 //Level building!
