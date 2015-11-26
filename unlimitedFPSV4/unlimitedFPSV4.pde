@@ -36,7 +36,7 @@ ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
 ArrayList<Turret> turrets;
 ArrayList<MovEnemy> movEnemy;
-
+ArrayList<bullet> bullet;
 //Call every class
 Player player;
 Camera worldCamera;
