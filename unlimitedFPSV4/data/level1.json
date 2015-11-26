@@ -834,6 +834,16 @@
         "height": 40
       },
       "value": 81
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 6000,
+        "width": 40,
+        "y": 360,
+        "height": 40
+      },
+      "value": 82
     }
   ]
 }

@@ -3,7 +3,16 @@
     "x": 250,
     "y": 200
   },
-  "turrets": [],
+  "turrets": [{
+    "index": 4,
+    "position": {
+      "x": 2760,
+      "width": 40,
+      "y": 280,
+      "height": 40
+    },
+    "value": 1
+  }],
   "MovEnemy": [
     {
       "index": 5,
