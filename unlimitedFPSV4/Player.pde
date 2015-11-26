@@ -166,7 +166,7 @@ class Player {
         coin.location.set(-100, 0);
       }
     }
-    
+
     for (MovEnemy other : movEnemy) {
 
       if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
@@ -228,8 +228,6 @@ class Player {
         if (other.index == 2) {
           respawn();
         }
-<<<<<<< HEAD
-=======
 
         if (other.index == 3) {
           if (level < 3) {
@@ -240,7 +238,6 @@ class Player {
         if (other.index == 5) {
           respawn();
         }
->>>>>>> 5f8b458d903f368cb3a3c12d3dba4797f6a75146
       }
     }
 
