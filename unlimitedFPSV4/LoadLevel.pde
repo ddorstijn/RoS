@@ -81,7 +81,7 @@ void loadLevel(boolean objectsToo) {
       if (setIndex == 0) {
         setIndex = 1;
       }
-      
+
       //coins.removeAll(coins);
 
       //for (int i = 0; i < movEnemyData.size(); i++) {

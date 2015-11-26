@@ -53,13 +53,13 @@ class Button {
       case 0:
         switch (mpos) {
         case 0:
-          subMenu = 1;
+          level = 1;
           break;
         case 1:
-          subMenu = 2;
+          subMenu = 1;
           break;
         case 2:
-          subMenu = 3;
+          subMenu = 2;
           break;
         case 3:
           exit();
