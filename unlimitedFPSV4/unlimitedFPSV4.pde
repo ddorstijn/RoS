@@ -41,11 +41,9 @@ ArrayList<bullet> bullet;
 Player player;
 Camera worldCamera;
 Ara ara;
-<<<<<<< HEAD
 Boss boss;
-=======
 Button menu;
->>>>>>> ef1b7ba4181f68cefdd5ecc0cd520407cb3f48a9
+
 
 void setup() {
   size(1200, 600, P2D);
