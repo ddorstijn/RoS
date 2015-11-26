@@ -260,6 +260,16 @@
         "height": 80
       },
       "value": 28
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 0,
+        "width": 400,
+        "y": 0,
+        "height": 160
+      },
+      "value": 29
     }
   ]
 }

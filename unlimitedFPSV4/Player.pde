@@ -201,6 +201,12 @@ class Player {
           respawn();
         }
 
+        if (other.index == 3) {
+          if (level < 3) {
+            level += 1;
+          }
+        }
+
         if (other.index == 5) {
           respawn();
         }

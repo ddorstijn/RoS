@@ -2,59 +2,90 @@ class Button {
   PVector location;
 
   float Width, Height;
-  String[] menu;
-  String[] levelselect = new String[3];
+  String[] mainMenu, levelSelect, credits;
   PFont menuFont, menuPopup;
   int menuFontSize, mpos, space;
 
-  Button(String m1, String m2, String m3, String m4) {
+  int subMenu;
+
+  Button() {
     location = new PVector(width/2, height/2);
 
-    menu = new String[4];
+    mainMenu = new String[4];
+    levelSelect = new String[3];
+    credits = new String[5];
+
     menuFontSize = 24;
     menuFont = createFont("Linux Libertine G Semibold", menuFontSize);
     menuPopup = createFont("Linux Libertine G Semibold", 72);
-    
-    levelselect[0] = "Level 1";   
-    levelselect[1] = "Level 2";
-    levelselect[2] = "Level 3";
-    
+
     mpos = 0;
     space = 50;
 
-    menu[0] = m1;
-    menu[1] = m2;
-    menu[2] = m3;
-    menu[3] = m4;
+    subMenu = 0;
+
+    mainMenu[0] = "Start";
+    mainMenu[1] = "Level Select";
+    mainMenu[2] = "Credits";
+    mainMenu[3] = "Exit";
+
+    levelSelect[0] = "Level 1";   
+    levelSelect[1] = "Level 2";
+    levelSelect[2] = "Level 3";
+
+    credits[0] = "Koen";
+    credits[1] = "Jamy";
+    credits[2] = "Tricia";
+    credits[3] = "Florian";
+    credits[4] = "Danny";
   }
 
   void update() {
     if (mpos < 0 ) {
-      mpos = menu.length - 1;
+      mpos = mainMenu.length - 1;
     }
-    if (mpos > menu.length - 1) {
+    if (mpos > mainMenu.length - 1) {
       mpos = 0;
     }
 
     if (keysPressed[' ']) {
-      switch (mpos) {
+      switch (subMenu) {
       case 0:
-        level = 1;
+        switch (mpos) {
+        case 0:
+          subMenu = 1;
+          break;
+        case 1:
+          subMenu = 2;
+          break;
+        case 2:
+          subMenu = 3;
+          break;
+        case 3:
+          exit();
+          break;
+        }
         break;
       case 1:
-        level = 0;
-        for (int i = 0; i < levelselect.length; i++) {
-          fill(0);
-          text(levelselect[i], location.x, location.y + i * space);
+        switch (mpos) {
+        case 0:
+          level = 1;
+          break;
+        case 1:
+          level = 2;
+          break;
+        case 2:
+          level = 3;
+          break;
+        case 3:
+          subMenu = 0;
+          break;
         }
         break;
       case 2:
-        level = 1;
-        text("Start Game", width/2, height/2);
-        break;
-      case 3:
-        level = 1;
-        text("Start Game", width/2, height/2);
+        if (keyPressed) {
+          subMenu = 0;
+        }
         break;
       }
     }
@@ -67,12 +98,23 @@ class Button {
     text("R O S", location.x, location.y - 100);
     textFont(menuFont);
 
-    if (level == 0) {
-      for (int i = 0; i < menu.length; i++) {
+    if (level == 0 && subMenu == 0) {
+      for (int i = 0; i < mainMenu.length; i++) {
         fill(0);
-        text(menu[i], location.x, location.y + i * space);
+        text(mainMenu[i], location.x, location.y + i * space);
+      }
+    } else if (level == 0 && subMenu == 1) {
+      for (int i = 0; i < levelSelect.length; i++) {
+        fill(0);
+        text(levelSelect[i], location.x, location.y + i * space);
+      }
+    } else if (level == 0 && subMenu == 2) {
+      for (int i = 0; i < credits.length; i++) {
+        fill(0);
+        text(credits[i], location.x, location.y + i * space);
       }
     }
+
 
     fill(255, 0, 0);
     ellipse(location.x - 100, location.y + mpos * space, 15, 15);

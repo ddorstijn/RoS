@@ -81,6 +81,23 @@ void loadLevel(boolean objectsToo) {
       if (setIndex == 0) {
         setIndex = 1;
       }
+      
+      //coins.removeAll(coins);
+
+      //for (int i = 0; i < movEnemyData.size(); i++) {
+      //  // Get each object in the array
+      //  JSONObject movEnemyObject = movEnemyData.getJSONObject(i); 
+      //  // Get a position object
+      //  JSONObject position = movEnemyObject.getJSONObject("position");
+      //  // Get properties from position
+      //  float x = position.getFloat("x");
+      //  float y = position.getFloat("y");
+      //  float aWidth = position.getFloat("width");
+      //  float aHeight = position.getFloat("height");
+
+      //  // Put object in array
+      //  coins.add(new Collectable (x, y, aWidth, aHeight));
+      //}
     }
   }
 }
