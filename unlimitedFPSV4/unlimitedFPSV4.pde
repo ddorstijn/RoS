@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -11,6 +11,9 @@ int level;
 
 int time;
 int score;
+int lives;
+
+boolean paused;
 
 JSONArray levelData;
 JSONArray turretData;
@@ -37,6 +40,7 @@ ArrayList<Collectable> coins;
 ArrayList<Turret> turrets;
 ArrayList<MovEnemy> movEnemy;
 ArrayList<bullet> bullet;
+
 //Call every class
 Player player;
 Camera worldCamera;
@@ -58,6 +62,7 @@ void setup() {
 
   time = millis() / 1000;
   score = 0;
+  lives = 3;
 
   pos = new PVector(0, 0);
 
@@ -79,10 +84,14 @@ void setup() {
 void draw() {
   loops = 0;
   while (millis () > next_game_tick && loops < MAX_FRAMESKIP) {
-    update_game();
+    if (!paused) { 
+      update_game();
+    }
+
     next_game_tick += SKIP_TICKS;
     loops++;
   }
+
   draw_game();
 }
 
@@ -112,6 +121,12 @@ void update_game() {
   }
 
   menu.update();
+
+  if (lives < 1) {
+    menu.subMenu = 0;
+    level = 0;
+    lives = 3;
+  }
 }
 
 void draw_game() {
@@ -130,28 +145,20 @@ void draw_game() {
     player.display();
     ara.display();
     for (Collectable b : coins) {
-      //   if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
-      //  }
     }
 
     for (Turret b : turrets) {
-      //  if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
-      // }
     }
 
     for (MovEnemy o : movEnemy) {
-      //  if (o.right > pos.x && o.left < pos.x + width) {
       o.display();
-      //  }
     }
 
     // Display all platforms
     for (Platform b : platforms) {
-      //if (b.right > pos.x && b.left < pos.x + width) {
       b.display();
-      // }
     }
 
     popMatrix();
@@ -166,6 +173,7 @@ void draw_game() {
     textAlign(CENTER, TOP);
     textFont(timerFont);
     text(time / 60 + ":" + nf(time % 60, 2), width/2, 0);
+    text(lives, width - 100, 0);
     popStyle();
   }
 

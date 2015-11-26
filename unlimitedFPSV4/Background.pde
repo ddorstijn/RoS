@@ -1,5 +1,10 @@
 void drawBackground() {
-  background(25, 41, 67); //Drawing background
+  if (level == 0) {
+    PImage bg = loadImage("img/background.jpg");
+    background(bg);
+  } else {
+    background(25, 41, 67); //Drawing background
+  }
 }
 
 void grid() {

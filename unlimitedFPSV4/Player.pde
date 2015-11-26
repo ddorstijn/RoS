@@ -173,6 +173,7 @@ class Player {
         if (velocity.y > 0) {
           if (bottom < other.nTop+40 && nBottom > other.nTop+40 && location.x > other.nlocation.x - radius + 1 && location.x < other.nlocation.x + other.aWidth + radius - 1) {// If player collides from top side
             respawn();
+            lives -= 1;
             System.out.println("collision top side");
           }
         } 
@@ -180,6 +181,7 @@ class Player {
           right -= radius/2;
           if (right < other.nLeft && nRight > other.nLeft && location.y > other.nlocation.y - radius) {// If player collides from left side
             respawn();
+            lives -= 1;
             System.out.println("collision left side");
           }
         }       
@@ -187,13 +189,13 @@ class Player {
           left += radius/2;
           if (left > other.nRight && nLeft < other.nRight && location.y > other.nlocation.y - radius) {// If player collides from left side
             respawn();
+            lives -= 1;
             System.out.println("collision right side");
           }
         }
       }
     }
 
-    // Display all platforms
     for (Platform other : platforms) {
 
       if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
@@ -224,12 +226,16 @@ class Player {
         }
 
         if (other.index == 2) {
+          lives -= 1;
           respawn();
         }
 
         if (other.index == 3) {
           if (level < 3) {
             level += 1;
+            setIndex = 0; 
+            loadLevel(true);
+            break;
           }
         }
       }

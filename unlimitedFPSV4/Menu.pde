@@ -69,7 +69,7 @@ class Button {
       break;
     }
 
-    if (keysPressed[' '] && !enteredMenu) {
+    if (keysPressed[10] && !enteredMenu) {
       switch (subMenu) {
         //If in main menu
       case 0:
@@ -83,11 +83,13 @@ class Button {
           //If cursor is on Level Select go to Level Select menu
         case 1:
           subMenu = 1;
+          mpos = 0;
           enteredMenu = true;
           break;
           //If on Credits fo to credits
         case 2:
           subMenu = 2;
+          mpos = 0;
           enteredMenu = true;
           break;
           //If on Exit exit game
@@ -116,6 +118,7 @@ class Button {
           break;
         case 3:
           subMenu = 0;
+          mpos = 0;
           enteredMenu = true;
           break;
         }
@@ -159,5 +162,13 @@ class Button {
         text(credits[i], location.x, location.y + i * space);
       }
     }
+  }
+}
+
+class pauseMenu {
+  
+  pauseMenu() {
+    
+    
   }
 }
