@@ -169,25 +169,23 @@ class Player {
 
     for (MovEnemy other : movEnemy) {
 
-      if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {
+      if (collisionDetect(nLeft, nTop, nRight, nBottom, other.nLeft, other.nTop, other.nRight, other.nBottom)) {
         if (velocity.y > 0) {
-          if (bottom < other.top && nBottom > other.top && location.x > other.location.x - radius + 1 && location.x < other.location.x + other.aWidth + radius - 1) {// If player collides from top side
-            velocity.y = 0;
-            bottom = top;
-            canJump = true;
-            angle = 0;
+          if (bottom < other.nTop+40 && nBottom > other.nTop+40 && location.x > other.nlocation.x - radius + 1 && location.x < other.nlocation.x + other.aWidth + radius - 1) {// If player collides from top side
+            respawn();
+            System.out.println("collision top side");
           }
         } 
         if (velocity.x > 0) {// If player collides from right side
-          right -= radius;
-          if (right < other.left && nRight > other.left && location.y > other.location.y - radius) {// If player collides from left side
+          right -= radius/2;
+          if (right < other.nLeft && nRight > other.nLeft && location.y > other.nlocation.y - radius) {// If player collides from left side
             respawn();
             System.out.println("collision left side");
           }
         }       
         if (velocity.x < 0) {// If player collides from right side
-          left += radius;
-          if (left > other.right && nLeft < other.right && location.y > other.location.y - radius) {// If player collides from left side
+          left += radius/2;
+          if (left > other.nRight && nLeft < other.nRight && location.y > other.nlocation.y - radius) {// If player collides from left side
             respawn();
             System.out.println("collision right side");
           }
@@ -233,10 +231,6 @@ class Player {
           if (level < 3) {
             level += 1;
           }
-        }
-
-        if (other.index == 5) {
-          respawn();
         }
       }
     }
