@@ -53,6 +53,7 @@ class MovEnemy {
   void update() {  
     enemyUpdatePosition();
     collisionDetection();
+    
   }
 
   void display() {
@@ -167,6 +168,12 @@ class Turret {
     bottom = location.y + theight;
 
     mousex = mouseX + pos.x;
+    
+    
+    if (millis() % 100 == 0) {
+      float angle =  atan((player.location.x-location.x) / (player.location.y-location.y));
+      bullet.add(new bullet(location.x, location.y, 3, angle));
+    } 
   }
 
   void display() {

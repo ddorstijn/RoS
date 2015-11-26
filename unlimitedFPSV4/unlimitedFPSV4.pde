@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -117,6 +117,10 @@ void update_game() {
     for (Platform b : platforms) {
       b.update();
     }
+    
+    for (bullet b : bullet) {
+      b.move();
+    }
 
     worldCamera.drawWorld();
     time = millis() / 1000;
@@ -160,6 +164,10 @@ void draw_game() {
 
     // Display all platforms
     for (Platform b : platforms) {
+      b.display();
+    }
+    
+    for (bullet b : bullet) {
       b.display();
     }
 
