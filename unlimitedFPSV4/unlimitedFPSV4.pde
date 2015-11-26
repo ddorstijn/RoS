@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -43,7 +43,7 @@ Camera worldCamera;
 Ara ara;
 
 void setup() {
-  size(1650, 480, P2D);
+  fullScreen(P2D);
   smooth(8);
   frameRate(1000);
 
@@ -68,8 +68,6 @@ void setup() {
   worldCamera = new Camera();
 
   coins = new ArrayList<Collectable>();
-  coins.add(new Collectable (width/2 + 70, 300, 10, 10));
-  coins.add(new Collectable (70, 300, 10, 10));
 
   popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);

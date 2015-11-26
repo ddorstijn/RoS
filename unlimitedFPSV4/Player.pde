@@ -228,6 +228,19 @@ class Player {
         if (other.index == 2) {
           respawn();
         }
+<<<<<<< HEAD
+=======
+
+        if (other.index == 3) {
+          if (level < 3) {
+            level += 1;
+          }
+        }
+
+        if (other.index == 5) {
+          respawn();
+        }
+>>>>>>> 5f8b458d903f368cb3a3c12d3dba4797f6a75146
       }
     }
 
