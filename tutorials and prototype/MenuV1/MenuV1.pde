@@ -1,5 +1,6 @@
 Button menu;
-boolean keysPressed[] = new boolean[256];
+boolean enteredMenu;
+boolean keysPressed[] = new boolean[256];  
 int level;
 
 void setup() {
@@ -28,4 +29,5 @@ void keyPressed() {
 
 void keyReleased() {
   keysPressed[keyCode] = false;
+  enteredMenu = false;
 }
