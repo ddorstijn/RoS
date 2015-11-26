@@ -164,11 +164,3 @@ class Button {
     }
   }
 }
-
-class pauseMenu {
-  
-  pauseMenu() {
-    
-    
-  }
-}

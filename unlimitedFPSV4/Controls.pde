@@ -11,6 +11,11 @@ void keyPressed() {
     shiftKey = !shiftKey;
   }
 
+  if (keyCode == 80) {
+    println("pause!");
+    paused = !paused;
+  }
+
   if (keysPressed[83] && level != 1) { 
     level = 1;
     setIndex = 0; 
