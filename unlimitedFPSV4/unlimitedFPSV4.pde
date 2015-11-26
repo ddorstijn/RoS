@@ -50,6 +50,7 @@ Button menu;
 
 void setup() {
   size(1200, 600, P2D);
+  surface.setResizable(true);
   smooth(8);
   frameRate(1000);
 
@@ -78,9 +79,8 @@ void setup() {
 
   coins = new ArrayList<Collectable>();
 
-  popUpFont = createFont("Arial", 72, true);
   statsFont = createFont("Arial", 14, true);
-  timerFont = createFont("Segoe UI Semibold", 50);
+  timerFont = createFont("Segoe UI Semibold", 50, true);
 }
 
 void draw() {
@@ -168,6 +168,7 @@ void draw_game() {
     pushStyle();
     textAlign(LEFT);
     textFont(statsFont);
+    textSize(14);
     fill(255);
     text("fps: " + (int) frameRate, 10, 20);
     text("score: " + score, 10, 40);
