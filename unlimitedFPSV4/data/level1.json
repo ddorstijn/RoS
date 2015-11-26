@@ -3,26 +3,19 @@
     "x": 250,
     "y": 200
   },
-  "turrets": [{
-    "index": 4,
-    "position": {
-      "x": 720,
-      "width": 40,
-      "y": 240,
-      "height": 40
-    },
-    "value": 6
-  }],
-  "MovEnemy": [{
-    "index": 5,
-    "position": {
-      "x": 520,
-      "width": 40,
-      "y": 320,
-      "height": 40
-    },
-    "value": 1
-  }],
+  "turrets": [],
+  "MovEnemy": [
+    {
+      "index": 5,
+      "position": {
+        "x": 520,
+        "width": 40,
+        "y": 320,
+        "height": 40
+      },
+      "value": 1
+    }
+    ],
   "player": {
     "x": 200,
     "y": 320
