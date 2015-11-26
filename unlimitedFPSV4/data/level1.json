@@ -3,9 +3,6 @@
     "x": 250,
     "y": 200
   },
-<<<<<<< HEAD
-  "turrets": [],
-=======
   "turrets": [{
     "index": 4,
     "position": {
@@ -16,81 +13,7 @@
     },
     "value": 6
   }],
->>>>>>> 5f8b458d903f368cb3a3c12d3dba4797f6a75146
-  "MovEnemy": [
-    {
-      "index": 5,
-      "position": {
-<<<<<<< HEAD
-        "x": 520,
-        "width": 40,
-        "y": 320,
-        "height": 40
-      },
-      "value": 1
-    }
-    ],
-=======
-        "x": 3760,
-        "width": 40,
-        "y": 200,
-        "height": 40
-      },
-      "value": 3
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 3440,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 4
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 960,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 3
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 1680,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 5
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 1600,
-        "width": 40,
-        "y": 160,
-        "height": 40
-      },
-      "value": 5
-    },
-    {
-      "index": 5,
-      "position": {
-        "x": 4440,
-        "width": 40,
-        "y": 240,
-        "height": 40
-      },
-      "value": 6
-    },
-    
-  ],
->>>>>>> 5f8b458d903f368cb3a3c12d3dba4797f6a75146
+  "MovEnemy": [],
   "player": {
     "x": 200,
     "y": 320
