@@ -74,10 +74,6 @@ void loadLevel(boolean objectsToo) {
         // Put object in array
         movEnemy.add(new MovEnemy(x, y, aWidth, aHeight, i));
       }
-
-      if (setIndex == 0) {
-        setIndex = 1;
-      }
     }
 
     if (setIndex == 6 || setIndex == 0) {
@@ -96,6 +92,10 @@ void loadLevel(boolean objectsToo) {
 
         // Put object in array
         coins.add(new Collectable (x, y, aWidth, aHeight, i));
+      }
+
+      if (setIndex == 0) {
+        setIndex = 1;
       }
     }
   }

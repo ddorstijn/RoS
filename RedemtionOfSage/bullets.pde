@@ -7,7 +7,7 @@ class bullet {
 
   boolean hit() {
     float dist = sqrt(sq(player.location.x-xBullet) + sq(player.location.y - yBullet) );
-    if (dist < 40) {
+    if (dist < 30) {
       return true;
     } else {
       return false;

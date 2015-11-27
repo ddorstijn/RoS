@@ -177,8 +177,8 @@ void mouseReleased() {
 
       // Create a new JSON position object
       JSONObject position = new JSONObject();
-      position.setFloat("x", beginX);
-      position.setFloat("y", beginY);
+      position.setFloat("x", beginX + gridSize/2);
+      position.setFloat("y", beginY + gridSize/2);
       position.setFloat("width", 10);
       position.setFloat("height", 10);
 
