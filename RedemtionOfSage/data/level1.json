@@ -3,6 +3,7 @@
     "x": 250,
     "y": 200
   },
+  "coins": [],
   "turrets": [{
     "index": 4,
     "position": {

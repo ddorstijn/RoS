@@ -22,6 +22,7 @@ JSONArray levelData;
 JSONArray turretData;
 JSONArray movEnemyData;
 JSONObject playerData;
+JSONArray coinData;
 
 PVector gravity, pos;
 float friction; //Same goes for friction
@@ -65,25 +66,24 @@ void setup() {
   turrets = new ArrayList<Turret>();
   movEnemy = new ArrayList<MovEnemy>();
   bullet = new ArrayList<bullet>();
+  coins = new ArrayList<Collectable>();
   boss = new Boss(6, 170, 180, 5);
+
+  statsFont = createFont("Arial", 14, true);
+  timerFont = createFont("Segoe UI Semibold", 50, true);
 
   score = 0;
   lives = 3;
 
   pos = new PVector(0, 0);
 
-  level = 0;
   setIndex = 0;
+  level = 0;
 
   loadLevel(true);
 
   worldCamera = new Camera();
   menu = new Button();
-
-  coins = new ArrayList<Collectable>();
-
-  statsFont = createFont("Arial", 14, true);
-  timerFont = createFont("Segoe UI Semibold", 50, true);
 }
 
 void draw() {
@@ -129,7 +129,7 @@ void update_game() {
     }
 
     for (bullet b : bullet) {
-      b.move();
+      b.update();
     }
 
     worldCamera.drawWorld();

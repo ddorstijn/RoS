@@ -6,9 +6,10 @@ class Collectable {
 
   float cwidth, cheight;
   float left, right, top, bottom;
+  
+  int value;
 
-
-  Collectable(float _x, float _y, float _width, float _height) {
+  Collectable(float _x, float _y, float _width, float _height, int value) {
 
     //INITIALIZE 
     location = new PVector(_x, _y);
@@ -20,6 +21,8 @@ class Collectable {
     right = location.x + cwidth;
     top = location.y;
     bottom = location.y + cheight;
+    
+    this.value = value;
   }
 
 

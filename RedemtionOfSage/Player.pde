@@ -123,7 +123,7 @@ class Player {
 
   void respawn() {
     lives--;
-    
+
     location.x = startX;
     location.y = startY;
 
@@ -165,7 +165,16 @@ class Player {
     for (Collectable coin : coins) {
       if (collisionDetect(nLeft, nTop, nRight, nBottom, coin.left, coin.top, coin.right, coin.bottom)) {
         score += 100;
-        coin.location.set(-100, 0);
+        coins.remove(coin);
+        break;
+      }
+    }
+
+    for (bullet b : bullet) {
+      if (b.hit()) {
+        respawn();
+        bullet.removeAll(bullet);
+        break;
       }
     }
 
@@ -175,7 +184,7 @@ class Player {
         if (velocity.y > 0) {
           if (bottom < other.nTop+40 && nBottom > other.nTop+40 && location.x > other.nlocation.x - radius + 1 && location.x < other.nlocation.x + other.aWidth + radius - 1) {// If player collides from top side
             respawn();
-            
+
             System.out.println("collision top side");
           }
         } 
@@ -183,7 +192,7 @@ class Player {
           right -= radius/2;
           if (right < other.nLeft && nRight > other.nLeft && location.y > other.nlocation.y - radius) {// If player collides from left side
             respawn();
-            
+
             System.out.println("collision left side");
           }
         }       
@@ -227,7 +236,7 @@ class Player {
         }
 
         if (other.index == 2) {
-          
+
           respawn();
         }
 

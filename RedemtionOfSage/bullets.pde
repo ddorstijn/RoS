@@ -5,6 +5,15 @@ class bullet {
   float angle;
   float vx, vy;
 
+  boolean hit() {
+    float dist = sqrt(sq(player.location.x-xBullet) + sq(player.location.y - yBullet) );
+    if (dist < 40) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   bullet(float tempXBullet, float tempYBullet, float tempVBullet, float tempAngle) {
     xBullet = tempXBullet;
     yBullet = tempYBullet;
@@ -19,9 +28,15 @@ class bullet {
       vy = (vBullet*cos(angle));
     }
   }
+
+  void update() {
+    move();
+  }
+
   void display() {
     ellipse (xBullet, yBullet, 10, 10);
   }
+
   void move() {
     xBullet = xBullet + vx;
     yBullet = yBullet + vy;

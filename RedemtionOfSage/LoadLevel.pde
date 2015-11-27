@@ -7,6 +7,7 @@ void loadLevel(boolean objectsToo) {
     levelData = levels.getJSONArray("platforms");
     turretData = levels.getJSONArray("turrets");
     movEnemyData = levels.getJSONArray("MovEnemy");
+    coinData = levels.getJSONArray("coins");
     JSONObject playerData = levels.getJSONObject("player");
     JSONObject araData = levels.getJSONObject("ara");
 
@@ -77,23 +78,25 @@ void loadLevel(boolean objectsToo) {
       if (setIndex == 0) {
         setIndex = 1;
       }
+    }
 
-      //coins.removeAll(coins);
+    if (setIndex == 6 || setIndex == 0) {
+      coins.removeAll(coins);
 
-      //for (int i = 0; i < movEnemyData.size(); i++) {
-      //  // Get each object in the array
-      //  JSONObject movEnemyObject = movEnemyData.getJSONObject(i); 
-      //  // Get a position object
-      //  JSONObject position = movEnemyObject.getJSONObject("position");
-      //  // Get properties from position
-      //  float x = position.getFloat("x");
-      //  float y = position.getFloat("y");
-      //  float aWidth = position.getFloat("width");
-      //  float aHeight = position.getFloat("height");
+      for (int i = 0; i < coinData.size(); i++) {
+        // Get each object in the array
+        JSONObject coinObject = coinData.getJSONObject(i); 
+        // Get a position object
+        JSONObject position = coinObject.getJSONObject("position");
+        // Get properties from position
+        float x = position.getFloat("x");
+        float y = position.getFloat("y");
+        float aWidth = position.getFloat("width");
+        float aHeight = position.getFloat("height");
 
-      //  // Put object in array
-      //  coins.add(new Collectable (x, y, aWidth, aHeight));
-      //}
+        // Put object in array
+        coins.add(new Collectable (x, y, aWidth, aHeight, i));
+      }
     }
   }
 }

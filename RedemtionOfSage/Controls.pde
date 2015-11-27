@@ -171,6 +171,30 @@ void mouseReleased() {
       saveJSONObject(levels, "data/level" + level + ".json");
       loadLevel(false);
       println("level loaded");
+    } else if (setIndex == 6) {
+      // Create a new JSON platform object
+      JSONObject newCoin = new JSONObject();
+
+      // Create a new JSON position object
+      JSONObject position = new JSONObject();
+      position.setFloat("x", beginX);
+      position.setFloat("y", beginY);
+      position.setFloat("width", 10);
+      position.setFloat("height", 10);
+
+      // Add position to platform
+      newCoin.setJSONObject("position", position);
+      newCoin.setInt("index", setIndex);
+      newCoin.setInt("value", movEnemyData.size() + 1);
+
+      // Append the new JSON bubble object to the array
+      JSONArray coinsData = levels.getJSONArray("coins");
+      coinsData.append(newCoin);
+
+      // Save new data
+      saveJSONObject(levels, "data/level" + level + ".json");
+      loadLevel(false);
+      println("level loaded");
     }
   }
 }
@@ -200,5 +224,8 @@ void levelBuild() {
   }
   if (keysPressed['5']) {
     setIndex = 5;
+  }
+  if (keysPressed['6']) {
+    setIndex = 6;
   }
 }

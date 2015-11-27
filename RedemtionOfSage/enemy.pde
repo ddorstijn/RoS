@@ -53,7 +53,6 @@ class MovEnemy {
   void update() {  
     enemyUpdatePosition();
     collisionDetection();
-    
   }
 
   void display() {
@@ -168,12 +167,14 @@ class Turret {
     bottom = location.y + theight;
 
     mousex = mouseX + pos.x;
-    
-    
-    if (millis() % 2000 >= 0 && millis() % 2000 <= MAX_FRAMESKIP) {
-      float angle =  atan((player.location.x-location.x) / (player.location.y-location.y));
-      bullet.add(new bullet(location.x, location.y, 3, angle));
-    } 
+
+    float dist = sqrt(sq(player.location.x-location.x) + sq(player.location.y - location.y) );
+    if (dist < 300) {
+      if (millis() % 5000 >= 0 && millis() % 2000 <= MAX_FRAMESKIP) {
+        float angle =  atan((player.location.x-location.x) / (player.location.y-location.y));
+        bullet.add(new bullet(location.x + twidth/2, location.y + theight/2, 3, angle));
+      }
+    }
   }
 
   void display() {
