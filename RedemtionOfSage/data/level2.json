@@ -3,7 +3,78 @@
     "x": 250,
     "y": 200
   },
-  "coins": [],
+  "coins": [
+    {
+      "index": 6,
+      "position": {
+        "x": 460,
+        "width": 10,
+        "y": 60,
+        "height": 10
+      },
+      "value": 13
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 940,
+        "width": 10,
+        "y": 220,
+        "height": 10
+      },
+      "value": 13
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 2220,
+        "width": 10,
+        "y": 220,
+        "height": 10
+      },
+      "value": 13
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 2540,
+        "width": 10,
+        "y": 20,
+        "height": 10
+      },
+      "value": 13
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 3220,
+        "width": 10,
+        "y": 380,
+        "height": 10
+      },
+      "value": 13
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 3940,
+        "width": 10,
+        "y": 260,
+        "height": 10
+      },
+      "value": 13
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 4180,
+        "width": 10,
+        "y": 260,
+        "height": 10
+      },
+      "value": 13
+    }
+  ],
   "turrets": [
     {
       "index": 4,
@@ -1046,22 +1117,12 @@
     {
       "index": 1,
       "position": {
-        "x": 600,
-        "width": 0,
-        "y": 320,
-        "height": -120
-      },
-      "value": 88
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 600,
+        "x": 560,
         "width": 40,
         "y": 320,
         "height": 40
       },
-      "value": 89
+      "value": 88
     }
   ]
 }
