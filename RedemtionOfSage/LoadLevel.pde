@@ -37,7 +37,7 @@ void loadLevel(boolean objectsToo) {
       }
     } 
 
-    if (setIndex == 4) {
+    if (setIndex == 4 || setIndex == 0) {
       turrets.removeAll(turrets);
 
       for (int i = 0; i < turretData.size(); i++) {
@@ -53,10 +53,6 @@ void loadLevel(boolean objectsToo) {
 
         // Put object in array
         turrets.add(new Turret(x, y, Twidth, Theight, i));
-      }
-
-      if (setIndex == 0) {
-        setIndex = 1;
       }
     }
 
