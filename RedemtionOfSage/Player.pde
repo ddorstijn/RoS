@@ -137,14 +137,14 @@ class Player {
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
     }
-    if (keysPressed[UP]) {
+    if (keysPressed[' ']) {
       if (canJump == true) {
         velocity.y = jumpSpeed;
         canJump = false; // Jump is possible
       }
     }
-    //If space is pressed stick to the player
-    if (keysPressed[' ']) { 
+    //If x is pressed stick to the player
+    if (keysPressed[88]) { 
 
       //stop moving
       ara.velocity.x = 0;

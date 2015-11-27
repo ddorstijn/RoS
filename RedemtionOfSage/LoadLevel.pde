@@ -1,5 +1,9 @@
 void loadLevel(boolean objectsToo) {
 
+  for (int i = 0; i < keysPressed.length; i++) {
+    keysPressed[i] = false;
+  }
+
   if (level == 0) {
   } else {
     levels = loadJSONObject("level" + level + ".json");

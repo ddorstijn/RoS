@@ -2,7 +2,7 @@ void keyPressed() {
 
   keysPressed[keyCode] = true;
 
-  if (keysPressed[65]) {
+  if (keysPressed[90]) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
   }

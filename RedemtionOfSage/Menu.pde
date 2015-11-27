@@ -46,27 +46,24 @@ class Button {
   }
 
   void update() {
-    if (mpos < 0 ) {
-      switch (currentMenu) {
-      case "mainMenu":
-        mpos = mainMenu.length - 1;
-        break;
-      case "levelSelect":
-        mpos = levelSelect.length - 1;
-        break;
-      }
-    }
     switch (currentMenu) {
     case "mainMenu":
       if (mpos > mainMenu.length - 1) {
         mpos = 0;
         break;
       }
+      if (mpos < 0) {
+        mpos = mainMenu.length - 1;
+        break;
+      }
     case "levelSelect":
       if (mpos > levelSelect.length - 1) {
         mpos = 0;
+      } 
+      if (mpos<0) {
+        mpos = levelSelect.length - 1;
+        break;
       }
-      break;
     }
 
     if (keysPressed[' '] && !enteredMenu && level == 0) {

@@ -90,7 +90,7 @@ class Ara {
   }
 
   void powerUps() {
-    if (powerUpActivated[0]) { //<>// //<>//
+    if (powerUpActivated[0]) { //<>//
       location.y -= 20;
       aHeight = 40;
     } else {     
