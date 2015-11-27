@@ -3,17 +3,8 @@
     "x": 250,
     "y": 200
   },
+  "coins": [],
   "turrets": [
-    {
-      "index": 4,
-      "position": {
-        "x": 600,
-        "width": 40,
-        "y": 320,
-        "height": 40
-      },
-      "value": 1
-    },
     {
       "index": 4,
       "position": {
@@ -177,7 +168,6 @@
       "value": 12
     }
   ],
-  "coins": [],
   "player": {
     "x": 200,
     "y": 200
@@ -1057,11 +1047,21 @@
       "index": 1,
       "position": {
         "x": 600,
+        "width": 0,
+        "y": 320,
+        "height": -120
+      },
+      "value": 88
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 600,
         "width": 40,
         "y": 320,
         "height": 40
       },
-      "value": 92
+      "value": 89
     }
   ]
 }

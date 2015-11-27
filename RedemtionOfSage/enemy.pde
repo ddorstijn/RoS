@@ -73,14 +73,14 @@ class MovEnemy {
     velocity.x = acceleration;
 
     left = location.x;
-    right = location.x + radius;
-    top = location.y - radius;
-    bottom = location.y + radius;
+    right = location.x + aWidth;
+    top = location.y;
+    bottom = location.y + aWidth;
 
     nLeft = nlocation.x;
-    nRight = nlocation.x + radius;
-    nTop = nlocation.y - radius;
-    nBottom = nlocation.y + radius;
+    nRight = nlocation.x + aWidth;
+    nTop = nlocation.y;
+    nBottom = nlocation.y + aHeight;
 
     for (Platform other : platforms) {
       if (collisionDetect(nLeft, nTop, nRight, nBottom, other.left, other.top, other.right, other.bottom)) {

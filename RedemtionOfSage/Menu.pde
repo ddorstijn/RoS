@@ -69,7 +69,7 @@ class Button {
       break;
     }
 
-    if (keysPressed[10] && !enteredMenu) {
+    if (keysPressed[' '] && !enteredMenu && level == 0) {
       switch (subMenu) {
         //If in main menu
       case 0:
@@ -77,9 +77,6 @@ class Button {
           //If cursor is on Start Game set level to 1
         case 0:
           level = 1;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;
@@ -106,25 +103,16 @@ class Button {
         switch (mpos) {
         case 0:
           level = 1;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;
         case 1:
           level = 2;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;
         case 2:
           level = 3;
-          accumTime= 0;
-          displayTime = 0;
-          startTime = 0;
           setIndex = 0;
           loadLevel(true);
           break;

@@ -87,6 +87,14 @@ void setup() {
 }
 
 void draw() {
+
+  if (paused == false && level != 0) {
+   displayTime = accumTime + millis() - startTime;
+  }
+  if (paused == true) {
+    startTime = millis();
+  }
+
   loops = 0;
   while (millis () > next_game_tick && loops < MAX_FRAMESKIP) {
     if (!paused) { 
@@ -95,13 +103,6 @@ void draw() {
 
     next_game_tick += SKIP_TICKS;
     loops++;
-  }
-
-  if (paused == false) {
-    displayTime = accumTime + millis() - startTime;
-  }
-  if (paused == true) {
-    startTime = millis();
   }
 
   draw_game();
@@ -210,6 +211,8 @@ void draw_game() {
     }
 
     popStyle();
+  } else {
+    startTime = millis();
   }
 
   menu.display();
