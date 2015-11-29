@@ -16,7 +16,7 @@ int displayTime;   // value to display on the clock face
 int score;
 int lives;
 
-boolean paused;
+boolean paused, bulletCollision;
 
 JSONArray levelData;
 JSONArray turretData;
@@ -158,6 +158,10 @@ void update_game() {
 
       for (bullet b : bullet) {
       b.update();
+      if (bulletCollision) {
+        bulletCollision = false;
+        break;
+      }
     }
 
     worldCamera.drawWorld();
@@ -206,6 +210,10 @@ void draw_game() {
 
     for (bullet b : bullet) {
       b.display();
+      if (bulletCollision) {
+        bulletCollision = false;
+        break;
+      }
     }
 
     popMatrix();

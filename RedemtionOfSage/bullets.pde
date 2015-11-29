@@ -53,6 +53,7 @@ class bullet {
             println("BULLET COLLISION");
           }
           bullet.remove(lenB);
+          bulletCollision = true;
           break;
         }
       }
