@@ -206,6 +206,9 @@ class Boss {
     for (int i = 0; i < n; i++) {
       vertex(cx + r * cos(radians(angle * i)), 
         cy + r * sin(radians(angle * i)));
+      rect(cx - r/2,cy - r/2,20,40); 
+      rect(cx + r/4,cy - r/2,20,40);  
+      rect(cx - r/8, cy + r/3,20,20);
     }
     endShape(CLOSE);
   }
