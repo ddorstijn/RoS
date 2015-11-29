@@ -279,16 +279,6 @@
     {
       "index": 4,
       "position": {
-        "x": 1720,
-        "width": 40,
-        "y": 200,
-        "height": 40
-      },
-      "value": 1
-    },
-    {
-      "index": 4,
-      "position": {
         "x": 3920,
         "width": 40,
         "y": 80,
@@ -375,6 +365,36 @@
         "height": 40
       },
       "value": 10
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 360,
+        "width": 40,
+        "y": 200,
+        "height": 40
+      },
+      "value": 11
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 480,
+        "width": 40,
+        "y": 200,
+        "height": 40
+      },
+      "value": 12
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 1720,
+        "width": 40,
+        "y": 200,
+        "height": 40
+      },
+      "value": 12
     }
   ],
   "MovEnemy": [
@@ -1185,16 +1205,6 @@
     {
       "index": 1,
       "position": {
-        "x": 1720,
-        "width": 80,
-        "y": 240,
-        "height": 40
-      },
-      "value": 84
-    },
-    {
-      "index": 1,
-      "position": {
         "x": 1280,
         "width": 760,
         "y": 440,
@@ -1415,46 +1425,6 @@
     {
       "index": 1,
       "position": {
-        "x": 3920,
-        "width": 80,
-        "y": 40,
-        "height": 40
-      },
-      "value": 102
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 3920,
-        "width": 40,
-        "y": 120,
-        "height": 40
-      },
-      "value": 103
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 3960,
-        "width": 40,
-        "y": 80,
-        "height": 320
-      },
-      "value": 104
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 3920,
-        "width": 40,
-        "y": 200,
-        "height": 200
-      },
-      "value": 105
-    },
-    {
-      "index": 1,
-      "position": {
         "x": 3680,
         "width": 80,
         "y": 40,
@@ -1481,6 +1451,46 @@
         "height": 40
       },
       "value": 109
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3920,
+        "width": 80,
+        "y": 40,
+        "height": 40
+      },
+      "value": 102
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3960,
+        "width": 40,
+        "y": 80,
+        "height": 280
+      },
+      "value": 103
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3920,
+        "width": 40,
+        "y": 200,
+        "height": 160
+      },
+      "value": 104
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3920,
+        "width": 40,
+        "y": 120,
+        "height": 40
+      },
+      "value": 105
     }
   ]
 }

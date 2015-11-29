@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>//
+int TICKS_PER_SECOND = 60; //<>// //<>// //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -9,7 +9,7 @@ int loops;
 JSONObject levels;
 int level;
 
-int accumTime;   // total time accumulated in previous intervals
+int accumTime;   // total time accumulated in previous intervals    
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
 
@@ -35,6 +35,33 @@ int setIndex; //While building check index that needs to be set
 // Basic collision detection method
 boolean collisionDetect(float playerLeft, float playerTop, float playerRight, float playerBottom, float otherLeft, float otherTop, float otherRight, float otherBottom) {
   return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
+}
+
+boolean CircleRectCollision(float circleX, float circleY, float radius, float rectangleX, float rectangleY, float rectangleWidth, float rectangleHeight){
+    
+  float circleDistanceX = abs(circleX - rectangleX - rectangleWidth/2); 
+  float circleDistanceY = abs(circleY - rectangleY - rectangleHeight/2); 
+
+  if (circleDistanceX > (rectangleWidth/2 + radius)) { 
+    return false;
+  } 
+
+  if (circleDistanceY > (rectangleHeight/2 + radius)) { 
+    return false;
+  } 
+
+  if (circleDistanceX <= (rectangleWidth/2)) { 
+    return true;
+  }  
+
+  if (circleDistanceY <= (rectangleHeight/2)) { 
+    return true;
+  }
+
+  float cornerDistance_sq = pow(circleDistanceX - rectangleWidth/2, 2) + 
+    pow(circleDistanceY - rectangleHeight/2, 2); 
+
+  return (cornerDistance_sq <= pow(radius, 2)); 
 }
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
@@ -129,7 +156,7 @@ void update_game() {
       b.update();
     }
 
-    for (bullet b : bullet) {
+      for (bullet b : bullet) {
       b.update();
     }
 

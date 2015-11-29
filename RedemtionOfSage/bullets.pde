@@ -31,6 +31,7 @@ class bullet {
 
   void update() {
     move();
+    collision();
   }
 
   void display() {
@@ -40,5 +41,21 @@ class bullet {
   void move() {
     xBullet = xBullet + vx;
     yBullet = yBullet + vy;
+  }
+
+  void collision() {
+    for /*(bullet b : bullet)*/(int lenB = bullet.size(), b = lenB; b-- != 0; ) {
+      final bullet u = bullet.get(b);
+      for (Platform other : platforms) {
+        if (CircleRectCollision(u.xBullet, u.yBullet, 5, other.left, other.top, other.right, other.bottom)) {
+          bullet.set(b, bullet.get(--lenB));
+          {
+            println("BULLET COLLISION");
+          }
+          bullet.remove(lenB);
+          break;
+        }
+      }
+    }
   }
 }
