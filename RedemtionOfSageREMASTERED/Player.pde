@@ -103,6 +103,7 @@ class Player {
       ara.location.x = location.x + pWidth/4;
       ara.location.y = location.y + pHeight/4;
       ara.powerUpActivated[0] = false;
+      ara.powerUps();
       ara.isCarried = true;
     } else {
       ara.isCarried = false;

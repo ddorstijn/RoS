@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class RedemtionOfSage extends PApplet {
+public class RedemtionOfSageREMASTERED extends PApplet {
 
 int TICKS_PER_SECOND = 60; //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -1152,6 +1152,7 @@ class Player {
       ara.location.x = location.x + pWidth/4;
       ara.location.y = location.y + pHeight/4;
       ara.powerUpActivated[0] = false;
+      ara.powerUps();
       ara.isCarried = true;
     } else {
       ara.isCarried = false;
@@ -1405,7 +1406,7 @@ class Boss {
 }
   public void settings() {  size(1200, 600, P2D);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "RedemtionOfSage" };
+    String[] appletArgs = new String[] { "RedemtionOfSageREMASTERED" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
