@@ -3,7 +3,6 @@
     "x": 250,
     "y": 200
   },
-  "coins": [],
   "turrets": [
     {
       "index": 4,
@@ -48,6 +47,7 @@
       "value": 2
     }
   ],
+  "coins": [],
   "player": {
     "x": 200,
     "y": 200
@@ -432,16 +432,6 @@
         "height": 40
       },
       "value": 38
-    },
-    {
-      "index": 3,
-      "position": {
-        "x": 3040,
-        "width": 40,
-        "y": 360,
-        "height": 40
-      },
-      "value": 39
     }
   ]
 }

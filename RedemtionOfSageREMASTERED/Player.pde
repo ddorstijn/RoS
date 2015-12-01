@@ -69,9 +69,9 @@ class Player {
   }
 
   void respawn() {
-    lives--;
-    location.set(start);
-    velocity.set(0, 0);
+    //lives--;
+    //location.set(start);
+    //velocity.set(0, 0);
   }
 
   void controls() {
