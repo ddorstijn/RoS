@@ -2,12 +2,20 @@ void keyPressed() {
 
   keysPressed[keyCode] = true;
 
+  if (key != CODED && level == 0 && menu.subMenu == 4)
+    userInput += key;
+  if (keysPressed[' '] && level == 0 && menu.subMenu == 4) {
+    level = 1;
+    setIndex = 0; 
+    loadLevel(true);
+  }
+
   if (keysPressed[90]) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
   }
 
-  if (keyCode == 16) { //16 is the keyCode for shift
+  if (keyCode == 16 && level != 0 && menu.subMenu != 4) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
   }
 
@@ -16,23 +24,23 @@ void keyPressed() {
     level = 0;
   }
 
-  if (keyCode == 80) {
+  if (keyCode == 80 && level != 0 && menu.subMenu != 4) {
     paused = !paused;
 
     accumTime = accumTime + millis() - startTime;
   }
 
-  if (keysPressed[83] && level != 1) { 
+  if (keysPressed[83] && level != 1 && level != 0) { 
     level = 1;
     setIndex = 0; 
     loadLevel(true);
   }
-  if (keysPressed[68] && level != 2) { 
+  if (keysPressed[68] && level != 2 && level != 0) { 
     level = 2;
     setIndex = 0;
     loadLevel(true);
   }
-  if (keysPressed[70] && level != 3) { 
+  if (keysPressed[70] && level != 3 && level != 0) { 
     level = 3;
     setIndex = 0;
     loadLevel(true);

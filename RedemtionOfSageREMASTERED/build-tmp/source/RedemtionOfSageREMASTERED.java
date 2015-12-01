@@ -64,6 +64,7 @@ public float calculate1DOverlap(float p0, float p1, float d0, float d1) {
 }
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
+String userInput = "";
 
 ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
@@ -166,7 +167,7 @@ public void update_game() {
           changeLevel = false;
           break;
         } else {
-          highscores.addScore("Player_"+playerIndex++, score/(displayTime/60000));
+          highscores.addScore(userInput, score);
           highscores.save("highscore.csv");
           highscores.load("highscore.csv");
           menu.subMenu = 3;
@@ -472,12 +473,20 @@ public void keyPressed() {
 
   keysPressed[keyCode] = true;
 
+  if (key != CODED && level == 0 && menu.subMenu == 4)
+    userInput += key;
+  if (keysPressed[' '] && level == 0 && menu.subMenu == 4) {
+    level = 1;
+    setIndex = 0; 
+    loadLevel(true);
+  }
+
   if (keysPressed[90]) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
   }
 
-  if (keyCode == 16) { //16 is the keyCode for shift
+  if (keyCode == 16 && level != 0 && menu.subMenu != 4) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
   }
 
@@ -486,23 +495,23 @@ public void keyPressed() {
     level = 0;
   }
 
-  if (keyCode == 80) {
+  if (keyCode == 80 && level != 0 && menu.subMenu != 4) {
     paused = !paused;
 
     accumTime = accumTime + millis() - startTime;
   }
 
-  if (keysPressed[83] && level != 1) { 
+  if (keysPressed[83] && level != 1 && level != 0) { 
     level = 1;
     setIndex = 0; 
     loadLevel(true);
   }
-  if (keysPressed[68] && level != 2) { 
+  if (keysPressed[68] && level != 2 && level != 0) { 
     level = 2;
     setIndex = 0;
     loadLevel(true);
   }
-  if (keysPressed[70] && level != 3) { 
+  if (keysPressed[70] && level != 3 && level != 0) { 
     level = 3;
     setIndex = 0;
     loadLevel(true);
@@ -893,9 +902,12 @@ class Button {
         switch (mpos) {
           //If cursor is on Start Game set level to 1
         case 0:
-          level = 1;
-          setIndex = 0;
-          loadLevel(true);
+          subMenu = 4;
+          mpos = 0;
+          enteredMenu = true;
+          // level = 1;
+          // setIndex = 0;
+          // loadLevel(true);
           break;
           //If cursor is on Level Select go to Level Select menu
         case 1:
@@ -909,10 +921,12 @@ class Button {
           mpos = 0;
           enteredMenu = true;
           break;
-          //If on Exit exit game
+          //If on Higschore show highscore
         case 3:
           subMenu = 3;
+          highscores.load("highscore.csv");
           break;
+          //Exit
         case 4:
           exit();
           break;
@@ -945,13 +959,6 @@ class Button {
         break;
       //Credits
       case 2:
-        if (keyPressed) {
-          subMenu = 0;
-          enteredMenu = true;
-        }
-        break;
-      //Highscores
-      case 3:
         if (keyPressed) {
           subMenu = 0;
           enteredMenu = true;
@@ -1007,6 +1014,9 @@ class Button {
         // display score in window
         text((iScore+1) + "            " + score.name + "        " + score.score, width/2, 100 + iScore*20);
       }
+    } else if (level == 0 && subMenu == 4) {
+      text("Keep tying until password matches", width/2, 20);
+      text("Enter text here: " + userInput, width/2, height/2 - 20);
     }
   }
 }
@@ -1180,7 +1190,7 @@ class Player {
     }
 
     if (canJump) {
-      angle =0;      
+      angle = 0;      
     }
 
     if (velocity.x > maxSpeed) {
@@ -1195,7 +1205,7 @@ class Player {
   }
 
   public void respawn() {
-    lives--;
+    //lives--;
     location.set(start);
     velocity.set(0, 0);
   }

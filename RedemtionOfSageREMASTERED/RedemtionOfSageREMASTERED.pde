@@ -46,6 +46,7 @@ float calculate1DOverlap(float p0, float p1, float d0, float d1) {
 }
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
+String userInput = "";
 
 ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
@@ -148,7 +149,7 @@ void update_game() {
           changeLevel = false;
           break;
         } else {
-          highscores.addScore("Player_"+playerIndex++, score/(displayTime/60000));
+          highscores.addScore(userInput, score);
           highscores.save("highscore.csv");
           highscores.load("highscore.csv");
           menu.subMenu = 3;

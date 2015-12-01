@@ -74,9 +74,12 @@ class Button {
         switch (mpos) {
           //If cursor is on Start Game set level to 1
         case 0:
-          level = 1;
-          setIndex = 0;
-          loadLevel(true);
+          subMenu = 4;
+          mpos = 0;
+          enteredMenu = true;
+          // level = 1;
+          // setIndex = 0;
+          // loadLevel(true);
           break;
           //If cursor is on Level Select go to Level Select menu
         case 1:
@@ -90,10 +93,12 @@ class Button {
           mpos = 0;
           enteredMenu = true;
           break;
-          //If on Exit exit game
+          //If on Higschore show highscore
         case 3:
           subMenu = 3;
+          highscores.load("highscore.csv");
           break;
+          //Exit
         case 4:
           exit();
           break;
@@ -126,13 +131,6 @@ class Button {
         break;
       //Credits
       case 2:
-        if (keyPressed) {
-          subMenu = 0;
-          enteredMenu = true;
-        }
-        break;
-      //Highscores
-      case 3:
         if (keyPressed) {
           subMenu = 0;
           enteredMenu = true;
@@ -188,6 +186,9 @@ class Button {
         // display score in window
         text((iScore+1) + "            " + score.name + "        " + score.score, width/2, 100 + iScore*20);
       }
+    } else if (level == 0 && subMenu == 4) {
+      text("Keep tying until password matches", width/2, 20);
+      text("Enter text here: " + userInput, width/2, height/2 - 20);
     }
   }
 }
