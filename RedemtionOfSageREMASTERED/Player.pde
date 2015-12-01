@@ -43,7 +43,11 @@ class Player {
   void display() {
     noStroke(); //No outline
     fill(colour); //Fill it white
-    rect(location.x, location.y, pWidth, pHeight); // character 
+    pushMatrix(); //Create a drawing without affecting other objects 
+    translate(location.x + pWidth/2, location.y + pHeight/2); //Move the box to the x and I position
+    rotate(angle); //For the jump mechanic
+    rect(-pWidth/2, -pHeight/2, pWidth, pHeight); // character 
+    popMatrix(); //End the drawing
   }
 
   void playerUpdatePosition() {
@@ -55,6 +59,23 @@ class Player {
     if (location.x < 0) {
       location.x = 0;
       velocity.x = 0;
+    }
+
+    if (velocity.y < 0 && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
+      angle += 2 * PI / 360 * 8;
+    } else if (velocity.y < 0 && angle >= -(PI / 2) && velocity.x < 0 && angle < PI / 2) {
+      angle -= 2 * PI / 360 * 8;
+    }
+
+    if (angle > PI / 2) {
+      angle = PI / 2;
+    }
+    if (angle < -PI / 2) {
+      angle = -PI / 2;
+    }
+
+    if (canJump) {
+      angle = 0;      
     }
 
     if (velocity.x > maxSpeed) {
