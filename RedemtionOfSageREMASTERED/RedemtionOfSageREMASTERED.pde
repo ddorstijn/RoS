@@ -24,6 +24,8 @@ JSONArray movEnemyData;
 JSONObject playerData;
 JSONArray coinData;
 
+ScoreList highscores = new ScoreList();
+
 PVector gravity, pos;
 float friction; //Same goes for friction
 
@@ -139,11 +141,22 @@ void update_game() {
     for (Platform b : platforms) {
       b.update();
       if (changeLevel) {
-        level ++;
-        setIndex = 0;
-        loadLevel(true);
-        changeLevel = false;
-        break;
+        if (level < 3) {
+          level ++;
+          setIndex = 0;
+          loadLevel(true);
+          changeLevel = false;
+          break;
+        } else {
+          highscores.addScore("Player_"+playerIndex++, score/(displayTime/6000));
+          highscores.save("highscore.csv");
+          highscores.load("highscore.csv");
+          menu.subMenu = 3;
+          level = 0;
+          lives = 3;
+          changeLevel = false;
+          break;
+        }
       }
     }
 

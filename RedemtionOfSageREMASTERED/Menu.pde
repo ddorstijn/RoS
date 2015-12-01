@@ -12,7 +12,7 @@ class Button {
   Button() {
     location = new PVector(width/2, height/2);
 
-    mainMenu = new String[4];
+    mainMenu = new String[5];
     levelSelect = new String[4];
     credits = new String[5];
 
@@ -31,7 +31,8 @@ class Button {
     mainMenu[0] = "Start";
     mainMenu[1] = "Level Select";
     mainMenu[2] = "Credits";
-    mainMenu[3] = "Exit";
+    mainMenu[3] = "Highscores";
+    mainMenu[4] = "Exit";
 
     levelSelect[0] = "Level 1";   
     levelSelect[1] = "Level 2";
@@ -91,6 +92,9 @@ class Button {
           break;
           //If on Exit exit game
         case 3:
+          subMenu = 3;
+          break;
+        case 4:
           exit();
           break;
         }
@@ -120,7 +124,15 @@ class Button {
           break;
         }
         break;
+      //Credits
       case 2:
+        if (keyPressed) {
+          subMenu = 0;
+          enteredMenu = true;
+        }
+        break;
+      //Highscores
+      case 3:
         if (keyPressed) {
           subMenu = 0;
           enteredMenu = true;
@@ -157,6 +169,24 @@ class Button {
       for (int i = 0; i < credits.length; i++) {
         fill(0);
         text(credits[i], location.x, location.y + i * space);
+      }
+    } else if (level == 0 && subMenu == 3) {
+      // display header row
+      fill(0);
+      textSize(20);
+      text("Place        Name        Score", width/2, 70);
+
+      textSize(16);
+      // for each score in list
+      for (int iScore=0; iScore<highscores.getScoreCount(); iScore++) {
+        // only show the top 10 scores
+        if (iScore>=9) break;
+        
+        // fetch a score from the list
+        Score score = highscores.getScore(iScore);
+
+        // display score in window
+        text((iScore+1) + "            " + score.name + "        " + score.score, width/2, 100 + iScore*20);
       }
     }
   }

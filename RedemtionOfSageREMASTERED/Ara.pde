@@ -94,7 +94,6 @@ class Ara {
     float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, aWidth);
     float yOverlap = calculate1DOverlap(player.location.y, location.y, player.pHeight, aHeight);
 
-    println("isCarried: "+isCarried);
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0 && !isCarried) {
       if (abs(xOverlap)-2 > abs(yOverlap)) {

@@ -11,6 +11,11 @@ void keyPressed() {
     shiftKey = !shiftKey;
   }
 
+  if (keysPressed[77]) {
+    menu.subMenu = 0;
+    level = 0;
+  }
+
   if (keyCode == 80) {
     paused = !paused;
 
@@ -47,6 +52,13 @@ void keyReleased() {
   keysPressed[keyCode] = false;
   menu.enteredMenu = false;
 }
+
+int playerIndex = 0;
+  // add score, save scores and load scores by typing space, 's' or 'l'
+  void keyTyped() {
+    if (key == 's') highscores.save("highscore.csv");
+    if (key == 'l') highscores.load("highscore.csv");
+  }
 
 //Level building!
 void mousePressed() {
