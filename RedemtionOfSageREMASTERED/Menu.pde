@@ -49,12 +49,12 @@ class Button {
   void update() {
     switch (currentMenu) {
     case "mainMenu":
-      if (mpos > mainMenu.length - 1) {
+      if (mpos > mainMenu.length) {
         mpos = 0;
         break;
       }
       if (mpos < 0) {
-        mpos = mainMenu.length - 1;
+        mpos = mainMenu.length;
         break;
       }
     case "levelSelect":
@@ -67,7 +67,7 @@ class Button {
       }
     }
 
-    if (keysPressed[' '] && !enteredMenu && level == 0) {
+    if (keysPressed[67] && !enteredMenu && level == 0) {
       switch (subMenu) {
         //If in main menu
       case 0:

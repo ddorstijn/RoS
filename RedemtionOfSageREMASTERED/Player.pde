@@ -85,7 +85,7 @@ class Player {
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
     }
-    if (keysPressed[UP]) {
+    if (keysPressed[67]) {
       if (canJump == true) {
         velocity.y = jumpSpeed;
         canJump = false; // Jump is possible

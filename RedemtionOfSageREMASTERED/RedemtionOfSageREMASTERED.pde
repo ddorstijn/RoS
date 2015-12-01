@@ -148,7 +148,7 @@ void update_game() {
           changeLevel = false;
           break;
         } else {
-          highscores.addScore("Player_"+playerIndex++, score/(displayTime/6000));
+          highscores.addScore("Player_"+playerIndex++, score/(displayTime/60000));
           highscores.save("highscore.csv");
           highscores.load("highscore.csv");
           menu.subMenu = 3;
