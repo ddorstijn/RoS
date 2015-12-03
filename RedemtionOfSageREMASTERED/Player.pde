@@ -80,6 +80,10 @@ class Player {
       angle = 0;      
     }
 
+    if (canJumpAgain) {
+      angle = 0;      
+    }
+
     if (velocity.x > maxSpeed) {
       velocity.x = maxSpeed;
     } else if (velocity.x < -maxSpeed) {

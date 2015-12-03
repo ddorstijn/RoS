@@ -43,8 +43,8 @@ class Ara {
   }
 
   void araUpdatePosition() {
-    location.x = player.location.x;
-    location.y = player.location.y;
+    location.x = player.location.x +10;
+    location.y = player.location.y +10;
     //location.add(velocity); //Speed
     //velocity.add(gravity); //Gravity
     //velocity.x *= friction;
