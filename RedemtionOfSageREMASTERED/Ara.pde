@@ -32,7 +32,7 @@ class Ara {
   //FUNCTIONS
   void update() {
     araUpdatePosition();
-    collisionDetection();
+    //collisionDetection();
   }
 
   void display() {
@@ -43,9 +43,11 @@ class Ara {
   }
 
   void araUpdatePosition() {
-    location.add(velocity); //Speed
-    velocity.add(gravity); //Gravity
-    velocity.x *= friction;
+    location.x = player.location.x;
+    location.y = player.location.y;
+    //location.add(velocity); //Speed
+    //velocity.add(gravity); //Gravity
+    //velocity.x *= friction;
 
     if (velocity.y > 5) {
       velocity.y = 5;
@@ -74,7 +76,7 @@ class Ara {
     } 
   }
 
-  void collisionDetection() {
+  /*void collisionDetection() {
     for (Platform other : platforms) {
       float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
       float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
@@ -117,5 +119,5 @@ class Ara {
           player.velocity.x = 0;
       }
     }   
-  }
+  }*/
 }

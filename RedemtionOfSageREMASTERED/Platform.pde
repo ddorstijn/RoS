@@ -83,6 +83,7 @@ class Platform {
         if (player.location.y < location.y) {
           player.velocity.y = 0;
           player.canJump = true;
+          player.canJumpAgain = true;
         }
       } else {
         player.location.x += xOverlap; // adjust player y - position based on overlap

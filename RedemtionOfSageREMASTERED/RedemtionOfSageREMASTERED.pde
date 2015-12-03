@@ -113,7 +113,10 @@ void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-
+  if (level != 0) {
+    println("canJumpAgain: "+player.canJumpAgain);
+  }
+  
   draw_game();
 }
 

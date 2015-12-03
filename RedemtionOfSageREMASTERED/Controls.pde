@@ -11,11 +11,15 @@ void keyPressed() {
   }
 
   if (keyCode == 67 && level != 0) {
-    if (player.canJump == true) {
+    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)) {
+      player.velocity.y = player.jumpSpeed / 1.2;
+      player.canJumpAgain = false;
+     }
+     if (player.canJump == true) {
       player.velocity.y = player.jumpSpeed;
       player.canJump = false; // Jump is possible
      }
-  }
+  }  
 
   if (keysPressed[90]) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];

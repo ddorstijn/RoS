@@ -9,6 +9,7 @@ class Player {
   //Properties
   float jumpSpeed, maxSpeed, acceleration;
   boolean canJump = true; //Check if able to jump
+  boolean canJumpAgain = true; //Check if player can jump second time
   int colour;
 
   //OBJECT
@@ -19,7 +20,8 @@ class Player {
     maxSpeed = 3;
     acceleration = 0.5;
 
-    canJump = true; //Check if ale to jump
+    canJump = true; //Check if able to jump
+    canJumpAgain = true; //check if able tu double jump
     colour = 255; //White
 
     pWidth = 40;
@@ -97,7 +99,7 @@ class Player {
 
   void controls() {
     if (velocity.y != 0.1) {
-      canJump = false;  
+      canJump = false;
     }
 
     if (keysPressed[LEFT]) {  
