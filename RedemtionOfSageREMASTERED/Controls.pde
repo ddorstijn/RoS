@@ -10,12 +10,19 @@ void keyPressed() {
     loadLevel(true);
   }
 
+  if (keyCode == 67 && level != 0) {
+    if (player.canJump == true) {
+      player.velocity.y = player.jumpSpeed;
+      player.canJump = false; // Jump is possible
+     }
+  }
+
   if (keysPressed[90]) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
   }
 
-  if (keyCode == 16 && level != 0 && menu.subMenu != 4) { //16 is the keyCode for shift
+  if (keyCode == 16 && level != 0 /*&& menu.subMenu != 4*/) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
   }
 
