@@ -65,13 +65,9 @@ class Ara {
   }
 
   void powerUps() {
-    if (powerUpActivated[0]) { 
-      location.y -= 20;
-      aHeight = 40;
-    } else {     
-      location.y += 20;
-      aHeight = 20;
-    } 
+    if (powerUpActivated[0]) {
+      
+    }
   }
 
   void collisionDetection() {

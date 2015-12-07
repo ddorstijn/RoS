@@ -17,7 +17,7 @@ class bullet {
 
     if (player.location.y < tempYBullet) {
       vx = -(vBullet*sin(angle));
-      vy = -(vBullet*cos(angle));
+      vy = -( vBullet*cos(angle));
     } else {
       vx = (vBullet*sin(angle));
       vy = (vBullet*cos(angle));
@@ -41,6 +41,9 @@ class bullet {
   void collision() {
     float xOverlap = calculate1DOverlap(player.location.x, xBullet, player.pWidth, bWidth);
     float yOverlap = calculate1DOverlap(player.location.y, yBullet, player.pHeight, bHeight);
+    if (!ara.powerUpActivated [0]){
+      player.respawn();
+    }
 
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {

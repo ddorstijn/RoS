@@ -26,7 +26,7 @@ JSONArray coinData;
 
 ScoreList highscores = new ScoreList();
 
-PVector gravity, pos;
+PVector gravity, pos, particlePos;
 float friction; //Same goes for friction
 
 PFont popUpFont, statsFont, timerFont;
@@ -60,6 +60,7 @@ Camera worldCamera;
 Ara ara;
 Boss boss;
 Button menu;
+ParticleSystem jump;
 
 void setup() {
   size(1200, 600, P2D);
@@ -70,6 +71,7 @@ void setup() {
   gridSize = 40;
 
   keysPressed = new boolean[256];
+particlePos = new PVector(100,100);
 
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
@@ -77,7 +79,7 @@ void setup() {
   bullet = new ArrayList<bullet>();
   coins = new ArrayList<Collectable>();
   boss = new Boss(6, 170, 180, 5);
-
+  jump = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 
@@ -218,7 +220,7 @@ void draw_game() {
     for (bullet b : bullet) {
       b.display();
     }
-
+    displayparticles();
     popMatrix();
 
     pushStyle();

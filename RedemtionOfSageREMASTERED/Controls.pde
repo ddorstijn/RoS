@@ -14,6 +14,9 @@ void keyPressed() {
     if (player.canJump == true) {
       player.velocity.y = player.jumpSpeed;
       player.canJump = false; // Jump is possible
+      for(int i = 0; i < 50; i++){
+      
+      }
      }
   }
 

@@ -48,6 +48,7 @@ class Player {
     rotate(angle); //For the jump mechanic
     rect(-pWidth/2, -pHeight/2, pWidth, pHeight); // character 
     popMatrix(); //End the drawing
+    
   }
 
   void playerUpdatePosition() {
