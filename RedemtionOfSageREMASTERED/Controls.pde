@@ -10,15 +10,20 @@ void keyPressed() {
     loadLevel(true);
   }
 
-  if (keyCode == 67 && level != 0) {
-    if (player.canJump == true) {
+  if (keyCode == 67 && level != 0) {//////Check for (double) jump
+    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)) {
+      player.velocity.y = player.jumpSpeed / 1.2;
+      player.canJumpAgain = false;
+     }
+     if (player.canJump == true) {
       player.velocity.y = player.jumpSpeed;
       player.canJump = false; // Jump is possible
-      for(int i = 0; i < 50; i++){
-      
+      for(int i = 0; i < 30; i++){
+      jump.addParticle();
       }
+      player.canJump = false;
      }
-  }
+  }  
 
   if (keysPressed[90]) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
