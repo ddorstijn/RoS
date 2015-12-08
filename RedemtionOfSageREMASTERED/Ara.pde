@@ -38,8 +38,16 @@ class Ara {
   void display() {
     noStroke();
     fill(255, 255, 0);
-    rectMode(CORNER); 
-    rect(location.x, location.y, aWidth, aHeight);
+    rectMode(CORNER);
+    if (powerUpActivated[1]) {
+      pushStyle();
+      noFill();
+      strokeWeight(5);
+      stroke(255,255,0);
+      rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
+      popStyle();
+    } else
+      rect(location.x, location.y, aWidth, aHeight);
   }
 
   void araUpdatePosition() {

@@ -1407,16 +1407,6 @@
       "position": {
         "x": 3680,
         "width": 80,
-        "y": 40,
-        "height": 160
-      },
-      "value": 106
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 3680,
-        "width": 80,
         "y": 280,
         "height": 160
       },
@@ -1491,6 +1481,46 @@
         "height": 40
       },
       "value": 107
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3440,
+        "width": 40,
+        "y": 160,
+        "height": 40
+      },
+      "value": 108
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3760,
+        "width": 40,
+        "y": 360,
+        "height": 80
+      },
+      "value": 110
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3680,
+        "width": 40,
+        "y": 40,
+        "height": 160
+      },
+      "value": 109
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3720,
+        "width": 40,
+        "y": 160,
+        "height": 40
+      },
+      "value": 110
     }
   ]
 }
