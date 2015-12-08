@@ -59,7 +59,7 @@ class Ara {
     }
 
     //Respawn
-    if (location.y > height || location.x > (player.location.x + (width / 2))) {
+    if (location.y > height || location.x > (player.location.x + (width / 2)) || location.x < (player.location.x - (width / 2))) {
       powerUpActivated[0] = false;
     }
   }
