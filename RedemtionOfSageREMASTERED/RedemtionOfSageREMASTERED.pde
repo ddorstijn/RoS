@@ -116,7 +116,7 @@ void draw() {
     loops++;
   }
   if (level != 0) {
-    println("canJumpAgain: "+player.canJumpAgain);
+    //println("canJumpAgain: "+player.canJumpAgain);
   }
   
   draw_game();

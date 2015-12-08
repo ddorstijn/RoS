@@ -517,6 +517,16 @@
         "height": 40
       },
       "value": 4
+    },
+    {
+      "index": 5,
+      "position": {
+        "x": 640,
+        "width": 40,
+        "y": 360,
+        "height": 40
+      },
+      "value": 5
     }
   ],
   "player": {

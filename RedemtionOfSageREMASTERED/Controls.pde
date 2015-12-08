@@ -10,7 +10,7 @@ void keyPressed() {
     loadLevel(true);
   }
 
-  if (keyCode == 67 && level != 0) {//////Check for (double) jump
+  if (keyCode == UP && level != 0) {//////Check for (double) jump
     if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)) {
       player.velocity.y = player.jumpSpeed / 1.2;
       player.canJumpAgain = false;

@@ -42,7 +42,7 @@ class bullet {
     float xOverlap = calculate1DOverlap(player.location.x, xBullet, player.pWidth, bWidth);
     float yOverlap = calculate1DOverlap(player.location.y, yBullet, player.pHeight, bHeight);
     if (!ara.powerUpActivated [0]){
-      player.respawn();
+      //player.respawn();
     }
 
     // Determine wchich overlap is the largest

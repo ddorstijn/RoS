@@ -18,8 +18,8 @@ class Ara {
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
 
-    startX = _x;
-    startY = _y;
+    startX = location.x;
+    startY = location.y;
 
     aWidth = 20;
     aHeight = 20; 
@@ -32,7 +32,7 @@ class Ara {
   //FUNCTIONS
   void update() {
     araUpdatePosition();
-    //collisionDetection();
+    collisionDetection();
   }
 
   void display() {
@@ -43,36 +43,44 @@ class Ara {
   }
 
   void araUpdatePosition() {
-    location.x = player.location.x +10;
-    location.y = player.location.y +10;
-    //location.add(velocity); //Speed
+    
+    location.add(velocity); //Speed
     //velocity.add(gravity); //Gravity
     //velocity.x *= friction;
+
+    if (!powerUpActivated[0]) {
+      velocity.x *= friction;
+      location.x = player.location.x +10;
+      location.y = player.location.y +10;
+    }
 
     if (velocity.y > 5) {
       velocity.y = 5;
     }
 
     //Respawn
-    if (location.y > height) {
-      respawn();
+    if (location.y > height || location.x > (player.location.x + (width / 2))) {
+      powerUpActivated[0] = false;
     }
   }
 
   void respawn() {
-    location.x = startX;
-    location.y = startY;
+    location.x = player.location.x;
+    location.y = player.location.y;
 
     velocity.mult(0);
   }
 
   void powerUps() {
-    if (powerUpActivated[0]) {
-      
+    if (powerUpActivated[0] && player.velocity.x >= 0) {
+      velocity.set(8,0);
+    }
+    if (powerUpActivated[0] && player.velocity.x < 0) {
+      velocity.set(-8,0);
     }
   }
 
-  /*void collisionDetection() {
+  void collisionDetection() {
     for (Platform other : platforms) {
       float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
       float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
@@ -81,15 +89,27 @@ class Ara {
         // Determine wchich overlap is the largest
         if (abs(xOverlap) > abs(yOverlap)) {
           location.y += yOverlap; // adjust player x - position based on overlap
-          velocity.y = 0;
         } else {
           location.x += xOverlap; // adjust player y - position based on overlap
-          velocity.x *= -1;
+          powerUpActivated[0] = false;
         }
       }
     }
 
-    float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, aWidth);
+    for (MovEnemy other : movEnemy) {
+    float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.aWidth);
+    float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.aHeight);
+
+    // Determine wchich overlap is the largest
+      if (xOverlap != 0 && yOverlap != 0) {
+        powerUpActivated[0] = false;
+        movEnemy.remove(other);
+        break;
+      }
+    }    
+  }
+
+    /*float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, aWidth);
     float yOverlap = calculate1DOverlap(player.location.y, location.y, player.pHeight, aHeight);
 
     // Determine wchich overlap is the largest
