@@ -40,7 +40,12 @@ class MovEnemy {
 
     rectMode(CORNER);
     rect(location.x, location.y, aWidth, aHeight);
+    fill(0,255,0);
+    triangle(location.x+4,location.y+4, location.x+20, location.y+8, location.x +10, location.y +14);
+    triangle(location.x+36,location.y+4, location.x+20, location.y+8, location.x +30, location.y +14);
+    rect(location.x+4, location.y+25, aWidth-8,aHeight/5);
   }
+    
 
   void enemyUpdatePosition() {
     location.add(velocity);
