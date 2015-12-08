@@ -1,4 +1,4 @@
-int TICKS_PER_SECOND = 60; //<>// //<>// //<>//
+int TICKS_PER_SECOND = 60; //<>//
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -9,14 +9,14 @@ int loops;
 JSONObject levels;
 int level;
 
-int accumTime;   // total time accumulated in previous intervals    
+int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
 
 int score;
 int lives;
 
-boolean paused, bulletCollision;
+boolean paused, collisionObject, changeLevel;
 
 JSONArray levelData;
 JSONArray turretData;
@@ -24,7 +24,9 @@ JSONArray movEnemyData;
 JSONObject playerData;
 JSONArray coinData;
 
-PVector gravity, pos;
+ScoreList highscores = new ScoreList();
+
+PVector gravity, pos, particlePos;
 float friction; //Same goes for friction
 
 PFont popUpFont, statsFont, timerFont;
@@ -37,34 +39,14 @@ boolean collisionDetect(float playerLeft, float playerTop, float playerRight, fl
   return !(playerLeft >= otherRight || playerRight <= otherLeft || playerTop >= otherBottom || playerBottom <= otherTop);
 }
 
-boolean CircleRectCollision(float circleX, float circleY, float radius, float rectangleX, float rectangleY, float rectangleWidth, float rectangleHeight){
-    
-  float circleDistanceX = abs(circleX - rectangleX - rectangleWidth/2); 
-  float circleDistanceY = abs(circleY - rectangleY - rectangleHeight/2); 
-
-  if (circleDistanceX > (rectangleWidth/2 + radius)) { 
-    return false;
-  } 
-
-  if (circleDistanceY > (rectangleHeight/2 + radius)) { 
-    return false;
-  } 
-
-  if (circleDistanceX <= (rectangleWidth/2)) { 
-    return true;
-  }  
-
-  if (circleDistanceY <= (rectangleHeight/2)) { 
-    return true;
-  }
-
-  float cornerDistance_sq = pow(circleDistanceX - rectangleWidth/2, 2) + 
-    pow(circleDistanceY - rectangleHeight/2, 2); 
-
-  return (cornerDistance_sq <= pow(radius, 2)); 
+// Basic collision detection method
+float calculate1DOverlap(float p0, float p1, float d0, float d1) {
+  float dl = p0+d0-p1, dr = p1+d1-p0;  
+  return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr; 
 }
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
+String userInput = "";
 
 ArrayList<Platform> platforms;
 ArrayList<Collectable> coins;
@@ -78,6 +60,7 @@ Camera worldCamera;
 Ara ara;
 Boss boss;
 Button menu;
+ParticleSystem jump;
 
 void setup() {
   size(1200, 600, P2D);
@@ -88,14 +71,15 @@ void setup() {
   gridSize = 40;
 
   keysPressed = new boolean[256];
+particlePos = new PVector(100,100);
 
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
   movEnemy = new ArrayList<MovEnemy>();
   bullet = new ArrayList<bullet>();
   coins = new ArrayList<Collectable>();
-  boss = new Boss(6, 170, 180, 60);
-
+  boss = new Boss(6, 170, 180, 5);
+  jump = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 
@@ -131,7 +115,10 @@ void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-
+  if (level != 0) {
+    println("canJumpAgain: "+player.canJumpAgain);
+  }
+  
   draw_game();
 }
 
@@ -142,6 +129,11 @@ void update_game() {
 
     for (Collectable coin : coins) {
       coin.update();
+      if (collisionObject){
+        collisionObject = false;
+        coins.remove(coin);
+        break;
+      }
     }
 
     for (Turret turret : turrets) {
@@ -154,16 +146,35 @@ void update_game() {
 
     for (Platform b : platforms) {
       b.update();
-    }
-
-      for (bullet b : bullet) {
-      b.update();
-      if (bulletCollision) {
-        bulletCollision = false;
-        break;
+      if (changeLevel) {
+        if (level < 3) {
+          level ++;
+          setIndex = 0;
+          loadLevel(true);
+          changeLevel = false;
+          break;
+        } else {
+          highscores.addScore(userInput, score);
+          highscores.save("highscore.csv");
+          highscores.load("highscore.csv");
+          menu.subMenu = 3;
+          level = 0;
+          lives = 3;
+          changeLevel = false;
+          break;
+        }
       }
     }
 
+    for (bullet b : bullet) {
+      b.update();
+      if (collisionObject){
+        collisionObject = false;
+        bullet.remove(b);
+        break;
+      }
+    }
+ 
     worldCamera.drawWorld();
   }
 
@@ -177,7 +188,7 @@ void update_game() {
 }
 
 void draw_game() {
-  drawBackground(); //UIgrid();
+  drawBackground(); //
 
   if (level != 0) {
     grid();
@@ -191,6 +202,7 @@ void draw_game() {
     //setuppreview();
     player.display();
     ara.display();
+    
     for (Collectable b : coins) {
       b.display();
     }
@@ -210,12 +222,8 @@ void draw_game() {
 
     for (bullet b : bullet) {
       b.display();
-      if (bulletCollision) {
-        bulletCollision = false;
-        break;
-      }
     }
-
+    displayparticles();
     popMatrix();
 
     pushStyle();
@@ -234,7 +242,7 @@ void draw_game() {
       text("Paused", width/2, height/2);
     }
 
-    for (int i = 0; i < lives; i++) {
+    /*for (int i = 0; i < lives; i++) {
       noStroke();
       fill(255, 0, 0);
       beginShape();
@@ -243,7 +251,7 @@ void draw_game() {
       vertex(width-100 + i * 40, 10);
       bezierVertex(width-100 + i * 40, -5, width-60 + i * 40, 10, width-100 + i * 40, 30);
       endShape();
-    }
+    }*/
 
     popStyle();
   } else {
