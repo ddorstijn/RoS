@@ -44,7 +44,7 @@ JSONArray coinData;
 
 ScoreList highscores = new ScoreList();
 
-PVector gravity, pos;
+PVector gravity, pos, particlePos;
 float friction; //Same goes for friction
 
 PFont popUpFont, statsFont, timerFont;
@@ -78,6 +78,7 @@ Camera worldCamera;
 Ara ara;
 Boss boss;
 Button menu;
+ParticleSystem jump;
 
 public void setup() {
   
@@ -88,6 +89,7 @@ public void setup() {
   gridSize = 40;
 
   keysPressed = new boolean[256];
+particlePos = new PVector(100,100);
 
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
@@ -95,7 +97,7 @@ public void setup() {
   bullet = new ArrayList<bullet>();
   coins = new ArrayList<Collectable>();
   boss = new Boss(6, 170, 180, 5);
-
+  jump = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 
@@ -131,7 +133,10 @@ public void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-
+  if (level != 0) {
+    //println("canJumpAgain: "+player.canJumpAgain);
+  }
+  
   draw_game();
 }
 
@@ -236,7 +241,7 @@ public void draw_game() {
     for (bullet b : bullet) {
       b.display();
     }
-
+    displayparticles();
     popMatrix();
 
     pushStyle();
@@ -255,7 +260,7 @@ public void draw_game() {
       text("Paused", width/2, height/2);
     }
 
-    for (int i = 0; i < lives; i++) {
+    /*for (int i = 0; i < lives; i++) {
       noStroke();
       fill(255, 0, 0);
       beginShape();
@@ -264,7 +269,7 @@ public void draw_game() {
       vertex(width-100 + i * 40, 10);
       bezierVertex(width-100 + i * 40, -5, width-60 + i * 40, 10, width-100 + i * 40, 30);
       endShape();
-    }
+    }*/
 
     popStyle();
   } else {
@@ -293,8 +298,8 @@ class Ara {
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1f);
 
-    startX = _x;
-    startY = _y;
+    startX = location.x;
+    startY = location.y;
 
     aWidth = 20;
     aHeight = 20; 
@@ -313,40 +318,54 @@ class Ara {
   public void display() {
     noStroke();
     fill(255, 255, 0);
-    rectMode(CORNER); 
-    rect(location.x, location.y, aWidth, aHeight);
+    rectMode(CORNER);
+    if (powerUpActivated[1]) {
+      pushStyle();
+      noFill();
+      strokeWeight(5);
+      stroke(255,255,0);
+      rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
+      popStyle();
+    } else
+      rect(location.x, location.y, aWidth, aHeight);
   }
 
   public void araUpdatePosition() {
+    
     location.add(velocity); //Speed
-    velocity.add(gravity); //Gravity
-    velocity.x *= friction;
+    //velocity.add(gravity); //Gravity
+    //velocity.x *= friction;
+
+    if (!powerUpActivated[0]) {
+      velocity.x *= friction;
+      location.x = player.location.x +10;
+      location.y = player.location.y +10;
+    }
 
     if (velocity.y > 5) {
       velocity.y = 5;
     }
 
     //Respawn
-    if (location.y > height) {
-      respawn();
+    if (location.y > height || location.x > (player.location.x + (width / 2))) {
+      powerUpActivated[0] = false;
     }
   }
 
   public void respawn() {
-    location.x = startX;
-    location.y = startY;
+    location.x = player.location.x;
+    location.y = player.location.y;
 
     velocity.mult(0);
   }
 
   public void powerUps() {
-    if (powerUpActivated[0]) { 
-      location.y -= 20;
-      aHeight = 40;
-    } else {     
-      location.y += 20;
-      aHeight = 20;
-    } 
+    if (powerUpActivated[0] && player.velocity.x >= 0) {
+      velocity.set(8,0);
+    }
+    if (powerUpActivated[0] && player.velocity.x < 0) {
+      velocity.set(-8,0);
+    }
   }
 
   public void collisionDetection() {
@@ -358,15 +377,27 @@ class Ara {
         // Determine wchich overlap is the largest
         if (abs(xOverlap) > abs(yOverlap)) {
           location.y += yOverlap; // adjust player x - position based on overlap
-          velocity.y = 0;
         } else {
           location.x += xOverlap; // adjust player y - position based on overlap
-          velocity.x *= -1;
+          powerUpActivated[0] = false;
         }
       }
     }
 
-    float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, aWidth);
+    for (MovEnemy other : movEnemy) {
+    float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.aWidth);
+    float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.aHeight);
+
+    // Determine wchich overlap is the largest
+      if (xOverlap != 0 && yOverlap != 0) {
+        powerUpActivated[0] = false;
+        movEnemy.remove(other);
+        break;
+      }
+    }    
+  }
+
+    /*float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, aWidth);
     float yOverlap = calculate1DOverlap(player.location.y, location.y, player.pHeight, aHeight);
 
     // Determine wchich overlap is the largest
@@ -392,7 +423,7 @@ class Ara {
           player.velocity.x = 0;
       }
     }   
-  }
+  }*/
 }
 public void drawBackground() {
   background(25, 41, 67); //Drawing background
@@ -481,12 +512,34 @@ public void keyPressed() {
     loadLevel(true);
   }
 
-  if (keysPressed[90]) {
+  if (keyCode == UP && level != 0) {//////Check for (double) jump
+    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)) {
+      player.velocity.y = player.jumpSpeed / 1.2f;
+      player.canJumpAgain = false;
+     }
+     if (player.canJump == true) {
+      player.velocity.y = player.jumpSpeed;
+      player.canJump = false; // Jump is possible
+      for(int i = 0; i < 30; i++){
+      jump.addParticle();
+      }
+      player.canJump = false;
+     }
+  }  
+
+  //If Z is pressed Ara shoots off
+  if (keysPressed[90] && !ara.powerUpActivated[1]) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
   }
 
-  if (keyCode == 16 && level != 0 && menu.subMenu != 4) { //16 is the keyCode for shift
+  //If X is pressed turn on shield
+  if (keysPressed[88] && !ara.powerUpActivated[0]) {
+    ara.powerUpActivated[1] = !ara.powerUpActivated[1];
+    ara.powerUps();
+  }
+
+  if (keyCode == 16 && level != 0 /*&& menu.subMenu != 4*/) { //16 is the keyCode for shift
     shiftKey = !shiftKey;
   }
 
@@ -1105,6 +1158,7 @@ class Platform {
         if (player.location.y < location.y) {
           player.velocity.y = 0;
           player.canJump = true;
+          player.canJumpAgain = true;
         }
       } else {
         player.location.x += xOverlap; // adjust player y - position based on overlap
@@ -1124,6 +1178,7 @@ class Player {
   //Properties
   float jumpSpeed, maxSpeed, acceleration;
   boolean canJump = true; //Check if able to jump
+  boolean canJumpAgain = true; //Check if player can jump second time
   int colour;
 
   //OBJECT
@@ -1134,7 +1189,8 @@ class Player {
     maxSpeed = 3;
     acceleration = 0.5f;
 
-    canJump = true; //Check if ale to jump
+    canJump = true; //Check if able to jump
+    canJumpAgain = true; //check if able tu double jump
     colour = 255; //White
 
     pWidth = 40;
@@ -1163,6 +1219,7 @@ class Player {
     rotate(angle); //For the jump mechanic
     rect(-pWidth/2, -pHeight/2, pWidth, pHeight); // character 
     popMatrix(); //End the drawing
+    
   }
 
   public void playerUpdatePosition() {
@@ -1193,6 +1250,10 @@ class Player {
       angle = 0;      
     }
 
+    if (canJumpAgain) {
+      angle = 0;      
+    }
+
     if (velocity.x > maxSpeed) {
       velocity.x = maxSpeed;
     } else if (velocity.x < -maxSpeed) {
@@ -1212,7 +1273,7 @@ class Player {
 
   public void controls() {
     if (velocity.y != 0.1f) {
-      canJump = false;  
+      canJump = false;
     }
 
     if (keysPressed[LEFT]) {  
@@ -1220,29 +1281,6 @@ class Player {
     }
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
-    }
-    if (keysPressed[67]) {
-      if (canJump == true) {
-        velocity.y = jumpSpeed;
-        canJump = false; // Jump is possible
-      }
-    }
-
-    //If x is pressed stick to the player
-    if (keysPressed[88]) { 
-
-      //stop moving
-      ara.velocity.x = 0;
-      ara.velocity.y = 0;
-
-      //Move x to player x
-      ara.location.x = location.x + pWidth/4;
-      ara.location.y = location.y + pHeight/4;
-      ara.powerUpActivated[0] = false;
-      ara.powerUps();
-      ara.isCarried = true;
-    } else {
-      ara.isCarried = false;
     }
   }
 }
@@ -1265,7 +1303,7 @@ class bullet {
 
     if (player.location.y < tempYBullet) {
       vx = -(vBullet*sin(angle));
-      vy = -(vBullet*cos(angle));
+      vy = -( vBullet*cos(angle));
     } else {
       vx = (vBullet*sin(angle));
       vy = (vBullet*cos(angle));
@@ -1292,9 +1330,11 @@ class bullet {
 
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {
-      player.respawn();
       collisionObject = true;
       bullet.removeAll(bullet);
+
+      if (!ara.powerUpActivated[1])
+        player.respawn();
     } 
 
     for (Platform other : platforms) {
@@ -1351,7 +1391,12 @@ class MovEnemy {
 
     rectMode(CORNER);
     rect(location.x, location.y, aWidth, aHeight);
+    fill(0,255,0);
+    triangle(location.x+4,location.y+4, location.x+20, location.y+8, location.x +10, location.y +14);
+    triangle(location.x+36,location.y+4, location.x+20, location.y+8, location.x +30, location.y +14);
+    rect(location.x+4, location.y+25, aWidth-8,aHeight/5);
   }
+    
 
   public void enemyUpdatePosition() {
     location.add(velocity);
@@ -1583,6 +1628,87 @@ class HSComperator implements Comparator<Score> {
   }
 }
 
+public void displayparticles() {
+  jump.run();
+}
+
+
+
+
+
+// A class to describe a group of Particles
+// An ArrayList is used to manage the list of Particles 
+
+class ParticleSystem {
+  ArrayList<Particle> particles;
+  PVector origin;
+
+  ParticleSystem(PVector location) {
+    particles = new ArrayList<Particle>();
+    origin = new PVector(0,0);
+  }
+
+  public void addParticle() {
+    origin.set(player.location.x + player.pWidth/2,player.location.y-15 + player.pHeight);
+    particles.add(new Particle(origin));
+  }
+
+  public void run() {
+    for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
+      p.run();
+      if (p.isDead()) {
+        particles.remove(i);
+      }
+    }
+  }
+}
+
+
+
+// A simple Particle class
+
+class Particle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float lifespan;
+
+  Particle(PVector l) {
+    acceleration = new PVector(0,0.05f);
+    velocity = new PVector(random(-0.5f,0.75f),random(-0.1f,1));
+    location = l.get();
+    lifespan = 75;
+  }
+
+  public void run() {
+    update();
+    display();
+  }
+
+  // Method to update location
+  public void update() {
+    velocity.add(acceleration);
+    location.add(velocity);
+    lifespan -= 1.0f;
+  }
+
+  // Method to display
+  public void display() {
+    //stroke(255,lifespan);
+    fill(238,221,130,lifespan);
+    rect(location.x,location.y,20,6);
+  }
+  
+  // Is the particle still useful?
+  public boolean isDead() {
+    if (lifespan < 0.0f) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
   public void settings() {  size(1200, 600, P2D);  smooth(8); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "RedemtionOfSageREMASTERED" };

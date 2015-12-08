@@ -41,15 +41,14 @@ class bullet {
   void collision() {
     float xOverlap = calculate1DOverlap(player.location.x, xBullet, player.pWidth, bWidth);
     float yOverlap = calculate1DOverlap(player.location.y, yBullet, player.pHeight, bHeight);
-    if (!ara.powerUpActivated [0]){
-          //player.respawn();
-    }
 
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {
-      player.respawn();
       collisionObject = true;
       bullet.removeAll(bullet);
+
+      if (!ara.powerUpActivated[1])
+        player.respawn();
     } 
 
     for (Platform other : platforms) {

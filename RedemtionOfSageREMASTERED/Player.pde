@@ -113,22 +113,5 @@ class Player {
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
     }
-
-    //If x is pressed stick to the player
-    if (keysPressed[88]) { 
-
-      //stop moving
-      ara.velocity.x = 0;
-      ara.velocity.y = 0;
-
-      //Move x to player x
-      ara.location.x = location.x + pWidth/4;
-      ara.location.y = location.y + pHeight/4;
-      ara.powerUpActivated[0] = false;
-      ara.powerUps();
-      ara.isCarried = true;
-    } else {
-      ara.isCarried = false;
-    }
   }
 }
