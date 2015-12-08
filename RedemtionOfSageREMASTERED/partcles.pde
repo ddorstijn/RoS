@@ -19,7 +19,7 @@ class ParticleSystem {
   }
 
   void addParticle() {
-    origin.set(player.location.x + player.pWidth/2,player.location.y + player.pHeight);
+    origin.set(player.location.x + player.pWidth/2,player.location.y-15 + player.pHeight);
     particles.add(new Particle(origin));
   }
 
@@ -46,9 +46,9 @@ class Particle {
 
   Particle(PVector l) {
     acceleration = new PVector(0,0.05);
-    velocity = new PVector(random(-1,1),random(-1,0.25));
+    velocity = new PVector(random(-0.5,0.75),random(-0.1,1));
     location = l.get();
-    lifespan = 100.0;
+    lifespan = 75;
   }
 
   void run() {
@@ -65,9 +65,9 @@ class Particle {
 
   // Method to display
   void display() {
-    stroke(255,lifespan);
-    fill(255,100,0,lifespan);
-    rect(location.x,location.y,8,8);
+    //stroke(255,lifespan);
+    fill(238,221,130,lifespan);
+    rect(location.x,location.y,20,6);
   }
   
   // Is the particle still useful?
