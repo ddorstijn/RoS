@@ -67,7 +67,7 @@ void setup() {
   movEnemy = new ArrayList<MovEnemy>();
   bullet = new ArrayList<bullet>();
   coins = new ArrayList<Collectable>();
-  boss = new Boss(6, 170, 180, 5);
+  boss = new Boss(6, 170, 180, 60);
 
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
