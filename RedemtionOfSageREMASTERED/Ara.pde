@@ -26,14 +26,10 @@ class Ara {
 
     aWidth = 20;
     aHeight = 20; 
-<<<<<<< HEAD
-    speed = 0.5 ;
-    locRel = 0;
-=======
     angle = 0.05;
     scalar = 50;
     speed = 0.02;
->>>>>>> caebc50a03ac387e7a14747b82aa3a51bf44a8ad
+
     
 
     isCarried = false;
@@ -66,21 +62,19 @@ class Ara {
     } else {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
       angle = angle + speed;
-      
-<<<<<<< HEAD
-      location.x = player.location.x + locRel + speed;
-      locRel += speed;
- 
-      if( location.x <= player.location.x - 40){
-       speed = -speed; 
-       
-      }
-      if( location.x >= player.location.x + 60){
-       speed = -speed;  
-      }
-=======
->>>>>>> caebc50a03ac387e7a14747b82aa3a51bf44a8ad
       rect(location.x, location.y - 35, aWidth, aHeight); 
+      
+      if( location.x >= player.location.x - 39.9 && location.x < player.location.x + 20){
+      aWidth += 0.1; 
+      aHeight += 0.1;
+      }
+      else if( location.x >= player.location.x + 20 && location.x <= player.location.x + 59.9){
+      aWidth -= 0.1; 
+      aHeight -= 0.1;
+      }else{
+      aWidth = 20;
+      aHeight = 20;
+      }
     }
   }
 
@@ -143,39 +137,11 @@ class Ara {
       float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.aHeight);
 
       // Determine wchich overlap is the largest
-      if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0] == true) {
+      if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0]) {
         powerUpActivated[0] = false;
         movEnemy.remove(other);
         break;
       }
     }
   }
-
-  /*float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, aWidth);
-   float yOverlap = calculate1DOverlap(player.location.y, location.y, player.pHeight, aHeight);
-   
-   // Determine wchich overlap is the largest
-   if (xOverlap != 0 && yOverlap != 0 && !isCarried) {
-   if (abs(xOverlap)-2 > abs(yOverlap)) {
-   //If bottom collision
-   if (velocity.y > 0) {
-   location.y -= yOverlap; // adjust player x - position based on overlap
-   velocity.y = 0;
-   } else 
-   player.location.y += yOverlap;
-   
-   //If top collision
-   if (player.location.y < location.y) {
-   player.velocity.y = 0; 
-   player.canJump = true;
-   }
-   } else {
-   player.location.x += xOverlap; // adjust player y - position based on overlap
-   if (!powerUpActivated[0]) {
-   velocity.x = player.velocity.x;  
-   } else 
-   player.velocity.x = 0;
-   }
-   }   
-   }*/
 }
