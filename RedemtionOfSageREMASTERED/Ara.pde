@@ -23,7 +23,7 @@ class Ara {
 
     aWidth = 20;
     aHeight = 20; 
-    speed = 1 ;
+    speed = 0.5 ;
     locRel = 0;
     
 
@@ -58,11 +58,12 @@ class Ara {
       
       location.x = player.location.x + locRel + speed;
       locRel += speed;
-      if( location.x <= player.location.x - 30){
+ 
+      if( location.x <= player.location.x - 40){
        speed = -speed; 
        
       }
-      if( location.x >= player.location.x + 50){
+      if( location.x >= player.location.x + 60){
        speed = -speed;  
       }
       rect(location.x, location.y - 35, aWidth, aHeight); 
@@ -128,7 +129,7 @@ class Ara {
       float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.aHeight);
 
       // Determine wchich overlap is the largest
-      if (xOverlap != 0 && yOverlap != 0) {
+      if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0] == true) {
         powerUpActivated[0] = false;
         movEnemy.remove(other);
         break;
