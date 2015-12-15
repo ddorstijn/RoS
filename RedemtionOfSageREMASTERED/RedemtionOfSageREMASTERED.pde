@@ -71,7 +71,7 @@ void setup() {
   gridSize = 40;
 
   keysPressed = new boolean[256];
-particlePos = new PVector(100,100);
+  particlePos = new PVector(100,100);
 
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
@@ -115,9 +115,6 @@ void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-  if (level != 0) {
-    //println("canJumpAgain: "+player.canJumpAgain);
-  }
   
   draw_game();
 }
@@ -154,7 +151,7 @@ void update_game() {
           changeLevel = false;
           break;
         } else {
-          highscores.addScore(userInput, score);
+          highscores.addScore(userInput, score, displayTime);
           highscores.save("highscore.csv");
           highscores.load("highscore.csv");
           menu.subMenu = 3;

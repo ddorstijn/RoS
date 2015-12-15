@@ -172,7 +172,7 @@ class Button {
       // display header row
       fill(0);
       textSize(20);
-      text("Place        Name        Score", width/2, 70);
+      text("Place        Name        Score        Time", width/2, 70);
 
       textSize(16);
       // for each score in list
@@ -184,8 +184,9 @@ class Button {
         Score score = highscores.getScore(iScore);
 
         // display score in window
-        text((iScore+1) + "            " + score.name + "        " + score.score, width/2, 100 + iScore*20);
+        text((iScore+1) + "            " + score.name + "        " + score.score + "        " + score.time , width/2, 100 + iScore*20);
       }
+      
     } else if (level == 0 && subMenu == 4) {
       text("Keep tying until password matches", width/2, 20);
       text("Enter text here: " + userInput, width/2, height/2 - 20);
