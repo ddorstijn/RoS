@@ -2,12 +2,18 @@ void keyPressed() {
 
   keysPressed[keyCode] = true;
 
-  if (key != CODED && level == 0 && menu.subMenu == 4)
-    userInput += key;
-  if (keysPressed[' '] && level == 0 && menu.subMenu == 4) {
-    level = 1;
-    setIndex = 0; 
-    loadLevel(true);
+  if (level == 0 && menu.subMenu == 4) {
+    if (key == BACKSPACE) {
+      if (userInput.length() > 0) {
+        userInput = userInput.substring(0, userInput.length()-1);
+      }
+    } else if ((keysPressed[ENTER]) || (keysPressed[RETURN])) {
+      level = 1;
+      setIndex = 0; 
+      loadLevel(true);
+    } else if (textWidth(userInput+key) < width) {
+      userInput = userInput+key;
+    }  
   }
 
   if (keyCode == UP && level != 0) {//////Check for (double) jump
@@ -27,13 +33,13 @@ void keyPressed() {
   }  
 
   //If Z is pressed Ara shoots off
-  if (keysPressed[90] && !ara.powerUpActivated[1]) {
+  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
   }
 
   //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0]) {
+  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0) {
     ara.powerUpActivated[1] = !ara.powerUpActivated[1];
     ara.powerUps();
   }

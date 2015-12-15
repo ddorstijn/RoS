@@ -74,7 +74,7 @@ void setup() {
   gridSize = 40;
 
   keysPressed = new boolean[256];
-particlePos = new PVector(100,100);
+  particlePos = new PVector(100,100);
 
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
@@ -120,9 +120,6 @@ void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-  if (level != 0) {
-    //println("canJumpAgain: "+player.canJumpAgain);
-  }
   
   draw_game();
 }
@@ -159,7 +156,7 @@ void update_game() {
           changeLevel = false;
           break;
         } else {
-          highscores.addScore(userInput, score);
+          highscores.addScore(userInput, score, displayTime);
           highscores.save("highscore.csv");
           highscores.load("highscore.csv");
           menu.subMenu = 3;
@@ -246,17 +243,6 @@ void draw_game() {
     if (paused) {
       text("Paused", width/2, height/2);
     }
-
-    /*for (int i = 0; i < lives; i++) {
-      noStroke();
-      fill(255, 0, 0);
-      beginShape();
-      vertex(width-100 + i * 40, 10);
-      bezierVertex(width-100 + i * 40, -5, width-140 + i * 40, 10, width-100 + i * 40, 30);
-      vertex(width-100 + i * 40, 10);
-      bezierVertex(width-100 + i * 40, -5, width-60 + i * 40, 10, width-100 + i * 40, 30);
-      endShape();
-    }*/
 
     popStyle();
   } else {
