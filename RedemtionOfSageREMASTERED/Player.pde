@@ -58,6 +58,7 @@ class Player {
     velocity.add(gravity);
     velocity.x *= friction;
 
+
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
@@ -109,9 +110,15 @@ class Player {
 
     if (keysPressed[LEFT]) {  
       velocity.x -= acceleration;
+      for (int i = 0; i < 1; i++) {
+        jump.addParticle();
+      }
     }
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
+      for (int i = 0; i < 1; i++) {
+        jump.addParticle();
+      }
     }
   }
 }

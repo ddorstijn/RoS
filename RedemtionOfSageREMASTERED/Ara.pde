@@ -55,6 +55,8 @@ class Ara {
       noFill();
       strokeWeight(5);
       stroke(255, 255, 0);
+      location.x = player.location.x;
+      location.y = player.location.y;
       rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
       popStyle();
     } else if (powerUpActivated[0]) {
@@ -125,10 +127,20 @@ class Ara {
         // Determine wchich overlap is the largest
         if (abs(xOverlap) > abs(yOverlap)) {
           location.y += yOverlap; // adjust player x - position based on overlap
-                   
+            if (powerUpActivated[0]) {
+              for (int i = 0; i < 40; i++) {
+                bParticle.addBParticle();
+              }
+            }
+                  
         } else {
           location.x += xOverlap; // adjust player y - position based on overlap
-          powerUpActivated[0] = false;                  
+          if (powerUpActivated[0]) {
+            for (int i = 0; i < 40; i++) {
+              bParticle.addBParticle();
+            }
+          }
+          powerUpActivated[0] = false;                 
         }
       }
     }

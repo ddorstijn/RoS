@@ -45,8 +45,11 @@ class bullet {
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {
       collisionObject = true;
-     
-
+      if (ara.powerUpActivated[1]) {
+          for (int i = 0; i < 40; i++) {
+            bParticle.addBParticle();
+          }
+        }  
       if (!ara.powerUpActivated[1])
         player.respawn();
     } 
