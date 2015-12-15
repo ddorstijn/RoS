@@ -54,6 +54,7 @@ ArrayList<Turret> turrets;
 ArrayList<MovEnemy> movEnemy;
 ArrayList<bullet> bullet;
 
+
 //Call every class
 Player player;
 Camera worldCamera;
@@ -61,6 +62,7 @@ Ara ara;
 Boss boss;
 Button menu;
 ParticleSystem jump;
+ParticleSystem cParticle;
 
 void setup() {
   size(1200, 600, P2D);
@@ -80,6 +82,7 @@ particlePos = new PVector(100,100);
   coins = new ArrayList<Collectable>();
   boss = new Boss(6, 170, 180, 5);
   jump = new ParticleSystem(particlePos);
+  cParticle = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 
