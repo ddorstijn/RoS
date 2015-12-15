@@ -11,6 +11,9 @@ class Ara {
   boolean isCarried; //For ara
   boolean[] powerUpActivated;
 
+  int scalar;
+  float angle;
+
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
@@ -23,8 +26,14 @@ class Ara {
 
     aWidth = 20;
     aHeight = 20; 
+<<<<<<< HEAD
     speed = 0.5 ;
     locRel = 0;
+=======
+    angle = 0.05;
+    scalar = 50;
+    speed = 0.02;
+>>>>>>> caebc50a03ac387e7a14747b82aa3a51bf44a8ad
     
 
     isCarried = false;
@@ -55,7 +64,10 @@ class Ara {
     } else if (powerUpActivated[0]) {
       rect(location.x, location.y, aWidth, aHeight);
     } else {
+      location.x = (player.location.x + 10) + sin(angle) * scalar;
+      angle = angle + speed;
       
+<<<<<<< HEAD
       location.x = player.location.x + locRel + speed;
       locRel += speed;
  
@@ -66,6 +78,8 @@ class Ara {
       if( location.x >= player.location.x + 60){
        speed = -speed;  
       }
+=======
+>>>>>>> caebc50a03ac387e7a14747b82aa3a51bf44a8ad
       rect(location.x, location.y - 35, aWidth, aHeight); 
     }
   }
