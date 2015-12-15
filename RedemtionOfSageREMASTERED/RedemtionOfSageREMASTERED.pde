@@ -242,17 +242,6 @@ void draw_game() {
       text("Paused", width/2, height/2);
     }
 
-    /*for (int i = 0; i < lives; i++) {
-      noStroke();
-      fill(255, 0, 0);
-      beginShape();
-      vertex(width-100 + i * 40, 10);
-      bezierVertex(width-100 + i * 40, -5, width-140 + i * 40, 10, width-100 + i * 40, 30);
-      vertex(width-100 + i * 40, 10);
-      bezierVertex(width-100 + i * 40, -5, width-60 + i * 40, 10, width-100 + i * 40, 30);
-      endShape();
-    }*/
-
     popStyle();
   } else {
     startTime = millis();
