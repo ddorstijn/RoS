@@ -72,6 +72,7 @@ ArrayList<Turret> turrets;
 ArrayList<MovEnemy> movEnemy;
 ArrayList<bullet> bullet;
 
+
 //Call every class
 Player player;
 Camera worldCamera;
@@ -79,6 +80,7 @@ Ara ara;
 Boss boss;
 Button menu;
 ParticleSystem jump;
+ParticleSystem cParticle;
 
 public void setup() {
   
@@ -98,6 +100,7 @@ particlePos = new PVector(100,100);
   coins = new ArrayList<Collectable>();
   boss = new Boss(6, 170, 180, 5);
   jump = new ParticleSystem(particlePos);
+  cParticle = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 
@@ -308,7 +311,8 @@ class Ara {
     aHeight = 20; 
     angle = 0.05f;
     scalar = 50;
-    speed = 0.05f;
+    speed = 0.02f;
+
     
 
     isCarried = false;
@@ -341,8 +345,19 @@ class Ara {
     } else {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
       angle = angle + speed;
-      
       rect(location.x, location.y - 35, aWidth, aHeight); 
+      
+      if( location.x >= player.location.x - 39.9f && location.x < player.location.x + 20){
+      aWidth += 0.1f; 
+      aHeight += 0.1f;
+      }
+      else if( location.x >= player.location.x + 20 && location.x <= player.location.x + 59.9f){
+      aWidth -= 0.1f; 
+      aHeight -= 0.1f;
+      }else{
+      aWidth = 20;
+      aHeight = 20;
+      }
     }
   }
 
@@ -363,7 +378,7 @@ class Ara {
     }
 
     //Respawn
-    if (location.y > height || location.x > (player.location.x + (width / 2))) {
+    if (location.y > height || location.x > (player.location.x + (width / 2)) || location.x < (player.location.x - (width / 2))) {
       powerUpActivated[0] = false;
     }
   }
@@ -393,9 +408,10 @@ class Ara {
         // Determine wchich overlap is the largest
         if (abs(xOverlap) > abs(yOverlap)) {
           location.y += yOverlap; // adjust player x - position based on overlap
+                   
         } else {
           location.x += xOverlap; // adjust player y - position based on overlap
-          powerUpActivated[0] = false;
+          powerUpActivated[0] = false;                  
         }
       }
     }
@@ -405,41 +421,16 @@ class Ara {
       float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.aHeight);
 
       // Determine wchich overlap is the largest
-      if (xOverlap != 0 && yOverlap != 0) {
+      if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0]) {
         powerUpActivated[0] = false;
         movEnemy.remove(other);
+        for (int i = 0; i < 300; i++) {
+            cParticle.addCParticle();
+          }
         break;
       }
     }
   }
-
-  /*float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, aWidth);
-   float yOverlap = calculate1DOverlap(player.location.y, location.y, player.pHeight, aHeight);
-   
-   // Determine wchich overlap is the largest
-   if (xOverlap != 0 && yOverlap != 0 && !isCarried) {
-   if (abs(xOverlap)-2 > abs(yOverlap)) {
-   //If bottom collision
-   if (velocity.y > 0) {
-   location.y -= yOverlap; // adjust player x - position based on overlap
-   velocity.y = 0;
-   } else 
-   player.location.y += yOverlap;
-   
-   //If top collision
-   if (player.location.y < location.y) {
-   player.velocity.y = 0; 
-   player.canJump = true;
-   }
-   } else {
-   player.location.x += xOverlap; // adjust player y - position based on overlap
-   if (!powerUpActivated[0]) {
-   velocity.x = player.velocity.x;  
-   } else 
-   player.velocity.x = 0;
-   }
-   }   
-   }*/
 }
 public void drawBackground() {
   background(25, 41, 67); //Drawing background
@@ -532,15 +523,16 @@ public void keyPressed() {
     if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
       player.velocity.y = player.jumpSpeed / 1.2f;
       player.canJumpAgain = false;
-     }
-     if (player.canJump == true) {
+      jump.addParticle();
+    }
+    if (player.canJump == true) {
       player.velocity.y = player.jumpSpeed;
       player.canJump = false; // Jump is possible
-      for(int i = 0; i < 30; i++){
-      jump.addParticle();
+      for (int i = 0; i < 30; i++) {
+        jump.addParticle();
       }
       player.canJump = false;
-     }
+    }
   }  
 
   //If Z is pressed Ara shoots off
@@ -602,11 +594,11 @@ public void keyReleased() {
 }
 
 int playerIndex = 0;
-  // add score, save scores and load scores by typing space, 's' or 'l'
-  public void keyTyped() {
-    if (key == 's') highscores.save("highscore.csv");
-    if (key == 'l') highscores.load("highscore.csv");
-  }
+// add score, save scores and load scores by typing space, 's' or 'l'
+public void keyTyped() {
+  if (key == 's') highscores.save("highscore.csv");
+  if (key == 'l') highscores.load("highscore.csv");
+}
 
 //Level building!
 public void mousePressed() {
@@ -794,7 +786,7 @@ public void loadLevel(boolean objectsToo) {
   for (int i = 0; i < keysPressed.length; i++) {
     keysPressed[i] = false;
   }
-
+  bullet.removeAll(bullet);
   if (level == 0) {
   } else {
     levels = loadJSONObject("level" + level + ".json");
@@ -1347,7 +1339,7 @@ class bullet {
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {
       collisionObject = true;
-      bullet.removeAll(bullet);
+     
 
       if (!ara.powerUpActivated[1])
         player.respawn();
@@ -1646,6 +1638,7 @@ class HSComperator implements Comparator<Score> {
 
 public void displayparticles() {
   jump.run();
+  cParticle.run();
 }
 
 
@@ -1657,16 +1650,23 @@ public void displayparticles() {
 
 class ParticleSystem {
   ArrayList<Particle> particles;
+  ArrayList<cParticle> cParticles;
   PVector origin;
 
   ParticleSystem(PVector location) {
     particles = new ArrayList<Particle>();
+    cParticles = new ArrayList<cParticle>();
     origin = new PVector(0,0);
   }
 
   public void addParticle() {
     origin.set(player.location.x + player.pWidth/2,player.location.y-15 + player.pHeight);
     particles.add(new Particle(origin));
+  }
+  
+  public void addCParticle() {
+    origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
+    cParticles.add(new cParticle(origin));
   }
 
   public void run() {
@@ -1675,6 +1675,13 @@ class ParticleSystem {
       p.run();
       if (p.isDead()) {
         particles.remove(i);
+      }
+    }
+    for (int c = cParticles.size()-1; c >= 0; c--) {
+      cParticle q = cParticles.get(c);
+      q.run();
+      if (q.isDead()) {
+        cParticles.remove(c);
       }
     }
   }
@@ -1713,7 +1720,49 @@ class Particle {
   public void display() {
     //stroke(255,lifespan);
     fill(238,221,130,lifespan);
-    rect(location.x,location.y,20,6);
+    ellipse(location.x,location.y,20,6);
+  }
+  
+  // Is the particle still useful?
+  public boolean isDead() {
+    if (lifespan < 0.0f) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+class cParticle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float lifespan;
+
+  cParticle(PVector l) {
+    acceleration = new PVector(random(-0.02f,0.02f),random(-0.02f,0.02f));
+    velocity = new PVector(random(-0.5f,0.75f),random(-0.1f,1));
+    location = l.get();
+    lifespan = 100;
+  }
+
+  public void run() {
+    update();
+    display();
+  }
+
+  // Method to update location
+  public void update() {
+    velocity.add(acceleration);
+    location.add(velocity);
+    lifespan -= 1.0f;
+  }
+
+  // Method to display
+  public void display() {
+    stroke(0,lifespan);
+    fill(random(200,250),0,0,lifespan);
+    ellipse(location.x,location.y,10,10);
   }
   
   // Is the particle still useful?
@@ -1727,7 +1776,7 @@ class Particle {
 }
   public void settings() {  size(1200, 600, P2D);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "RedemtionOfSageREMASTERED" };
+    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "RedemtionOfSageREMASTERED" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

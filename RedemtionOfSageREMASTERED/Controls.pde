@@ -14,15 +14,16 @@ void keyPressed() {
     if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
       player.velocity.y = player.jumpSpeed / 1.2;
       player.canJumpAgain = false;
-     }
-     if (player.canJump == true) {
+      jump.addParticle();
+    }
+    if (player.canJump == true) {
       player.velocity.y = player.jumpSpeed;
       player.canJump = false; // Jump is possible
-      for(int i = 0; i < 30; i++){
-      jump.addParticle();
+      for (int i = 0; i < 30; i++) {
+        jump.addParticle();
       }
       player.canJump = false;
-     }
+    }
   }  
 
   //If Z is pressed Ara shoots off
@@ -84,11 +85,11 @@ void keyReleased() {
 }
 
 int playerIndex = 0;
-  // add score, save scores and load scores by typing space, 's' or 'l'
-  void keyTyped() {
-    if (key == 's') highscores.save("highscore.csv");
-    if (key == 'l') highscores.load("highscore.csv");
-  }
+// add score, save scores and load scores by typing space, 's' or 'l'
+void keyTyped() {
+  if (key == 's') highscores.save("highscore.csv");
+  if (key == 'l') highscores.load("highscore.csv");
+}
 
 //Level building!
 void mousePressed() {

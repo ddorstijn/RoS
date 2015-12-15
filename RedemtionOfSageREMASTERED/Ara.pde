@@ -95,7 +95,7 @@ class Ara {
     }
 
     //Respawn
-    if (location.y > height || location.x > (player.location.x + (width / 2))) {
+    if (location.y > height || location.x > (player.location.x + (width / 2)) || location.x < (player.location.x - (width / 2))) {
       powerUpActivated[0] = false;
     }
   }
@@ -125,9 +125,10 @@ class Ara {
         // Determine wchich overlap is the largest
         if (abs(xOverlap) > abs(yOverlap)) {
           location.y += yOverlap; // adjust player x - position based on overlap
+                   
         } else {
           location.x += xOverlap; // adjust player y - position based on overlap
-          powerUpActivated[0] = false;
+          powerUpActivated[0] = false;                  
         }
       }
     }
@@ -140,6 +141,9 @@ class Ara {
       if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0]) {
         powerUpActivated[0] = false;
         movEnemy.remove(other);
+        for (int i = 0; i < 300; i++) {
+            cParticle.addCParticle();
+          }
         break;
       }
     }
