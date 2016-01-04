@@ -81,6 +81,7 @@ Boss boss;
 Button menu;
 ParticleSystem jump;
 ParticleSystem cParticle;
+ParticleSystem bParticle;
 
 public void setup() {
   
@@ -101,6 +102,7 @@ public void setup() {
   boss = new Boss(6, 170, 180, 5);
   jump = new ParticleSystem(particlePos);
   cParticle = new ParticleSystem(particlePos);
+  bParticle = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 
@@ -322,6 +324,8 @@ class Ara {
       noFill();
       strokeWeight(5);
       stroke(255, 255, 0);
+      location.x = player.location.x;
+      location.y = player.location.y;
       rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
       popStyle();
     } else if (powerUpActivated[0]) {
@@ -384,6 +388,7 @@ class Ara {
   }
 
   public void collisionDetection() {
+<<<<<<< HEAD
     if (powerUpActivated[0]) {
       for (Platform other : platforms) {
         float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
@@ -398,6 +403,30 @@ class Ara {
             location.x += xOverlap; // adjust player y - position based on overlap
             powerUpActivated[0] = false;                  
           }
+=======
+    for (Platform other : platforms) {
+      float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
+      float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
+
+      if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
+        // Determine wchich overlap is the largest
+        if (abs(xOverlap) > abs(yOverlap)) {
+          location.y += yOverlap; // adjust player x - position based on overlap
+            if (powerUpActivated[0]) {
+              for (int i = 0; i < 40; i++) {
+                bParticle.addBParticle();
+              }
+            }
+                  
+        } else {
+          location.x += xOverlap; // adjust player y - position based on overlap
+          if (powerUpActivated[0]) {
+            for (int i = 0; i < 40; i++) {
+              bParticle.addBParticle();
+            }
+          }
+          powerUpActivated[0] = false;                 
+>>>>>>> b05ee142d2972f6195f386ec415b9e271b84e1f1
         }
       }
     }
@@ -1228,6 +1257,7 @@ class Player {
     velocity.add(gravity);
     velocity.x *= friction;
 
+
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
@@ -1279,9 +1309,15 @@ class Player {
 
     if (keysPressed[LEFT]) {  
       velocity.x -= acceleration;
+      for (int i = 0; i < 1; i++) {
+        jump.addParticle();
+      }
     }
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
+      for (int i = 0; i < 1; i++) {
+        jump.addParticle();
+      }
     }
   }
 }
@@ -1332,8 +1368,11 @@ class bullet {
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {
       collisionObject = true;
-     
-
+      if (ara.powerUpActivated[1]) {
+          for (int i = 0; i < 40; i++) {
+            bParticle.addBParticle();
+          }
+        }  
       if (!ara.powerUpActivated[1])
         player.respawn();
     } 
@@ -1637,6 +1676,7 @@ class HSComperator implements Comparator<Score> {
 public void displayparticles() {
   jump.run();
   cParticle.run();
+  bParticle.run();
 }
 
 
@@ -1649,11 +1689,13 @@ public void displayparticles() {
 class ParticleSystem {
   ArrayList<Particle> particles;
   ArrayList<cParticle> cParticles;
+  ArrayList<bParticle> bParticles;
   PVector origin;
 
   ParticleSystem(PVector location) {
     particles = new ArrayList<Particle>();
     cParticles = new ArrayList<cParticle>();
+    bParticles = new ArrayList<bParticle>();
     origin = new PVector(0,0);
   }
 
@@ -1665,6 +1707,11 @@ class ParticleSystem {
   public void addCParticle() {
     origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
     cParticles.add(new cParticle(origin));
+  }
+
+  public void addBParticle() {
+    origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
+    bParticles.add(new bParticle(origin));
   }
 
   public void run() {
@@ -1682,6 +1729,13 @@ class ParticleSystem {
         cParticles.remove(c);
       }
     }
+    for (int b = bParticles.size()-1; b >= 0; b--) {
+      bParticle s = bParticles.get(b);
+      s.run();
+      if (s.isDead()) {
+        bParticles.remove(b);
+      }
+    }
   }
 }
 
@@ -1696,10 +1750,10 @@ class Particle {
   float lifespan;
 
   Particle(PVector l) {
-    acceleration = new PVector(0,0.05f);
+    acceleration = new PVector(0,0.02f);
     velocity = new PVector(random(-0.5f,0.75f),random(-0.1f,1));
     location = l.get();
-    lifespan = 75;
+    lifespan = 60;
   }
 
   public void run() {
@@ -1716,9 +1770,9 @@ class Particle {
 
   // Method to display
   public void display() {
-    //stroke(255,lifespan);
-    fill(238,221,130,lifespan);
-    ellipse(location.x,location.y,20,6);
+    stroke(255,lifespan);
+    fill(72,215,230,lifespan);
+    rect(location.x,location.y,10,10);
   }
   
   // Is the particle still useful?
@@ -1761,6 +1815,48 @@ class cParticle {
     stroke(0,lifespan);
     fill(random(200,250),0,0,lifespan);
     ellipse(location.x,location.y,10,10);
+  }
+  
+  // Is the particle still useful?
+  public boolean isDead() {
+    if (lifespan < 0.0f) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+class bParticle {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float lifespan;
+
+  bParticle(PVector l) {
+    acceleration = new PVector(random(-0.02f,0.02f),random(-0.02f,0.02f));
+    velocity = new PVector(random(-0.5f,0.5f),random(-0.5f,0.5f));
+    location = l.get();
+    lifespan = 50;
+  }
+
+  public void run() {
+    update();
+    display();
+  }
+
+  // Method to update location
+  public void update() {
+    velocity.add(acceleration);
+    location.add(velocity);
+    lifespan -= 1.0f;
+  }
+
+  // Method to display
+  public void display() {
+    stroke(250,lifespan);
+    fill(0,0,0,lifespan);
+    ellipse(location.x,location.y,7,7);
   }
   
   // Is the particle still useful?
