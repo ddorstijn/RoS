@@ -2,99 +2,16 @@ void keyPressed() {
 
   keysPressed[keyCode] = true;
 
-  if (level == 0 && menu.subMenu == 4) {
-    if (key == BACKSPACE) {
-      if (userInput.length() > 0) {
-        userInput = userInput.substring(0, userInput.length()-1);
-      }
-    } else if ((keysPressed[ENTER]) || (keysPressed[RETURN])) {
-      level = 1;
-      setIndex = 0; 
-      loadLevel(true);
-    } else if (textWidth(userInput+key) < width) {
-      userInput = userInput+key;
-    }  
-  }
-
-  if (keyCode == UP && level != 0) {//////Check for (double) jump
-    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
-      player.velocity.y = player.jumpSpeed / 1.2;
-      player.canJumpAgain = false;
-      jump.addParticle();
-    }
-    if (player.canJump == true) {
-      player.velocity.y = player.jumpSpeed;
-      player.canJump = false; // Jump is possible
-      for (int i = 0; i < 30; i++) {
-        jump.addParticle();
-      }
-      player.canJump = false;
-    }
-  }  
-
-  //If Z is pressed Ara shoots off
-  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0) {
-    ara.powerUpActivated[0] = !ara.powerUpActivated[0];
-    ara.powerUps();
-  }
-
-  //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0) {
-    ara.powerUpActivated[1] = !ara.powerUpActivated[1];
-    ara.powerUps();
-  }
-
-  if (keyCode == 16 && level != 0 /*&& menu.subMenu != 4*/) { //16 is the keyCode for shift
-    shiftKey = !shiftKey;
-  }
-
-  if (keysPressed[77]) {
-    menu.subMenu = 0;
-    level = 0;
-  }
-
-  if (keyCode == 80 && level != 0 && menu.subMenu != 4) {
-    paused = !paused;
-
-    accumTime = accumTime + millis() - startTime;
-  }
-
-  if (keysPressed[83] && level != 1 && level != 0) { 
-    level = 1;
-    setIndex = 0; 
-    loadLevel(true);
-  }
-  if (keysPressed[68] && level != 2 && level != 0) { 
-    level = 2;
-    setIndex = 0;
-    loadLevel(true);
-  }
-  if (keysPressed[70] && level != 3 && level != 0) { 
-    level = 3;
-    setIndex = 0;
-    loadLevel(true);
-  }
-
-  if (level == 0) {
-    if (keyCode == DOWN) {
-      menu.mpos++;
-    }
-    if (keyCode == UP) {
-      menu.mpos--;
-    }
-  }
+  menuControls();
+  playerControls();
+  araControls();
+  gameControls();
+  buildControls();
 }
 
 void keyReleased() {
   keysPressed[keyCode] = false;
   menu.enteredMenu = false;
-}
-
-int playerIndex = 0;
-// add score, save scores and load scores by typing space, 's' or 'l'
-void keyTyped() {
-  if (key == 's') highscores.save("highscore.csv");
-  if (key == 'l') highscores.load("highscore.csv");
 }
 
 //Level building!
@@ -276,5 +193,103 @@ void levelBuild() {
   }
   if (keysPressed['6']) {
     setIndex = 6;
+  }
+}
+
+
+
+//Controls menu
+void menuControls() {
+  if (level == 0 && menu.subMenu == 4) {
+    if (key == BACKSPACE) {
+      if (userInput.length() > 0) {
+        userInput = userInput.substring(0, userInput.length()-1);
+      }
+    } else if ((keysPressed[ENTER]) || (keysPressed[RETURN])) {
+      level = 1;
+      setIndex = 0; 
+      loadLevel(true);
+    } else if (textWidth(userInput+key) < width) {
+      userInput = userInput+key;
+    }  
+  }
+
+  if (level == 0) {
+    if (keyCode == DOWN) {
+      menu.mpos++;
+    }
+    if (keyCode == UP) {
+      menu.mpos--;
+    }
+  }
+}
+
+void gameControls() {
+  //enable buildmode
+  if (keyCode == 16 && level != 0) { //16 is the keyCode for shift
+    shiftKey = !shiftKey;
+  }
+
+  //M-key to go to menu
+  if (keysPressed[77]) {
+    menu.subMenu = 0;
+    level = 0;
+  }
+
+  //P-key to pause
+  if (keyCode == 80 && level != 0) {
+    paused = !paused;
+
+    accumTime = accumTime + millis() - startTime;
+  }
+}
+
+void playerControls() {
+  if (keyCode == UP && level != 0) {//////Check for (double) jump
+    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
+      player.velocity.y = player.jumpSpeed / 1.2;
+      player.canJumpAgain = false;
+      jump.addParticle();
+    }
+    if (player.canJump == true) {
+      player.velocity.y = player.jumpSpeed;
+      player.canJump = false; // Jump is possible
+      for (int i = 0; i < 30; i++) {
+        jump.addParticle();
+      }
+      player.canJump = false;
+    }
+  }
+}
+
+void araControls() {
+  //If Z is pressed Ara shoots off
+  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0) {
+    ara.powerUpActivated[0] = !ara.powerUpActivated[0];
+    ara.powerUps();
+  }
+
+  //If X is pressed turn on shield
+  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0) {
+    ara.powerUpActivated[1] = !ara.powerUpActivated[1];
+    ara.powerUps();
+  }
+}
+
+void buildControls() {
+    if (keysPressed[83] && level != 1 && level != 0) { 
+    level = 1;
+    setIndex = 0; 
+    loadLevel(true);
+  }
+  if (keysPressed[68] && level != 2 && level != 0) { 
+    level = 2;
+    setIndex = 0;
+    loadLevel(true);
+  }
+  if (keysPressed[70] && level != 3 && level != 0) { 
+    level = 3;
+    setIndex = 0;
+    loadLevel(true);
   }
 }

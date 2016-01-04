@@ -91,7 +91,7 @@ public void setup() {
   gridSize = 40;
 
   keysPressed = new boolean[256];
-particlePos = new PVector(100,100);
+  particlePos = new PVector(100,100);
 
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
@@ -136,9 +136,6 @@ public void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-  if (level != 0) {
-    //println("canJumpAgain: "+player.canJumpAgain);
-  }
   
   draw_game();
 }
@@ -175,7 +172,7 @@ public void update_game() {
           changeLevel = false;
           break;
         } else {
-          highscores.addScore(userInput, score);
+          highscores.addScore(userInput, score, displayTime);
           highscores.save("highscore.csv");
           highscores.load("highscore.csv");
           menu.subMenu = 3;
@@ -263,17 +260,6 @@ public void draw_game() {
       text("Paused", width/2, height/2);
     }
 
-    /*for (int i = 0; i < lives; i++) {
-      noStroke();
-      fill(255, 0, 0);
-      beginShape();
-      vertex(width-100 + i * 40, 10);
-      bezierVertex(width-100 + i * 40, -5, width-140 + i * 40, 10, width-100 + i * 40, 30);
-      vertex(width-100 + i * 40, 10);
-      bezierVertex(width-100 + i * 40, -5, width-60 + i * 40, 10, width-100 + i * 40, 30);
-      endShape();
-    }*/
-
     popStyle();
   } else {
     startTime = millis();
@@ -312,8 +298,6 @@ class Ara {
     angle = 0.05f;
     scalar = 50;
     speed = 0.02f;
-
-    
 
     isCarried = false;
     powerUpActivated = new boolean[2];
@@ -400,18 +384,20 @@ class Ara {
   }
 
   public void collisionDetection() {
-    for (Platform other : platforms) {
-      float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
-      float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
+    if (powerUpActivated[0]) {
+      for (Platform other : platforms) {
+        float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
+        float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
 
-      if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
-        // Determine wchich overlap is the largest
-        if (abs(xOverlap) > abs(yOverlap)) {
-          location.y += yOverlap; // adjust player x - position based on overlap
-                   
-        } else {
-          location.x += xOverlap; // adjust player y - position based on overlap
-          powerUpActivated[0] = false;                  
+        if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
+          // Determine wchich overlap is the largest
+          if (abs(xOverlap) > abs(yOverlap)) {
+            location.y += yOverlap; // adjust player x - position based on overlap
+                     
+          } else {
+            location.x += xOverlap; // adjust player y - position based on overlap
+            powerUpActivated[0] = false;                  
+          }
         }
       }
     }
@@ -511,12 +497,18 @@ public void keyPressed() {
 
   keysPressed[keyCode] = true;
 
-  if (key != CODED && level == 0 && menu.subMenu == 4)
-    userInput += key;
-  if (keysPressed[' '] && level == 0 && menu.subMenu == 4) {
-    level = 1;
-    setIndex = 0; 
-    loadLevel(true);
+  if (level == 0 && menu.subMenu == 4) {
+    if (key == BACKSPACE) {
+      if (userInput.length() > 0) {
+        userInput = userInput.substring(0, userInput.length()-1);
+      }
+    } else if ((keysPressed[ENTER]) || (keysPressed[RETURN])) {
+      level = 1;
+      setIndex = 0; 
+      loadLevel(true);
+    } else if (textWidth(userInput+key) < width) {
+      userInput = userInput+key;
+    }  
   }
 
   if (keyCode == UP && level != 0) {//////Check for (double) jump
@@ -536,13 +528,13 @@ public void keyPressed() {
   }  
 
   //If Z is pressed Ara shoots off
-  if (keysPressed[90] && !ara.powerUpActivated[1]) {
+  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
   }
 
   //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0]) {
+  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0) {
     ara.powerUpActivated[1] = !ara.powerUpActivated[1];
     ara.powerUps();
   }
@@ -1061,7 +1053,7 @@ class Button {
       // display header row
       fill(0);
       textSize(20);
-      text("Place        Name        Score", width/2, 70);
+      text("Place        Name        Score        Time", width/2, 70);
 
       textSize(16);
       // for each score in list
@@ -1073,8 +1065,9 @@ class Button {
         Score score = highscores.getScore(iScore);
 
         // display score in window
-        text((iScore+1) + "            " + score.name + "        " + score.score, width/2, 100 + iScore*20);
+        text((iScore+1) + "            " + score.name + "        " + score.score + "        " + score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), width/2, 100 + iScore*20);
       }
+
     } else if (level == 0 && subMenu == 4) {
       text("Keep tying until password matches", width/2, 20);
       text("Enter text here: " + userInput, width/2, height/2 - 20);
@@ -1552,11 +1545,14 @@ class Score {
   String name;
   // and his/her score
   int score;
+  // also her time
+  int time;
 
   // Constructor
-  Score(String name, int score) {
+  Score(String name, int score, int time) {
     this.name = name;
     this.score = score;
+    this.time = time;
   }
 }
 
@@ -1570,12 +1566,13 @@ class ScoreList {
     scoreTable = new Table();
     scoreTable.addColumn("name");
     scoreTable.addColumn("score");
+    scoreTable.addColumn("time");
   }
 
   // Create a new Score and add it to the scores ArrayList
-  public void addScore(String name, int score) {
+  public void addScore(String name, int score, int time) {
     // Add a new score object to the scores ArrayList
-    scores.add(new Score(name, score));
+    scores.add(new Score(name, score, time));
     // Sort the scores ArrayList after each score is added
     sortScores();
   }
@@ -1602,6 +1599,7 @@ class ScoreList {
       TableRow row = scoreTable.addRow();
       row.setString("name", score.name);
       row.setInt("score", score.score);
+      row.setInt("time", score.time);
     }
     
     // save the table to file
@@ -1621,7 +1619,7 @@ class ScoreList {
     // copy scores from table to the scores array
     for (int iScore=0; iScore<scoreTable.getRowCount(); iScore++) {
       TableRow row = scoreTable.getRow(iScore);
-      scores.add(new Score(row.getString("name"), row.getInt("score")));
+      scores.add(new Score(row.getString("name"), row.getInt("score"), row.getInt("time")));
     }
   }
 }
@@ -1776,7 +1774,7 @@ class cParticle {
 }
   public void settings() {  size(1200, 600, P2D);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "RedemtionOfSageREMASTERED" };
+    String[] appletArgs = new String[] { "RedemtionOfSageREMASTERED" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

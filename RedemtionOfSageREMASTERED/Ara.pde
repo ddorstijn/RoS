@@ -30,8 +30,6 @@ class Ara {
     scalar = 50;
     speed = 0.02;
 
-    
-
     isCarried = false;
     powerUpActivated = new boolean[2];
   }
@@ -117,18 +115,20 @@ class Ara {
   }
 
   void collisionDetection() {
-    for (Platform other : platforms) {
-      float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
-      float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
+    if (powerUpActivated[0]) {
+      for (Platform other : platforms) {
+        float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
+        float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
 
-      if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
-        // Determine wchich overlap is the largest
-        if (abs(xOverlap) > abs(yOverlap)) {
-          location.y += yOverlap; // adjust player x - position based on overlap
-                   
-        } else {
-          location.x += xOverlap; // adjust player y - position based on overlap
-          powerUpActivated[0] = false;                  
+        if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
+          // Determine wchich overlap is the largest
+          if (abs(xOverlap) > abs(yOverlap)) {
+            location.y += yOverlap; // adjust player x - position based on overlap
+                     
+          } else {
+            location.x += xOverlap; // adjust player y - position based on overlap
+            powerUpActivated[0] = false;                  
+          }
         }
       }
     }
