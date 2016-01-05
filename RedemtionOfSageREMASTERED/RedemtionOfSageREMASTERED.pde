@@ -1,4 +1,11 @@
-int TICKS_PER_SECOND = 60; //<>//
+import ddf.minim.*; //<>//
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -138,14 +145,6 @@ void update_game() {
       }
     }
 
-    for (Turret turret : turrets) {
-      turret.update();
-    }
-
-    for (MovEnemy o : movEnemy) {
-      o.update();
-    }
-
     for (Platform b : platforms) {
       b.update();
       if (changeLevel) {
@@ -167,7 +166,16 @@ void update_game() {
         }
       }
     }
+  
+    for (Turret turret : turrets) {
+      turret.update();
+    }
 
+    for (MovEnemy o : movEnemy) {
+      o.update();
+    }
+    
+    
     for (bullet b : bullet) {
       b.update();
       if (collisionObject){
