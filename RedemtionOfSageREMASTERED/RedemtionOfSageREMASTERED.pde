@@ -12,7 +12,11 @@ int level;
 int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
-
+//kleur g
+int checkpointColor1;
+int checkpointColor2;
+int checkpointStroke;
+int strokeWeight1;
 int score;
 int lives;
 
@@ -70,7 +74,12 @@ void setup() {
   surface.setResizable(true);
   smooth(8);
   frameRate(1000);
-
+// rondje
+  checkpointColor1 = color(245,245,230);
+  checkpointColor2 =  color(245,245,230);
+  checkpointStroke = color(245,245,250);
+  strokeWeight1 = 0;
+  
   gridSize = 40;
 
   keysPressed = new boolean[256];
@@ -137,6 +146,27 @@ void update_game() {
         break;
       }
     }
+    //veranderd
+    if(level == 1){
+    if(player.location.x >= 2291){
+      strokeWeight1 = 3;
+      checkpointStroke = color(255);
+      checkpointColor1 = color(252,252,38);
+    }
+    if(player.location.x >= 4733){
+      checkpointStroke = color(242,242,99);
+      checkpointColor2 = color(252,252,38);
+      }
+    }
+    if(level == 2){
+      if(player.location.x >= 3336){
+      checkpointStroke = color(242,242,99);
+      checkpointColor1 = color(252,252,38);
+      }
+    }
+
+
+println(player.location.x, player.location.y);
 
     for (Turret turret : turrets) {
       turret.update();
@@ -198,7 +228,33 @@ void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
+//checkpoint rondje
+if(level == 1){  
+  //Drawing checkpoint 1
+  noStroke();
+  fill(64,64,64);
+  rect(2291, 220, 8, 80);
+  //strokeWeight(strokeWeight1);
+  stroke(checkpointStroke);
+  fill(checkpointColor1);
+  ellipse(2285, 210, 20,20);
+  noStroke();
+  //Drawing checkpoint 2
+  fill(64,64,64); 
+  rect(4733, 210, 8, 80);
+  fill (checkpointColor2);
+  ellipse(4727, 200, 20,20);
+  }
 
+if (level == 2){ 
+  //Drawing checkpoint 1
+  fill(64,64,64);
+  noStroke();
+  rect(3336, 200, 8, 80);
+  stroke(checkpointStroke);
+  fill(checkpointColor1);
+  ellipse(3330, 190, 20,20);
+}
     levelBuild();
 
     //setuppreview();
