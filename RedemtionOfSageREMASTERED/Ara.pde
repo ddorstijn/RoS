@@ -56,6 +56,8 @@ class Ara {
       rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
       popStyle();
     } else if (powerUpActivated[0]) {
+      aWidth = 20;
+      aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
@@ -141,8 +143,8 @@ class Ara {
       if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0]) {
         powerUpActivated[0] = false;
         movEnemy.remove(other);
-        for (int i = 0; i < 300; i++) {
-            cParticle.addCParticle();
+        for (int i = 0; i < 60; i++) {
+            enemyParticle.addenemyParticle();
           }
         break;
       }

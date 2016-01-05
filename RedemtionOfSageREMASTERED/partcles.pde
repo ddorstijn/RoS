@@ -1,7 +1,7 @@
 void displayparticles() {
   jump.run();
-  cParticle.run();
-  bParticle.run();
+  enemyParticle.run();
+  bulletParticle.run();
 }
 
 
@@ -13,30 +13,30 @@ void displayparticles() {
 
 class ParticleSystem {
   ArrayList<Particle> particles;
-  ArrayList<cParticle> cParticles;
-  ArrayList<bParticle> bParticles;
+  ArrayList<enemyParticle> enemyParticles;
+  ArrayList<bulletParticle> bulletParticles;
   PVector origin;
 
   ParticleSystem(PVector location) {
     particles = new ArrayList<Particle>();
-    cParticles = new ArrayList<cParticle>();
-    bParticles = new ArrayList<bParticle>();
-    origin = new PVector(0,0);
+    enemyParticles = new ArrayList<enemyParticle>();
+    bulletParticles = new ArrayList<bulletParticle>();
+    origin = new PVector(0, 0);
   }
 
   void addParticle() {
-    origin.set(player.location.x + player.pWidth/2,player.location.y-15 + player.pHeight);
+    origin.set(player.location.x + player.pWidth/2, player.location.y + player.pHeight);
     particles.add(new Particle(origin));
   }
-  
-  void addCParticle() {
-    origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
-    cParticles.add(new cParticle(origin));
+
+  void addenemyParticle() {
+    origin.set(ara.location.x + ara.aWidth/2, ara.location.y + ara.aHeight/2);
+    enemyParticles.add(new enemyParticle(origin));
   }
 
-  void addBParticle() {
-    origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
-    bParticles.add(new bParticle(origin));
+  void addbulletParticle() {
+    origin.set(player.location.x + player.pWidth/2, player.location.y + player.pHeight/2);
+    bulletParticles.add(new bulletParticle(origin));
   }
 
   void run() {
@@ -47,18 +47,18 @@ class ParticleSystem {
         particles.remove(i);
       }
     }
-    for (int c = cParticles.size()-1; c >= 0; c--) {
-      cParticle q = cParticles.get(c);
+    for (int c = enemyParticles.size()-1; c >= 0; c--) {
+      enemyParticle q = enemyParticles.get(c);
       q.run();
       if (q.isDead()) {
-        cParticles.remove(c);
+        enemyParticles.remove(c);
       }
     }
-    for (int b = bParticles.size()-1; b >= 0; b--) {
-      bParticle s = bParticles.get(b);
+    for (int b = bulletParticles.size()-1; b >= 0; b--) {
+      bulletParticle s = bulletParticles.get(b);
       s.run();
       if (s.isDead()) {
-        bParticles.remove(b);
+        bulletParticles.remove(b);
       }
     }
   }
@@ -73,10 +73,11 @@ class Particle {
   PVector velocity;
   PVector acceleration;
   float lifespan;
+  float c1;
 
   Particle(PVector l) {
-    acceleration = new PVector(0,0.02);
-    velocity = new PVector(random(-0.5,0.75),random(-0.1,1));
+    acceleration = new PVector(0, 0.02);
+    velocity = new PVector(random(-0.75, 0.75), random(-0.85, 0.01));
     location = l.get();
     lifespan = 60;
   }
@@ -95,11 +96,16 @@ class Particle {
 
   // Method to display
   void display() {
-    stroke(255,lifespan);
-    fill(72,215,230,lifespan);
-    rect(location.x,location.y,10,10);
+    c1 +=10;
+    c1%=255;
+    stroke(100, 0, 0);
+    pushStyle();
+    colorMode(HSB);
+    fill(c1, 255, 255, lifespan+60);
+    rect(location.x, location.y, 8, 8);
+    popStyle();
   }
-  
+
   // Is the particle still useful?
   boolean isDead() {
     if (lifespan < 0.0) {
@@ -110,22 +116,25 @@ class Particle {
   }
 }
 
-class cParticle {
+class enemyParticle {
   PVector location;
   PVector velocity;
   PVector acceleration;
   float lifespan;
+  float epWidth;
+  float epheight;
 
-  cParticle(PVector l) {
-    acceleration = new PVector(random(-0.02,0.02),random(-0.02,0.02));
-    velocity = new PVector(random(-0.5,0.75),random(-0.1,1));
+  enemyParticle(PVector l) {//enemy particles
+    acceleration = new PVector(random(-0.01, 0.01), random(-0.01, 0.01));
+    velocity = new PVector(random(-0.5, 0.5), random(-0.1, 0.7));
     location = l.get();
-    lifespan = 100;
+    lifespan = 160;
   }
 
   void run() {
     update();
     display();
+    collisionDetection();
   }
 
   // Method to update location
@@ -134,14 +143,30 @@ class cParticle {
     location.add(velocity);
     lifespan -= 1.0;
   }
+  void collisionDetection() {
+    for (Platform other : platforms) {
+      float xOverlap = calculate1DOverlap(location.x, other.location.x, epWidth, other.iWidth);
+      float yOverlap = calculate1DOverlap(location.y, other.location.y, epheight, other.iHeight);
 
+      if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
+        // Determine wchich overlap is the largest
+        if (abs(xOverlap) > abs(yOverlap)) {
+          location.y += yOverlap; // adjust player x - position based on overlap
+          velocity.y = 0;
+        } else {
+          location.x += xOverlap; // adjust player y - position based on overlap
+          velocity.x *= -1;
+        }
+      }
+    }
+  }
   // Method to display
   void display() {
-    stroke(0,lifespan);
-    fill(random(200,250),0,0,lifespan);
-    ellipse(location.x,location.y,10,10);
+    stroke(0, lifespan);
+    fill(187, 10, 30, lifespan);
+    ellipse(location.x, location.y, 10, 10);
   }
-  
+
   // Is the particle still useful?
   boolean isDead() {
     if (lifespan < 0.0) {
@@ -152,15 +177,15 @@ class cParticle {
   }
 }
 
-class bParticle {
+class bulletParticle {//bullet particles
   PVector location;
   PVector velocity;
   PVector acceleration;
   float lifespan;
 
-  bParticle(PVector l) {
-    acceleration = new PVector(random(-0.02,0.02),random(-0.02,0.02));
-    velocity = new PVector(random(-0.5,0.5),random(-0.5,0.5));
+  bulletParticle(PVector l) {
+    acceleration = new PVector(random(-0.02, 0.02), random(-0.02, 0.02));
+    velocity = new PVector(random(-0.5, 0.5), random(-0.5, 0.5));
     location = l.get();
     lifespan = 50;
   }
@@ -179,11 +204,11 @@ class bParticle {
 
   // Method to display
   void display() {
-    stroke(250,lifespan);
-    fill(0,0,0,lifespan);
-    ellipse(location.x,location.y,7,7);
+    stroke(250, lifespan);
+    fill(150, 150, 0, lifespan);
+    ellipse(location.x, location.y, 7, 7);
   }
-  
+
   // Is the particle still useful?
   boolean isDead() {
     if (lifespan < 0.0) {

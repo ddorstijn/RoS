@@ -62,8 +62,8 @@ Ara ara;
 Boss boss;
 Button menu;
 ParticleSystem jump;
-ParticleSystem cParticle;
-ParticleSystem bParticle;
+ParticleSystem enemyParticle;
+ParticleSystem bulletParticle;
 
 void setup() {
   size(1200, 600, P2D);
@@ -83,8 +83,8 @@ void setup() {
   coins = new ArrayList<Collectable>();
   boss = new Boss(6, 170, 180, 5);
   jump = new ParticleSystem(particlePos);
-  cParticle = new ParticleSystem(particlePos);
-  bParticle = new ParticleSystem(particlePos);
+  enemyParticle = new ParticleSystem(particlePos);
+  bulletParticle = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 

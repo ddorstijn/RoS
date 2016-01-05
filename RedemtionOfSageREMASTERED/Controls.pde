@@ -254,7 +254,7 @@ void playerControls() {
     if (player.canJump == true) {
       player.velocity.y = player.jumpSpeed;
       player.canJump = false; // Jump is possible
-      for (int i = 0; i < 30; i++) {
+      for (int i = 0; i < 12; i++) {
         jump.addParticle();
       }
       player.canJump = false;

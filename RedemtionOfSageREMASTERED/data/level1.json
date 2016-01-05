@@ -1521,6 +1521,16 @@
         "height": 40
       },
       "value": 110
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3640,
+        "width": 40,
+        "y": 400,
+        "height": 40
+      },
+      "value": 111
     }
   ]
 }

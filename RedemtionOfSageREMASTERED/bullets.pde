@@ -47,7 +47,7 @@ class bullet {
       collisionObject = true;
       if (ara.powerUpActivated[1]) {
           for (int i = 0; i < 40; i++) {
-            bParticle.addBParticle();
+            bulletParticle.addbulletParticle();
           }
         }  
       if (!ara.powerUpActivated[1])
