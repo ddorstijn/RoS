@@ -25,7 +25,7 @@ class ParticleSystem {
   }
 
   void addParticle() {
-    origin.set(player.location.x + player.pWidth/2,player.location.y-15 + player.pHeight);
+    origin.set(player.location.x + player.pWidth/2,player.location.y-5 + player.pHeight);
     particles.add(new Particle(origin));
   }
   
