@@ -35,7 +35,7 @@ class ParticleSystem {
   }
 
   void addBParticle() {
-    origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
+    origin.set(player.location.x + player.pWidth/2,player.location.y + player.pHeight/2);
     bParticles.add(new bParticle(origin));
   }
 

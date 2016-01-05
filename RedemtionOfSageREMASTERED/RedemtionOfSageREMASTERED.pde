@@ -1,9 +1,7 @@
-import ddf.minim.*; //<>//
-import ddf.minim.analysis.*;
-import ddf.minim.effects.*;
-import ddf.minim.signals.*;
-import ddf.minim.spi.*;
-import ddf.minim.ugens.*;
+import ddf.minim.*; //<>// //<>//
+
+Minim minim;
+AudioPlayer backgroundmusic;
 
 int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -77,6 +75,9 @@ void setup() {
   surface.setResizable(true);
   smooth(8);
   frameRate(1000);
+  
+  minim = new Minim(this);
+  backgroundmusic = minim.loadFile("");
 
   gridSize = 40;
 
