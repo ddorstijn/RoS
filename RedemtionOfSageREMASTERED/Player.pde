@@ -4,12 +4,14 @@ class Player {
   float angle, pWidth, pHeight;
 
   //Vectors
-  PVector location, velocity, start;
+  PVector location, velocity, respawn, start;
+   
 
   //Properties
   float jumpSpeed, maxSpeed, acceleration;
   boolean canJump = true; //Check if able to jump
   boolean canJumpAgain = true; //Check if player can jump second time
+  
   int colour;
 
   //OBJECT
@@ -58,7 +60,22 @@ class Player {
     velocity.add(gravity);
     velocity.x *= friction;
 
+  if( level == 1){
+    if (location.x >= 2291){
+      start = new PVector(2291, 150);
+    }
+    if (location.x >= 4733){
+      start = new PVector(4733, 150);
+    }
+  }
+  if(level == 2){
+    if(location.x >= 3336){
+      start = new PVector(3336, 130);
+    }
+  }
 
+  
+// 1765,200 
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
@@ -110,14 +127,18 @@ class Player {
 
     if (keysPressed[LEFT]) {  
       velocity.x -= acceleration;
-      for (int i = 0; i < 1; i++) {
+      if (canJump){
+        for (int i = 0; i < 1; i++) {
         jump.addParticle();
+        }
       }
     }
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
-      for (int i = 0; i < 1; i++) {
-        jump.addParticle();
+      if (canJump){
+        for (int i = 0; i < 1; i++) {
+          jump.addParticle();
+        }
       }
     }
   }
