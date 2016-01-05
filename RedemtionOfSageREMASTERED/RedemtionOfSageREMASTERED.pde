@@ -77,7 +77,7 @@ void setup() {
   frameRate(1000);
   
   minim = new Minim(this);
-  backgroundmusic = minim.loadFile("");
+  backgroundmusic = minim.loadFile("music/background.wav");
 
   gridSize = 40;
 
