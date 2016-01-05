@@ -1,4 +1,9 @@
-int TICKS_PER_SECOND = 60; //<>//
+import ddf.minim.*; //<>//
+
+Minim minim;
+AudioPlayer backgroundmusic;
+
+int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -70,6 +75,9 @@ void setup() {
   surface.setResizable(true);
   smooth(8);
   frameRate(1000);
+  
+  minim = new Minim(this);
+  backgroundmusic = minim.loadFile("");
 
   gridSize = 40;
 
