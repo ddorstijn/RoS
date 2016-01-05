@@ -1,4 +1,9 @@
-int TICKS_PER_SECOND = 60; //<>//
+import ddf.minim.*; //<>// //<>// //<>//
+
+Minim minim;
+AudioPlayer backgroundmusic;
+
+int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -74,11 +79,18 @@ void setup() {
   surface.setResizable(true);
   smooth(8);
   frameRate(1000);
+
 // rondje
   checkpointColor1 = color(245,245,230);
   checkpointColor2 =  color(245,245,230);
   checkpointStroke = color(245,245,250);
   strokeWeight1 = 0;
+
+  
+  minim = new Minim(this);
+  backgroundmusic = minim.loadFile("music/background.mp3");
+  backgroundmusic.play();
+
   
   gridSize = 40;
 
@@ -166,7 +178,7 @@ void update_game() {
     }
 
 
-println(player.location.x, player.location.y);
+
 
     for (Turret turret : turrets) {
       turret.update();

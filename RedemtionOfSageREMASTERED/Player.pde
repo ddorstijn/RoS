@@ -127,14 +127,18 @@ class Player {
 
     if (keysPressed[LEFT]) {  
       velocity.x -= acceleration;
-      for (int i = 0; i < 1; i++) {
+      if (canJump){
+        for (int i = 0; i < 1; i++) {
         jump.addParticle();
+        }
       }
     }
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
-      for (int i = 0; i < 1; i++) {
-        jump.addParticle();
+      if (canJump){
+        for (int i = 0; i < 1; i++) {
+          jump.addParticle();
+        }
       }
     }
   }
