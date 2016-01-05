@@ -77,8 +77,9 @@ void setup() {
   frameRate(1000);
   
   minim = new Minim(this);
-  backgroundmusic = minim.loadFile("music/background.wav");
-
+  backgroundmusic = minim.loadFile("music/background.mp3");
+  backgroundmusic.play();
+  
   gridSize = 40;
 
   keysPressed = new boolean[256];
@@ -146,6 +147,14 @@ void update_game() {
       }
     }
 
+    for (Turret turret : turrets) {
+      turret.update();
+    }
+
+    for (MovEnemy o : movEnemy) {
+      o.update();
+    }
+
     for (Platform b : platforms) {
       b.update();
       if (changeLevel) {
@@ -167,16 +176,7 @@ void update_game() {
         }
       }
     }
-  
-    for (Turret turret : turrets) {
-      turret.update();
-    }
 
-    for (MovEnemy o : movEnemy) {
-      o.update();
-    }
-    
-    
     for (bullet b : bullet) {
       b.update();
       if (collisionObject){
