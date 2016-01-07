@@ -26,6 +26,7 @@ int score;
 int lives;
 
 boolean paused, collisionObject, changeLevel;
+PShader blur;
 
 JSONArray levelData;
 JSONArray turretData;
@@ -91,7 +92,7 @@ void setup() {
   backgroundmusic = minim.loadFile("music/background.mp3");
   backgroundmusic.play();
 
-  
+  blur = loadShader("blur.glsl");
   gridSize = 40;
 
   keysPressed = new boolean[256];
