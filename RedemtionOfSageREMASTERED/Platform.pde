@@ -39,27 +39,25 @@ class Platform {
   }
 
   void display() {
-
-    noStroke();
-
+    noFill();
+    strokeWeight(6);
     if (isOver() && shiftKey) {
-      fill(0, 0, 255);
+      stroke(0, 0, 255);
     } else { 
       switch (index) {
       case 1:     
-        fill(0, 0, 0);
+        stroke(0, 0, 0);
         break;
       case 2:
-        fill(255, 0, 0);
+        stroke(255, 0, 0);
         break;
       case 3:
-        fill(0, 255, 0);
+        stroke(0, 255, 0);
         break;
       }
     }
 
-    rectMode(CORNER);
-    rect(location.x, location.y, iWidth, iHeight);
+    quad(location.x, location.y, location.x+iWidth, location.y, location.x+iWidth, location.y+iHeight, location.x, location.y+iHeight);
   }
 
   void collision() {

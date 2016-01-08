@@ -2,27 +2,22 @@ class bullet {
   float xBullet;
   float yBullet;
   float vBullet;
+  float bWidth;
+  float bHeight;
   float angle;
   float vx, vy;
-
-  boolean hit() {
-    float dist = sqrt(sq(player.location.x-xBullet) + sq(player.location.y - yBullet) );
-    if (dist < 30) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   bullet(float tempXBullet, float tempYBullet, float tempVBullet, float tempAngle) {
     xBullet = tempXBullet;
     yBullet = tempYBullet;
     vBullet = tempVBullet;
+    bWidth = 10;
+    bHeight = 10;
     angle = tempAngle;
 
     if (player.location.y < tempYBullet) {
       vx = -(vBullet*sin(angle));
-      vy = -(vBullet*cos(angle));
+      vy = -( vBullet*cos(angle));
     } else {
       vx = (vBullet*sin(angle));
       vy = (vBullet*cos(angle));
@@ -35,7 +30,7 @@ class bullet {
   }
 
   void display() {
-    ellipse (xBullet, yBullet, 10, 10);
+    rect(xBullet, yBullet, bWidth, bHeight);
   }
 
   void move() {
@@ -44,19 +39,31 @@ class bullet {
   }
 
   void collision() {
-    for /*(bullet b : bullet)*/(int lenB = bullet.size(), b = lenB; b-- != 0; ) {
-      final bullet u = bullet.get(b);
-      for (Platform other : platforms) {
-        if (CircleRectCollision(u.xBullet, u.yBullet, 5, other.left, other.top, other.right, other.bottom)) {
-          bullet.set(b, bullet.get(--lenB));
-          {
-            println("BULLET COLLISION");
+    float xOverlap = calculate1DOverlap(player.location.x, xBullet, player.pWidth, bWidth);
+    float yOverlap = calculate1DOverlap(player.location.y, yBullet, player.pHeight, bHeight);
+
+    // Determine wchich overlap is the largest
+    if (xOverlap != 0 && yOverlap != 0) {
+      collisionObject = true;
+      if (ara.powerUpActivated[1]) {
+          for (int i = 0; i < 40; i++) {
+            bulletParticle.addbulletParticle();
           }
-          bullet.remove(lenB);
-          bulletCollision = true;
-          break;
-        }
-      }
+        }  
+      if (!ara.powerUpActivated[1]){
+        player.respawn();
+      }  
+  } 
+
+    for (Platform other : platforms) {
+      xOverlap = calculate1DOverlap(other.location.x, xBullet, other.iWidth, bWidth);
+      yOverlap = calculate1DOverlap(other.location.y, yBullet, other.iHeight, bHeight);
+
+      // Determine wchich overlap is the largest
+      if (xOverlap != 0 && yOverlap != 0) {
+        collisionObject = true;
+        break;
+      } 
     }
   }
 }
