@@ -49,21 +49,23 @@ class Button {
   void update() {
     switch (currentMenu) {
     case "mainMenu":
-      if (mpos > mainMenu.length) {
+      if (mpos > mainMenu.length-1) {
         mpos = 0;
         break;
       }
       if (mpos < 0) {
-        mpos = mainMenu.length;
+        mpos = mainMenu.length-1;
         break;
       }
     case "levelSelect":
-      if (mpos > levelSelect.length - 1) {
-        mpos = 0;
-      } 
-      if (mpos<0) {
-        mpos = levelSelect.length - 1;
-        break;
+      if (currentMenu == "levelSelect") {
+        if (mpos > levelSelect.length-1) {
+          mpos = 0;
+        } 
+        if (mpos<0) {
+          mpos = levelSelect.length-1;
+          break;
+        }
       }
     }
 
@@ -86,6 +88,7 @@ class Button {
           subMenu = 1;
           mpos = 0;
           enteredMenu = true;
+          currentMenu = "levelSelect";
           break;
           //If on Credits fo to credits
         case 2:
@@ -126,10 +129,11 @@ class Button {
           subMenu = 0;
           mpos = 0;
           enteredMenu = true;
+          currentMenu = "mainMenu";
           break;
         }
         break;
-      //Credits
+        //Credits
       case 2:
         if (keyPressed) {
           subMenu = 0;
@@ -183,14 +187,13 @@ class Button {
       for (int iScore=0; iScore<highscores.getScoreCount(); iScore++) {
         // only show the top 10 scores
         if (iScore>=9) break;
-        
+
         // fetch a score from the list
         Score score = highscores.getScore(iScore);
 
         // display score in window
         text((iScore+1) + "            " + score.name + "        " + score.score + "        " + score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), width/2, 100 + iScore*20);
       }
-
     } else if (level == 0 && subMenu == 4) {
       text("Keep tying until password matches", width/2, 20);
       text("Enter text here: " + userInput, width/2, height/2 - 20);

@@ -143,6 +143,8 @@ void draw() {
 }
 
 void update_game() {
+  //println(menu.mpos);
+  println(menu.currentMenu);
   if (level != 0) {
     player.update();
     ara.update();
