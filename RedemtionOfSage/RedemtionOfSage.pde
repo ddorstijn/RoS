@@ -151,6 +151,7 @@ void draw() {
 
 void update_game() {
   colortransition();
+
   if (level != 0) {
     player.update();
     ara.update();
@@ -312,6 +313,7 @@ if (level == 2){
     fill(255);
     text("fps: " + (int) frameRate, 10, 20);
     text("score: " + score, 10, 40);
+
 
     textAlign(CENTER, TOP);
     textFont(timerFont);

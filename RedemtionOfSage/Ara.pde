@@ -2,7 +2,7 @@ class Ara {
 
   //DECLARE
   //Starting proportions
-  float aWidth, aHeight, startX, startY, speed, locRel;
+  float aWidth, aHeight, startX, startY, speed, locRel, timerSize;
 
   //Vectors
   PVector location, velocity;
@@ -10,8 +10,11 @@ class Ara {
   //Booleans
   boolean isCarried; //For ara
   boolean[] powerUpActivated;
+  boolean canShoot;
+  boolean shieldActivate;
 
   int scalar;
+  int timer;
   float angle;
 
   //OBJECT
@@ -29,9 +32,13 @@ class Ara {
     angle = 0.05;
     scalar = 50;
     speed = 0.02;
+    timerSize = 5;
 
     isCarried = false;
     powerUpActivated = new boolean[2];
+    canShoot = true;
+    timer = 0;
+    shieldActivate = true;
   }
 
 
@@ -45,17 +52,60 @@ class Ara {
     noStroke();
     fill(255, 255, 0);
     rectMode(CORNER);
-    
+
+
+    if (powerUpActivated[1]) {//shield timer countdown with ellipses
+      if (millis() - timer < 3000) {
+      ellipse(player.location.x+((40/6)-2.5), player.location.y-10, timerSize, timerSize);
+      }
+      if (millis() - timer < 2500) {
+      ellipse(player.location.x+((40/6)*2-2.5), player.location.y-10, timerSize, timerSize);
+      }
+      if (millis() - timer < 2000) {
+      ellipse(player.location.x+((40/6)*3-2.5), player.location.y-10, timerSize, timerSize);
+      }      
+      if (millis() - timer < 1500) {
+      ellipse(player.location.x+((40/6)*4-2.5), player.location.y-10, timerSize, timerSize);
+      }
+      if (millis() - timer < 1000) {
+      ellipse(player.location.x+((40/6)*5-2.5), player.location.y-10, timerSize, timerSize);
+      }
+      if (millis() - timer < 500) {
+      ellipse(player.location.x+((40/6)*6-2.5), player.location.y-10, timerSize, timerSize);
+      }  
+    }
+    if (millis() - timer < 6500) {
+      if (!powerUpActivated[1] && timer != 0) {
+        if (millis() - timer > 3500) {
+        ellipse(player.location.x+((40/6)-2.5), player.location.y-10, timerSize, timerSize);
+        }
+        if (millis() - timer > 4000) {
+        ellipse(player.location.x+((40/6)*2-2.5), player.location.y-10, timerSize, timerSize);
+        }
+        if (millis() - timer > 4500) {
+        ellipse(player.location.x+((40/6)*3-2.5), player.location.y-10, timerSize, timerSize);
+        }
+        if (millis() - timer > 5000) {
+        ellipse(player.location.x+((40/6)*4-2.5), player.location.y-10, timerSize, timerSize);
+        }
+        if (millis() - timer > 5500) {
+        ellipse(player.location.x+((40/6)*5-2.5), player.location.y-10, timerSize, timerSize);
+        }
+        if (millis() - timer > 6000) {
+        ellipse(player.location.x+((40/6)*6-2.5), player.location.y-10, timerSize, timerSize);
+        }       
+      }
+    }
  
     
-    if (powerUpActivated[1]) {
+    if (powerUpActivated[1]) {//shield
       pushStyle();
       noFill();
       strokeWeight(5);
       stroke(255, 255, 0);
       rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
       popStyle();
-    } else if (powerUpActivated[0]) {
+    } else if (powerUpActivated[0]) {//shoot
       aWidth = 20;
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
@@ -80,6 +130,14 @@ class Ara {
 
   void araUpdatePosition() {
 
+    if (millis() - timer > 3000) {
+      powerUpActivated[1] = false;
+    }
+    if (millis() - timer > 6000) {
+      shieldActivate = true;
+    }
+    
+
     location.add(velocity); //Speed
     //velocity.add(gravity); //Gravity
     //velocity.x *= friction;
@@ -97,6 +155,7 @@ class Ara {
     //Respawn
     if (location.y > height || location.x > (player.location.x + (width / 2)) || location.x < (player.location.x - (width / 2))) {
       powerUpActivated[0] = false;
+      canShoot = true;
     }
   }
 
@@ -107,14 +166,17 @@ class Ara {
     velocity.mult(0);
   }
 
-  void powerUps() {
-    if (powerUpActivated[0] && player.velocity.x >= 0) {
+  void powerUps() {//schieten naar links of naar rechts
+    if (powerUpActivated[0] && player.velocity.x >= 0 && canShoot == true) {
       velocity.set(8, 0);
+      canShoot = false;
     }
-    if (powerUpActivated[0] && player.velocity.x < 0) {
+    if (powerUpActivated[0] && player.velocity.x < 0 && canShoot == true) {
       velocity.set(-8, 0);
+      canShoot = false;
     }
   }
+
 
   void collisionDetection() {
     if (powerUpActivated[0]) {
@@ -130,7 +192,8 @@ class Ara {
                araRaaktIetsMusic.play();      
           } else {
             location.x += xOverlap; // adjust player y - position based on overlap
-            powerUpActivated[0] = false;                  
+            powerUpActivated[0] = false;
+            canShoot = true;                  
           }
         }
       }
@@ -143,6 +206,7 @@ class Ara {
       // Determine wchich overlap is the largest
       if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0]) {
         powerUpActivated[0] = false;
+        canShoot = true;
         enemyDiesMusic.rewind();
         enemyDiesMusic.play();
         movEnemy.remove(other);
