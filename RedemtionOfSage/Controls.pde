@@ -268,7 +268,7 @@ void playerControls() {
 
 void araControls() {
   //If Z is pressed Ara shoots off
-  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0) {
+  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0 && ara.canShoot == true) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
     araGooienMusic.rewind();
@@ -276,9 +276,11 @@ void araControls() {
   }
 
   //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0) {
+  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0 && ara.shieldActivate == true) {
     ara.powerUpActivated[1] = !ara.powerUpActivated[1];
     ara.powerUps();
+    ara.timer = millis();
+    ara.shieldActivate = false;
   }
 }
 

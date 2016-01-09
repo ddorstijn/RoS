@@ -3,6 +3,7 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import ddf.minim.*; 
 import java.util.*; 
 
 import java.util.HashMap; 
@@ -14,9 +15,12 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class RedemtionOfSageREMASTERED extends PApplet {
+public class RedemtionOfSage extends PApplet {
 
-int TICKS_PER_SECOND = 60; //<>//
+ //<>//
+Minim minim;
+
+int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 int MAX_FRAMESKIP = 10;
 
@@ -30,11 +34,16 @@ int level;
 int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
-
+//kleur g
+int checkpointColor1;
+int checkpointColor2;
+int checkpointStroke;
+int strokeWeight1;
 int score;
 int lives;
 
 boolean paused, collisionObject, changeLevel;
+boolean checkpoint1Activated, checkpoint2Activated, checkpointsoundplayed;
 
 JSONArray levelData;
 JSONArray turretData;
@@ -80,8 +89,8 @@ Ara ara;
 Boss boss;
 Button menu;
 ParticleSystem jump;
-ParticleSystem cParticle;
-ParticleSystem bParticle;
+ParticleSystem enemyParticle;
+ParticleSystem bulletParticle;
 
 public void setup() {
   
@@ -89,6 +98,16 @@ public void setup() {
   
   frameRate(1000);
 
+// rondje
+  checkpointColor1 = color(245,245,230);
+  checkpointColor2 =  color(245,245,230);
+  checkpointStroke = color(245,245,250);
+  strokeWeight1 = 0;
+
+  
+  music();
+
+  
   gridSize = 40;
 
   keysPressed = new boolean[256];
@@ -101,8 +120,8 @@ public void setup() {
   coins = new ArrayList<Collectable>();
   boss = new Boss(6, 170, 180, 5);
   jump = new ParticleSystem(particlePos);
-  cParticle = new ParticleSystem(particlePos);
-  bParticle = new ParticleSystem(particlePos);
+  enemyParticle = new ParticleSystem(particlePos);
+  bulletParticle = new ParticleSystem(particlePos);
   statsFont = createFont("Arial", 14, true);
   timerFont = createFont("Segoe UI Semibold", 50, true);
 
@@ -155,6 +174,27 @@ public void update_game() {
         break;
       }
     }
+    //veranderd
+    if(level == 1){
+    if((player.location.x >= 2291) == true){
+      strokeWeight1 = 3;
+      checkpointStroke = color(255);
+      checkpointColor1 = color(252,252,38);
+    }
+    if(player.location.x >= 4733){
+      checkpointStroke = color(242,242,99);
+      checkpointColor2 = color(252,252,38);
+      }
+    }
+    if(level == 2){
+      if(player.location.x >= 3336){
+      checkpointStroke = color(242,242,99);
+      checkpointColor1 = color(252,252,38);
+      }
+    }
+
+
+
 
     for (Turret turret : turrets) {
       turret.update();
@@ -216,7 +256,37 @@ public void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
+//checkpoint rondje
+if(level == 1){  
+  //Drawing checkpoint 1
+  noStroke();
+  fill(64,64,64);
+  rect(2291, 220, 8, 80);
+  //strokeWeight(strokeWeight1);
+  stroke(checkpointStroke);
+  fill(checkpointColor1);
+  ellipse(2285, 210, 20,20);
+  noStroke();
+  //Drawing checkpoint 2
+  fill(64,64,64); 
+  rect(4733, 210, 8, 80);
+  fill (checkpointColor2);
+  ellipse(4727, 200, 20,20);
+  menuMusic.pause();
+  menuMusic.rewind();
+  backgroundMusic.play();
+  }
 
+
+if (level == 2){ 
+  //Drawing checkpoint 1
+  fill(64,64,64);
+  noStroke();
+  rect(3336, 200, 8, 80);
+  stroke(checkpointStroke);
+  fill(checkpointColor1);
+  ellipse(3330, 190, 20,20);
+}
     levelBuild();
 
     //setuppreview();
@@ -254,6 +324,7 @@ public void draw_game() {
     text("fps: " + (int) frameRate, 10, 20);
     text("score: " + score, 10, 40);
 
+
     textAlign(CENTER, TOP);
     textFont(timerFont);
     text(displayTime / 1000/ 60 + ":" + nf(displayTime / 1000 % 60, 2), width/2, 0);
@@ -281,8 +352,11 @@ class Ara {
   //Booleans
   boolean isCarried; //For ara
   boolean[] powerUpActivated;
+  boolean canShoot;
+  boolean shieldActivate;
 
   int scalar;
+  int timer;
   float angle;
 
   //OBJECT
@@ -303,6 +377,9 @@ class Ara {
 
     isCarried = false;
     powerUpActivated = new boolean[2];
+    canShoot = true;
+    timer = 0;
+    shieldActivate = true;
   }
 
 
@@ -316,19 +393,46 @@ class Ara {
     noStroke();
     fill(255, 255, 0);
     rectMode(CORNER);
+
+
+    if (powerUpActivated[1]) {
+      if (millis() - timer < 3000) {
+      ellipse(player.location.x-5, player.location.y-20, 10, 10);
+      }
+      if (millis() - timer < 2000) {
+      ellipse(player.location.x+15, player.location.y-20, 10, 10);
+      }
+      if (millis() - timer < 1000) {
+      ellipse(player.location.x+35, player.location.y-20, 10, 10);
+      }      
+    }
+    if (millis() - timer < 6500) {
+      if (!powerUpActivated[1] && timer != 0) {
+        if (millis() - timer > 4000) {
+        ellipse(player.location.x-5, player.location.y-20, 10, 10);
+        }
+        if (millis() - timer > 5000) {
+        ellipse(player.location.x+15, player.location.y-20, 10, 10);
+        }
+        if (millis() - timer > 6000) {
+        ellipse(player.location.x+35, player.location.y-20, 10, 10);
+        }      
+      }
+    }
+      
     
  
     
-    if (powerUpActivated[1]) {
+    if (powerUpActivated[1]) {//shield
       pushStyle();
       noFill();
       strokeWeight(5);
       stroke(255, 255, 0);
-      location.x = player.location.x;
-      location.y = player.location.y;
       rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
       popStyle();
-    } else if (powerUpActivated[0]) {
+    } else if (powerUpActivated[0]) {//shoot
+      aWidth = 20;
+      aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
@@ -351,6 +455,14 @@ class Ara {
 
   public void araUpdatePosition() {
 
+    if (millis() - timer > 3000) {
+      powerUpActivated[1] = false;
+    }
+    if (millis() - timer > 6000) {
+      shieldActivate = true;
+    }
+    
+
     location.add(velocity); //Speed
     //velocity.add(gravity); //Gravity
     //velocity.x *= friction;
@@ -368,6 +480,7 @@ class Ara {
     //Respawn
     if (location.y > height || location.x > (player.location.x + (width / 2)) || location.x < (player.location.x - (width / 2))) {
       powerUpActivated[0] = false;
+      canShoot = true;
     }
   }
 
@@ -378,17 +491,19 @@ class Ara {
     velocity.mult(0);
   }
 
-  public void powerUps() {
-    if (powerUpActivated[0] && player.velocity.x >= 0) {
+  public void powerUps() {//schieten naar links of naar rechts
+    if (powerUpActivated[0] && player.velocity.x >= 0 && canShoot == true) {
       velocity.set(8, 0);
+      canShoot = false;
     }
-    if (powerUpActivated[0] && player.velocity.x < 0) {
+    if (powerUpActivated[0] && player.velocity.x < 0 && canShoot == true) {
       velocity.set(-8, 0);
+      canShoot = false;
     }
   }
 
+
   public void collisionDetection() {
-<<<<<<< HEAD
     if (powerUpActivated[0]) {
       for (Platform other : platforms) {
         float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
@@ -397,36 +512,14 @@ class Ara {
         if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
           // Determine wchich overlap is the largest
           if (abs(xOverlap) > abs(yOverlap)) {
+            araRaaktIetsMusic.rewind();
             location.y += yOverlap; // adjust player x - position based on overlap
-                     
+               araRaaktIetsMusic.play();      
           } else {
             location.x += xOverlap; // adjust player y - position based on overlap
-            powerUpActivated[0] = false;                  
+            powerUpActivated[0] = false;
+            canShoot = true;                  
           }
-=======
-    for (Platform other : platforms) {
-      float xOverlap = calculate1DOverlap(location.x, other.location.x, aWidth, other.iWidth);
-      float yOverlap = calculate1DOverlap(location.y, other.location.y, aHeight, other.iHeight);
-
-      if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
-        // Determine wchich overlap is the largest
-        if (abs(xOverlap) > abs(yOverlap)) {
-          location.y += yOverlap; // adjust player x - position based on overlap
-            if (powerUpActivated[0]) {
-              for (int i = 0; i < 40; i++) {
-                bParticle.addBParticle();
-              }
-            }
-                  
-        } else {
-          location.x += xOverlap; // adjust player y - position based on overlap
-          if (powerUpActivated[0]) {
-            for (int i = 0; i < 40; i++) {
-              bParticle.addBParticle();
-            }
-          }
-          powerUpActivated[0] = false;                 
->>>>>>> b05ee142d2972f6195f386ec415b9e271b84e1f1
         }
       }
     }
@@ -438,9 +531,12 @@ class Ara {
       // Determine wchich overlap is the largest
       if (xOverlap != 0 && yOverlap != 0 && powerUpActivated[0]) {
         powerUpActivated[0] = false;
+        canShoot = true;
+        enemyDiesMusic.rewind();
+        enemyDiesMusic.play();
         movEnemy.remove(other);
-        for (int i = 0; i < 300; i++) {
-            cParticle.addCParticle();
+        for (int i = 0; i < 60; i++) {
+            enemyParticle.addenemyParticle();
           }
         break;
       }
@@ -516,9 +612,11 @@ class Collectable {
 
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {
+      coinMusic.rewind();
       score += 100; 
       collisionObject = true;
       location.x = -100;
+      coinMusic.play();
     } 
   } 
 }
@@ -526,99 +624,16 @@ public void keyPressed() {
 
   keysPressed[keyCode] = true;
 
-  if (level == 0 && menu.subMenu == 4) {
-    if (key == BACKSPACE) {
-      if (userInput.length() > 0) {
-        userInput = userInput.substring(0, userInput.length()-1);
-      }
-    } else if ((keysPressed[ENTER]) || (keysPressed[RETURN])) {
-      level = 1;
-      setIndex = 0; 
-      loadLevel(true);
-    } else if (textWidth(userInput+key) < width) {
-      userInput = userInput+key;
-    }  
-  }
-
-  if (keyCode == UP && level != 0) {//////Check for (double) jump
-    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
-      player.velocity.y = player.jumpSpeed / 1.2f;
-      player.canJumpAgain = false;
-      jump.addParticle();
-    }
-    if (player.canJump == true) {
-      player.velocity.y = player.jumpSpeed;
-      player.canJump = false; // Jump is possible
-      for (int i = 0; i < 30; i++) {
-        jump.addParticle();
-      }
-      player.canJump = false;
-    }
-  }  
-
-  //If Z is pressed Ara shoots off
-  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0) {
-    ara.powerUpActivated[0] = !ara.powerUpActivated[0];
-    ara.powerUps();
-  }
-
-  //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0) {
-    ara.powerUpActivated[1] = !ara.powerUpActivated[1];
-    ara.powerUps();
-  }
-
-  if (keyCode == 16 && level != 0 /*&& menu.subMenu != 4*/) { //16 is the keyCode for shift
-    shiftKey = !shiftKey;
-  }
-
-  if (keysPressed[77]) {
-    menu.subMenu = 0;
-    level = 0;
-  }
-
-  if (keyCode == 80 && level != 0 && menu.subMenu != 4) {
-    paused = !paused;
-
-    accumTime = accumTime + millis() - startTime;
-  }
-
-  if (keysPressed[83] && level != 1 && level != 0) { 
-    level = 1;
-    setIndex = 0; 
-    loadLevel(true);
-  }
-  if (keysPressed[68] && level != 2 && level != 0) { 
-    level = 2;
-    setIndex = 0;
-    loadLevel(true);
-  }
-  if (keysPressed[70] && level != 3 && level != 0) { 
-    level = 3;
-    setIndex = 0;
-    loadLevel(true);
-  }
-
-  if (level == 0) {
-    if (keyCode == DOWN) {
-      menu.mpos++;
-    }
-    if (keyCode == UP) {
-      menu.mpos--;
-    }
-  }
+  menuControls();
+  playerControls();
+  araControls();
+  gameControls();
+  buildControls();
 }
 
 public void keyReleased() {
   keysPressed[keyCode] = false;
   menu.enteredMenu = false;
-}
-
-int playerIndex = 0;
-// add score, save scores and load scores by typing space, 's' or 'l'
-public void keyTyped() {
-  if (key == 's') highscores.save("highscore.csv");
-  if (key == 'l') highscores.load("highscore.csv");
 }
 
 //Level building!
@@ -802,8 +817,119 @@ public void levelBuild() {
     setIndex = 6;
   }
 }
-public void loadLevel(boolean objectsToo) {
 
+
+
+//Controls menu
+public void menuControls() {
+  if (level == 0 && menu.subMenu == 4) {
+    if (key == BACKSPACE) {
+      if (userInput.length() > 0) {
+        userInput = userInput.substring(0, userInput.length()-1);
+      }
+    } else if ((keysPressed[ENTER]) || (keysPressed[RETURN])) {
+      level = 1;
+      setIndex = 0; 
+      loadLevel(true);
+    } else if (textWidth(userInput+key) < width) {
+      userInput = userInput+key;
+    }  
+  }
+
+  if (level == 0) {
+    if (keyCode == DOWN) {
+      menu.mpos++;
+    }
+    if (keyCode == UP) {
+      menu.mpos--;
+    }
+  }
+}
+
+public void gameControls() {
+  //enable buildmode
+  if (keyCode == 16 && level != 0) { //16 is the keyCode for shift
+    shiftKey = !shiftKey;
+  }
+
+  //M-key to go to menu
+  if (keysPressed[77]) {
+    menu.subMenu = 0;
+    level = 0;
+  }
+
+  //P-key to pause
+  if (keyCode == 80 && level != 0) {
+    paused = !paused;
+
+    accumTime = accumTime + millis() - startTime;
+  }
+}
+
+public void playerControls() {
+  if (keyCode == UP && level != 0) {//////Check for (double) jump
+    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
+      player.velocity.y = player.jumpSpeed / 1.2f;
+      player.canJumpAgain = false;
+      jumpMusic.rewind();
+      jumpMusic.play();
+      jump.addParticle();
+    }
+    if (player.canJump == true) {
+      player.velocity.y = player.jumpSpeed;
+      player.canJump = false; // Jump is possible
+      for (int i = 0; i < 12; i++) {
+        jump.addParticle();
+        jumpMusic.rewind();
+        jumpMusic.play();
+      }
+      player.canJump = false;
+    }
+  }
+}
+
+public void araControls() {
+  //If Z is pressed Ara shoots off
+  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0 && ara.canShoot == true) {
+    ara.powerUpActivated[0] = !ara.powerUpActivated[0];
+    ara.powerUps();
+    araGooienMusic.rewind();
+    araGooienMusic.play();
+  }
+
+  //If X is pressed turn on shield
+  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0 && ara.shieldActivate == true) {
+    ara.powerUpActivated[1] = !ara.powerUpActivated[1];
+    ara.powerUps();
+    ara.timer = millis();
+    ara.shieldActivate = false;
+  }
+}
+
+public void buildControls() {
+    if (keysPressed[83] && level != 1 && level != 0) { 
+    level = 1;
+    setIndex = 0; 
+    loadLevel(true);
+  }
+  if (keysPressed[68] && level != 2 && level != 0) { 
+    level = 2;
+    setIndex = 0;
+    loadLevel(true);
+  }
+  if (keysPressed[70] && level != 3 && level != 0) { 
+    level = 3;
+    setIndex = 0;
+    loadLevel(true);
+  }
+}
+public void loadLevel(boolean objectsToo) {
+   
+   checkpoint1Activated = false;
+   checkpoint2Activated = false;
+      
+  
+  
   for (int i = 0; i < keysPressed.length; i++) {
     keysPressed[i] = false;
   }
@@ -959,21 +1085,23 @@ class Button {
   public void update() {
     switch (currentMenu) {
     case "mainMenu":
-      if (mpos > mainMenu.length) {
+      if (mpos > mainMenu.length-1) {
         mpos = 0;
         break;
       }
       if (mpos < 0) {
-        mpos = mainMenu.length;
+        mpos = mainMenu.length-1;
         break;
       }
     case "levelSelect":
-      if (mpos > levelSelect.length - 1) {
-        mpos = 0;
-      } 
-      if (mpos<0) {
-        mpos = levelSelect.length - 1;
-        break;
+      if (currentMenu == "levelSelect") {
+        if (mpos > levelSelect.length-1) {
+          mpos = 0;
+        } 
+        if (mpos<0) {
+          mpos = levelSelect.length-1;
+          break;
+        }
       }
     }
 
@@ -996,6 +1124,7 @@ class Button {
           subMenu = 1;
           mpos = 0;
           enteredMenu = true;
+          currentMenu = "levelSelect";
           break;
           //If on Credits fo to credits
         case 2:
@@ -1036,10 +1165,11 @@ class Button {
           subMenu = 0;
           mpos = 0;
           enteredMenu = true;
+          currentMenu = "mainMenu";
           break;
         }
         break;
-      //Credits
+        //Credits
       case 2:
         if (keyPressed) {
           subMenu = 0;
@@ -1065,8 +1195,12 @@ class Button {
 
     if (level == 0 && subMenu == 0) {
       for (int i = 0; i < mainMenu.length; i++) {
+        backgroundMusic.pause();
+        backgroundMusic.rewind();
         fill(0);
         text(mainMenu[i], location.x, location.y + i * space);
+        //menuMusic.rewind();
+        menuMusic.play();
       }
     } else if (level == 0 && subMenu == 1) {
       for (int i = 0; i < levelSelect.length; i++) {
@@ -1089,14 +1223,13 @@ class Button {
       for (int iScore=0; iScore<highscores.getScoreCount(); iScore++) {
         // only show the top 10 scores
         if (iScore>=9) break;
-        
+
         // fetch a score from the list
         Score score = highscores.getScore(iScore);
 
         // display score in window
         text((iScore+1) + "            " + score.name + "        " + score.score + "        " + score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), width/2, 100 + iScore*20);
       }
-
     } else if (level == 0 && subMenu == 4) {
       text("Keep tying until password matches", width/2, 20);
       text("Enter text here: " + userInput, width/2, height/2 - 20);
@@ -1203,12 +1336,14 @@ class Player {
   float angle, pWidth, pHeight;
 
   //Vectors
-  PVector location, velocity, start;
+  PVector location, velocity, respawn, start;
+   
 
   //Properties
   float jumpSpeed, maxSpeed, acceleration;
   boolean canJump = true; //Check if able to jump
   boolean canJumpAgain = true; //Check if player can jump second time
+  
   int colour;
 
   //OBJECT
@@ -1258,6 +1393,30 @@ class Player {
     velocity.x *= friction;
 
 
+  if( level == 1){
+    if (location.x >= 2291 && !checkpoint2Activated){
+      start = new PVector(2291, 150);
+      checkpoint1Activated = true;
+      checkpointMusic.play();
+    }
+    if (location.x >= 4733){
+      start = new PVector(4733, 150);
+      checkpoint2Activated = true;
+      if (checkpointsoundplayed) {
+        checkpointMusic.rewind();
+        checkpointMusic.play();
+        checkpointsoundplayed = true;
+      }
+    }
+  }
+  if(level == 2){
+    if(location.x >= 3336){
+      start = new PVector(3336, 130);
+    }
+  }
+
+  
+// 1765,200 
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
@@ -1298,6 +1457,8 @@ class Player {
 
   public void respawn() {
     //lives--;
+    playerDiesMusic.rewind();
+    playerDiesMusic.play();
     location.set(start);
     velocity.set(0, 0);
   }
@@ -1309,14 +1470,18 @@ class Player {
 
     if (keysPressed[LEFT]) {  
       velocity.x -= acceleration;
-      for (int i = 0; i < 1; i++) {
+      if (canJump){
+        for (int i = 0; i < 1; i++) {
         jump.addParticle();
+        }
       }
     }
     if (keysPressed[RIGHT]) {
       velocity.x += acceleration;
-      for (int i = 0; i < 1; i++) {
-        jump.addParticle();
+      if (canJump){
+        for (int i = 0; i < 1; i++) {
+          jump.addParticle();
+        }
       }
     }
   }
@@ -1370,12 +1535,13 @@ class bullet {
       collisionObject = true;
       if (ara.powerUpActivated[1]) {
           for (int i = 0; i < 40; i++) {
-            bParticle.addBParticle();
+            bulletParticle.addbulletParticle();
           }
         }  
-      if (!ara.powerUpActivated[1])
+      if (!ara.powerUpActivated[1]){
         player.respawn();
-    } 
+      }  
+  } 
 
     for (Platform other : platforms) {
       xOverlap = calculate1DOverlap(other.location.x, xBullet, other.iWidth, bWidth);
@@ -1465,6 +1631,8 @@ class MovEnemy {
 
     // Determine wchich overlap is the largest
     if (xOverlap != 0 && yOverlap != 0) {
+      playerDiesMusic.rewind();
+      playerDiesMusic.play();
       player.respawn();
     }
 
@@ -1512,6 +1680,8 @@ class Turret {
       if (millis() % 5000 >= 0 && millis() % 2000 <= MAX_FRAMESKIP) {
         float angle =  atan((player.location.x-location.x) / (player.location.y-location.y));
         bullet.add(new bullet(location.x + twidth/2, location.y + theight/2, 3, angle));
+        enemyShootMusic.rewind();
+        enemyShootMusic.play();
       }
     }
   }
@@ -1673,10 +1843,62 @@ class HSComperator implements Comparator<Score> {
   }
 }
 
+  AudioPlayer araGooienMusic;
+  AudioPlayer araRaaktIetsMusic;
+  AudioPlayer backgroundMusic;
+  AudioPlayer checkpointMusic;
+  AudioPlayer coinMusic;
+  AudioPlayer enemyDiesMusic;
+  AudioPlayer enemyShootMusic;
+  AudioPlayer jumpMusic;
+  AudioPlayer menuMusic;
+  AudioPlayer playerDiesMusic;
+  AudioPlayer selectMusic;
+  AudioPlayer shieldHitMusic;
+
+
+public void music(){
+  minim = new Minim(this);
+  araGooienMusic = minim.loadFile("music/aragooien.wav");
+  
+  minim = new Minim(this);
+  araRaaktIetsMusic = minim.loadFile("music/araraaktiets.wav");
+  
+  minim = new Minim(this);
+  backgroundMusic = minim.loadFile("music/background2.mp3");
+  
+  
+  minim = new Minim(this);
+  checkpointMusic = minim.loadFile("music/checkpoint.wav");
+  
+  minim = new Minim(this);
+  coinMusic = minim.loadFile("music/coin.wav");
+  
+  minim = new Minim(this);
+  enemyDiesMusic = minim.loadFile("music/enemydies.wav");
+  
+  minim = new Minim(this);
+  enemyShootMusic = minim.loadFile("music/enemyshoot.wav");
+  
+  minim = new Minim(this);
+  jumpMusic = minim.loadFile("music/jump.wav");
+  
+  minim = new Minim(this);
+  menuMusic = minim.loadFile("music/menu.mp3");
+  
+  minim = new Minim(this);
+  playerDiesMusic = minim.loadFile("music/playerdies.wav");
+  
+  minim = new Minim(this);
+  selectMusic = minim.loadFile("music/select.wav");  
+  
+  minim = new Minim(this);
+  shieldHitMusic = minim.loadFile("music/shieldhit.wav");  
+}
 public void displayparticles() {
   jump.run();
-  cParticle.run();
-  bParticle.run();
+  enemyParticle.run();
+  bulletParticle.run();
 }
 
 
@@ -1688,189 +1910,221 @@ public void displayparticles() {
 
 class ParticleSystem {
   ArrayList<Particle> particles;
-  ArrayList<cParticle> cParticles;
-  ArrayList<bParticle> bParticles;
+  ArrayList<enemyParticle> enemyParticles;
+  ArrayList<bulletParticle> bulletParticles;
   PVector origin;
 
   ParticleSystem(PVector location) {
     particles = new ArrayList<Particle>();
-    cParticles = new ArrayList<cParticle>();
-    bParticles = new ArrayList<bParticle>();
-    origin = new PVector(0,0);
+    enemyParticles = new ArrayList<enemyParticle>();
+    bulletParticles = new ArrayList<bulletParticle>();
+    origin = new PVector(0, 0);
   }
 
   public void addParticle() {
-    origin.set(player.location.x + player.pWidth/2,player.location.y-15 + player.pHeight);
+
+
+    origin.set(player.location.x + player.pWidth/2, player.location.y-5 + player.pHeight);
+
     particles.add(new Particle(origin));
   }
-  
-  public void addCParticle() {
-    origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
-    cParticles.add(new cParticle(origin));
+
+  public void addenemyParticle() {
+    origin.set(ara.location.x + ara.aWidth/2, ara.location.y + ara.aHeight/2);
+    enemyParticles.add(new enemyParticle(origin));
   }
 
-  public void addBParticle() {
-    origin.set(ara.location.x + ara.aWidth/2,ara.location.y + ara.aHeight/2);
-    bParticles.add(new bParticle(origin));
-  }
 
-  public void run() {
-    for (int i = particles.size()-1; i >= 0; i--) {
-      Particle p = particles.get(i);
-      p.run();
-      if (p.isDead()) {
-        particles.remove(i);
+
+    public void addbulletParticle() {
+    origin.set(player.location.x + player.pWidth/2, player.location.y + player.pHeight/2);
+    bulletParticles.add(new bulletParticle(origin));
+
+    }
+      public void run() {
+      for (int i = particles.size()-1; i >= 0; i--) {
+        Particle p = particles.get(i);
+        p.run();
+        if (p.isDead()) {
+          particles.remove(i);
+        }
+      }
+      for (int c = enemyParticles.size()-1; c >= 0; c--) {
+        enemyParticle q = enemyParticles.get(c);
+        q.run();
+        if (q.isDead()) {
+          enemyParticles.remove(c);
+        }
+      }
+      for (int b = bulletParticles.size()-1; b >= 0; b--) {
+        bulletParticle s = bulletParticles.get(b);
+        s.run();
+        if (s.isDead()) {
+          shieldHitMusic.rewind();
+          shieldHitMusic.play();
+          bulletParticles.remove(b);
+        }
       }
     }
-    for (int c = cParticles.size()-1; c >= 0; c--) {
-      cParticle q = cParticles.get(c);
-      q.run();
-      if (q.isDead()) {
-        cParticles.remove(c);
+  }
+
+
+
+  // A simple Particle class
+
+  class Particle {
+    PVector location;
+    PVector velocity;
+    PVector acceleration;
+    float lifespan;
+    float c1;
+
+    Particle(PVector l) {
+      acceleration = new PVector(0, 0.02f);
+      velocity = new PVector(random(-0.75f, 0.75f), random(-0.85f, 0.01f));
+      location = l.get();
+      lifespan = 60;
+    }
+
+    public void run() {
+      update();
+      display();
+    }
+
+    // Method to update location
+    public void update() {
+      velocity.add(acceleration);
+      location.add(velocity);
+      lifespan -= 1.0f;
+    }
+
+    // Method to display
+    public void display() {
+      c1 +=10;
+      c1%=255;
+      stroke(100, 0, 0);
+      pushStyle();
+      colorMode(HSB);
+      fill(c1, 255, 255, lifespan+60);
+      rect(location.x, location.y, 8, 8);
+      popStyle();
+    }
+
+    // Is the particle still useful?
+    public boolean isDead() {
+      if (lifespan < 0.0f) {
+        return true;
+      } else {
+        return false;
       }
     }
-    for (int b = bParticles.size()-1; b >= 0; b--) {
-      bParticle s = bParticles.get(b);
-      s.run();
-      if (s.isDead()) {
-        bParticles.remove(b);
+  }
+
+  class enemyParticle {
+    PVector location;
+    PVector velocity;
+    PVector acceleration;
+    float lifespan;
+    float epWidth;
+    float epheight;
+
+    enemyParticle(PVector l) {//enemy particles
+      acceleration = new PVector(random(-0.01f, 0.01f), random(-0.01f, 0.01f));
+      velocity = new PVector(random(-0.5f, 0.5f), random(-0.1f, 0.7f));
+      location = l.get();
+      lifespan = 160;
+    }
+
+    public void run() {
+      update();
+      display();
+      collisionDetection();
+    }
+
+    // Method to update location
+    public void update() {
+      velocity.add(acceleration);
+      location.add(velocity);
+      lifespan -= 1.0f;
+    }
+    public void collisionDetection() {
+      for (Platform other : platforms) {
+        float xOverlap = calculate1DOverlap(location.x, other.location.x, epWidth, other.iWidth);
+        float yOverlap = calculate1DOverlap(location.y, other.location.y, epheight, other.iHeight);
+
+        if (abs(xOverlap) > 0 && abs(yOverlap) > 0) {
+          // Determine wchich overlap is the largest
+          if (abs(xOverlap) > abs(yOverlap)) {
+            location.y += yOverlap; // adjust player x - position based on overlap
+            velocity.y = 0;
+          } else {
+            location.x += xOverlap; // adjust player y - position based on overlap
+            velocity.x *= -1;
+          }
+        }
+      }
+    }
+    // Method to display
+    public void display() {
+      stroke(0, lifespan);
+      fill(187, 10, 30, lifespan);
+      ellipse(location.x, location.y, 10, 10);
+    }
+
+    // Is the particle still useful?
+    public boolean isDead() {
+      if (lifespan < 0.0f) {
+        return true;
+      } else {
+        return false;
       }
     }
   }
-}
 
+  class bulletParticle {//bullet particles
+    PVector location;
+    PVector velocity;
+    PVector acceleration;
+    float lifespan;
 
+    bulletParticle(PVector l) {
+      acceleration = new PVector(random(-0.02f, 0.02f), random(-0.02f, 0.02f));
+      velocity = new PVector(random(-0.5f, 0.5f), random(-0.5f, 0.5f));
+      location = l.get();
+      lifespan = 50;
+    }
 
-// A simple Particle class
+    public void run() {
+      update();
+      display();
+    }
 
-class Particle {
-  PVector location;
-  PVector velocity;
-  PVector acceleration;
-  float lifespan;
+    // Method to update location
+    public void update() {
+      velocity.add(acceleration);
+      location.add(velocity);
+      lifespan -= 1.0f;
+    }
 
-  Particle(PVector l) {
-    acceleration = new PVector(0,0.02f);
-    velocity = new PVector(random(-0.5f,0.75f),random(-0.1f,1));
-    location = l.get();
-    lifespan = 60;
-  }
+    // Method to display
+    public void display() {
+      stroke(250, lifespan);
+      fill(150, 150, 0, lifespan);
+      ellipse(location.x, location.y, 7, 7);
+    }
 
-  public void run() {
-    update();
-    display();
-  }
-
-  // Method to update location
-  public void update() {
-    velocity.add(acceleration);
-    location.add(velocity);
-    lifespan -= 1.0f;
-  }
-
-  // Method to display
-  public void display() {
-    stroke(255,lifespan);
-    fill(72,215,230,lifespan);
-    rect(location.x,location.y,10,10);
-  }
-  
-  // Is the particle still useful?
-  public boolean isDead() {
-    if (lifespan < 0.0f) {
-      return true;
-    } else {
-      return false;
+    // Is the particle still useful?
+    public boolean isDead() {
+      if (lifespan < 0.0f) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
-}
-
-class cParticle {
-  PVector location;
-  PVector velocity;
-  PVector acceleration;
-  float lifespan;
-
-  cParticle(PVector l) {
-    acceleration = new PVector(random(-0.02f,0.02f),random(-0.02f,0.02f));
-    velocity = new PVector(random(-0.5f,0.75f),random(-0.1f,1));
-    location = l.get();
-    lifespan = 100;
-  }
-
-  public void run() {
-    update();
-    display();
-  }
-
-  // Method to update location
-  public void update() {
-    velocity.add(acceleration);
-    location.add(velocity);
-    lifespan -= 1.0f;
-  }
-
-  // Method to display
-  public void display() {
-    stroke(0,lifespan);
-    fill(random(200,250),0,0,lifespan);
-    ellipse(location.x,location.y,10,10);
-  }
-  
-  // Is the particle still useful?
-  public boolean isDead() {
-    if (lifespan < 0.0f) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-class bParticle {
-  PVector location;
-  PVector velocity;
-  PVector acceleration;
-  float lifespan;
-
-  bParticle(PVector l) {
-    acceleration = new PVector(random(-0.02f,0.02f),random(-0.02f,0.02f));
-    velocity = new PVector(random(-0.5f,0.5f),random(-0.5f,0.5f));
-    location = l.get();
-    lifespan = 50;
-  }
-
-  public void run() {
-    update();
-    display();
-  }
-
-  // Method to update location
-  public void update() {
-    velocity.add(acceleration);
-    location.add(velocity);
-    lifespan -= 1.0f;
-  }
-
-  // Method to display
-  public void display() {
-    stroke(250,lifespan);
-    fill(0,0,0,lifespan);
-    ellipse(location.x,location.y,7,7);
-  }
-  
-  // Is the particle still useful?
-  public boolean isDead() {
-    if (lifespan < 0.0f) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
   public void settings() {  size(1200, 600, P2D);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "RedemtionOfSageREMASTERED" };
+    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "RedemtionOfSage" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
