@@ -344,7 +344,7 @@ class Ara {
 
   //DECLARE
   //Starting proportions
-  float aWidth, aHeight, startX, startY, speed, locRel;
+  float aWidth, aHeight, startX, startY, speed, locRel, timerSize;
 
   //Vectors
   PVector location, velocity;
@@ -374,6 +374,7 @@ class Ara {
     angle = 0.05f;
     scalar = 50;
     speed = 0.02f;
+    timerSize = 5;
 
     isCarried = false;
     powerUpActivated = new boolean[2];
@@ -395,32 +396,48 @@ class Ara {
     rectMode(CORNER);
 
 
-    if (powerUpActivated[1]) {
+    if (powerUpActivated[1]) {//shield timer countdown with ellipses
       if (millis() - timer < 3000) {
-      ellipse(player.location.x-5, player.location.y-20, 10, 10);
+      ellipse(player.location.x+((40/6)-2.5f), player.location.y-10, timerSize, timerSize);
+      }
+      if (millis() - timer < 2500) {
+      ellipse(player.location.x+((40/6)*2-2.5f), player.location.y-10, timerSize, timerSize);
       }
       if (millis() - timer < 2000) {
-      ellipse(player.location.x+15, player.location.y-20, 10, 10);
+      ellipse(player.location.x+((40/6)*3-2.5f), player.location.y-10, timerSize, timerSize);
+      }      
+      if (millis() - timer < 1500) {
+      ellipse(player.location.x+((40/6)*4-2.5f), player.location.y-10, timerSize, timerSize);
       }
       if (millis() - timer < 1000) {
-      ellipse(player.location.x+35, player.location.y-20, 10, 10);
-      }      
+      ellipse(player.location.x+((40/6)*5-2.5f), player.location.y-10, timerSize, timerSize);
+      }
+      if (millis() - timer < 500) {
+      ellipse(player.location.x+((40/6)*6-2.5f), player.location.y-10, timerSize, timerSize);
+      }  
     }
     if (millis() - timer < 6500) {
       if (!powerUpActivated[1] && timer != 0) {
+        if (millis() - timer > 3500) {
+        ellipse(player.location.x+((40/6)-2.5f), player.location.y-10, timerSize, timerSize);
+        }
         if (millis() - timer > 4000) {
-        ellipse(player.location.x-5, player.location.y-20, 10, 10);
+        ellipse(player.location.x+((40/6)*2-2.5f), player.location.y-10, timerSize, timerSize);
+        }
+        if (millis() - timer > 4500) {
+        ellipse(player.location.x+((40/6)*3-2.5f), player.location.y-10, timerSize, timerSize);
         }
         if (millis() - timer > 5000) {
-        ellipse(player.location.x+15, player.location.y-20, 10, 10);
+        ellipse(player.location.x+((40/6)*4-2.5f), player.location.y-10, timerSize, timerSize);
+        }
+        if (millis() - timer > 5500) {
+        ellipse(player.location.x+((40/6)*5-2.5f), player.location.y-10, timerSize, timerSize);
         }
         if (millis() - timer > 6000) {
-        ellipse(player.location.x+35, player.location.y-20, 10, 10);
-        }      
+        ellipse(player.location.x+((40/6)*6-2.5f), player.location.y-10, timerSize, timerSize);
+        }       
       }
     }
-      
-    
  
     
     if (powerUpActivated[1]) {//shield
