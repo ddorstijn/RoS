@@ -12,7 +12,6 @@
   AudioPlayer selectMusic;
   AudioPlayer shieldHitMusic;
 
-
 void music(){
   minim = new Minim(this);
   araGooienMusic = minim.loadFile("music/aragooien.wav");
@@ -50,4 +49,12 @@ void music(){
   
   minim = new Minim(this);
   shieldHitMusic = minim.loadFile("music/shieldhit.wav");  
+  
+  fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
+}
+
+void colortransition() {
+  if (currentWaveformcolor != defaultWaveformcolor) {
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .1);
+  }
 }

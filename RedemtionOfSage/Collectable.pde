@@ -42,6 +42,7 @@ class Collectable {
       collisionObject = true;
       location.x = -100;
       coinMusic.play();
+      currentWaveformcolor = color(255,255,0);
     } 
   } 
 }

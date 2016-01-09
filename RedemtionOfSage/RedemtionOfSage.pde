@@ -1,5 +1,8 @@
 import ddf.minim.*; //<>//
+import ddf.minim.analysis.*;
+
 Minim minim;
+FFT fft;
 
 int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -22,6 +25,8 @@ int checkpointStroke;
 int strokeWeight1;
 int score;
 int lives;
+
+color defaultWaveformcolor, currentWaveformcolor;
 
 boolean paused, collisionObject, changeLevel;
 boolean checkpoint1Activated, checkpoint2Activated, checkpointsoundplayed;
@@ -84,15 +89,17 @@ void setup() {
   checkpointColor2 =  color(245,245,230);
   checkpointStroke = color(245,245,250);
   strokeWeight1 = 0;
-
   
   music();
-
+  fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
   
   gridSize = 40;
 
   keysPressed = new boolean[256];
   particlePos = new PVector(100,100);
+
+  defaultWaveformcolor = color(20, 77, 207);
+  currentWaveformcolor = color(20, 77, 207);
 
   platforms = new ArrayList<Platform>();
   turrets = new ArrayList<Turret>();
@@ -143,8 +150,7 @@ void draw() {
 }
 
 void update_game() {
-  //println(menu.mpos);
-  println(menu.currentMenu);
+  colortransition();
   if (level != 0) {
     player.update();
     ara.update();
