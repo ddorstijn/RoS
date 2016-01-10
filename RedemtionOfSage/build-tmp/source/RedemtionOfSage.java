@@ -32,9 +32,6 @@ int next_game_tick = millis();
 int loops;
 
 //Gloal variable INIT
-
-PImage bgMenu;
-
 JSONObject levels;
 int level;
 
@@ -108,8 +105,8 @@ public void setup() {
   
   frameRate(1000);
 
-  bgMenu = loadImage("img/background.png");
-
+  loadImages();
+  
   // rondje
   checkpointColor1 = color(245,245,230);
   checkpointColor2 = color(245,245,230);
@@ -1165,9 +1162,6 @@ class Button {
           subMenu = 4;
           mpos = 0;
           enteredMenu = true;
-          // level = 1;
-          // setIndex = 0;
-          // loadLevel(true);
           break;
           //If cursor is on Level Select go to Level Select menu
         case 1:
@@ -1238,7 +1232,6 @@ class Button {
       fill(0);
       textFont(menuPopup);
       textAlign(CENTER, CENTER);
-      text("R O S", location.x, location.y - 100);
     }
 
     textFont(menuFont);
@@ -1926,6 +1919,24 @@ class HSComperator implements Comparator<Score> {
     public int compare(Score o1, Score o2) {
     return o2.score - o1.score;
   }
+}
+PImage bgMenu;
+PImage bgKeybindings;
+PImage btnStart;
+PImage btnLevelSelect;
+PImage btnHighscores;
+PImage btnCredits;
+PImage btnExit;
+
+public void loadImages() {
+	bgMenu = loadImage("img/background.png");
+	bgKeybindings= loadImage("img/keybindings.png");
+
+	btnStart = loadImage("img/buttons/startButton");
+	btnLevelSelect = loadImage("img/buttons/levelSelectButton");
+	btnHighscores = loadImage("img/buttons/highScoresButton");
+	btnCredits = loadImage("img/buttons/creditsButton");
+	btnExit = loadImage("img/buttons/exitButton");
 }
 
   AudioPlayer araGooienMusic;

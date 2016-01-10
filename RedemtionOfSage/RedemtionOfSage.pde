@@ -12,9 +12,6 @@ int next_game_tick = millis();
 int loops;
 
 //Gloal variable INIT
-
-PImage bgMenu;
-
 JSONObject levels;
 int level;
 
@@ -88,8 +85,8 @@ void setup() {
   smooth(8);
   frameRate(1000);
 
-  bgMenu = loadImage("img/background.png");
-
+  loadImages();
+  
   // rondje
   checkpointColor1 = color(245,245,230);
   checkpointColor2 = color(245,245,230);

@@ -79,9 +79,6 @@ class Button {
           subMenu = 4;
           mpos = 0;
           enteredMenu = true;
-          // level = 1;
-          // setIndex = 0;
-          // loadLevel(true);
           break;
           //If cursor is on Level Select go to Level Select menu
         case 1:
@@ -152,7 +149,6 @@ class Button {
       fill(0);
       textFont(menuPopup);
       textAlign(CENTER, CENTER);
-      text("R O S", location.x, location.y - 100);
     }
 
     textFont(menuFont);
