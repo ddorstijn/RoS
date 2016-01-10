@@ -2,7 +2,7 @@ class Button {
   PVector location;
 
   float Width, Height;
-  String[] mainMenu, levelSelect, credits;
+  String[] levelSelect, credits;
   String currentMenu;
   PFont menuFont, menuPopup;
   int menuFontSize, mpos, space, subMenu;
@@ -12,7 +12,6 @@ class Button {
   Button() {
     location = new PVector(width/2, height/2);
 
-    mainMenu = new String[5];
     levelSelect = new String[4];
     credits = new String[5];
 
@@ -27,12 +26,6 @@ class Button {
     enteredMenu = false;
 
     currentMenu = "mainMenu";
-
-    mainMenu[0] = "Start";
-    mainMenu[1] = "Level Select";
-    mainMenu[2] = "Credits";
-    mainMenu[3] = "Highscores";
-    mainMenu[4] = "Exit";
 
     levelSelect[0] = "Level 1";   
     levelSelect[1] = "Level 2";
@@ -49,7 +42,7 @@ class Button {
   void update() {
     switch (currentMenu) {
     case "mainMenu":
-      if (mpos > mainMenu.length-1) {
+      if (mpos > 4) {
         mpos = 0;
         break;
       }
@@ -154,14 +147,17 @@ class Button {
     textFont(menuFont);
 
     if (level == 0 && subMenu == 0) {
-      for (int i = 0; i < mainMenu.length; i++) {
-        backgroundMusic.pause();
-        backgroundMusic.rewind();
-        fill(0);
-        text(mainMenu[i], location.x, location.y + i * space);
-        //menuMusic.rewind();
-        menuMusic.play();
-      }
+      backgroundMusic.pause();
+      backgroundMusic.rewind();
+    
+      image(btnStart, 411, 258);
+      image(btnLevelSelect, 411, 309);
+      image(btnHighscores, 411, 359);
+      image(btnCredits, 411, 410);
+      image(btnExit, 411, 461);
+      
+      menuMusic.play();
+      menuMusic.loop();
     } else if (level == 0 && subMenu == 1) {
       for (int i = 0; i < levelSelect.length; i++) {
         fill(0);

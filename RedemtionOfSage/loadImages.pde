@@ -10,9 +10,9 @@ void loadImages() {
 	bgMenu = loadImage("img/background.png");
 	bgKeybindings= loadImage("img/keybindings.png");
 
-	btnStart = loadImage("img/buttons/startButton");
-	btnLevelSelect = loadImage("img/buttons/levelSelectButton");
-	btnHighscores = loadImage("img/buttons/highScoresButton");
-	btnCredits = loadImage("img/buttons/creditsButton");
-	btnExit = loadImage("img/buttons/exitButton");
+	btnStart = loadImage("img/buttons/startButton.JPG");
+	btnLevelSelect = loadImage("img/buttons/levelSelectButton.JPG");
+	btnHighscores = loadImage("img/buttons/highScoresButton.JPG");
+	btnCredits = loadImage("img/buttons/creditsButton.JPG");
+	btnExit = loadImage("img/buttons/exitButton.JPG");
 }
