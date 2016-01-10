@@ -18,6 +18,7 @@ int level;
 int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
+
 //kleur g
 int checkpointColor1;
 int checkpointColor2;
@@ -182,9 +183,6 @@ void update_game() {
       checkpointColor1 = color(252,252,38);
       }
     }
-
-
-
 
     for (Turret turret : turrets) {
       turret.update();

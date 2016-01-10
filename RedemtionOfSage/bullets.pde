@@ -30,6 +30,7 @@ class bullet {
   }
 
   void display() {
+    fill(255,0,0);
     rect(xBullet, yBullet, bWidth, bHeight);
   }
 

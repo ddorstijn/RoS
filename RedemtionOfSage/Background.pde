@@ -11,6 +11,7 @@ void drawBackground() {
      float x = map( i-1, 0, fft.specSize()/9, 0, width/2);
      
      println("i: "+i);
+     strokeWeight(2);
      line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
      line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
     }

@@ -95,6 +95,8 @@ class Turret {
   //Position in array
   int value;
 
+  int interval; //Time between bullets shot
+
   boolean isOver() { 
     return mousex >= location.x  && mousex < location.x + twidth && mouseY >= location.y && mouseY < location.y + theight;
   }
@@ -109,6 +111,8 @@ class Turret {
     theight = _height;
 
     value = i;
+
+    interval = 90;
   }
 
 
@@ -120,11 +124,14 @@ class Turret {
 
     float dist = sqrt(sq(player.location.x-location.x) + sq(player.location.y - location.y) );
     if (dist < 300) {
-      if (millis() % 5000 >= 0 && millis() % 2000 <= MAX_FRAMESKIP) {
+      if (interval == 0) {
         float angle =  atan((player.location.x-location.x) / (player.location.y-location.y));
         bullet.add(new bullet(location.x + twidth/2, location.y + theight/2, 3, angle));
+        interval = 60;
         enemyShootMusic.rewind();
         enemyShootMusic.play();
+      } else {
+        interval--;
       }
     }
   }

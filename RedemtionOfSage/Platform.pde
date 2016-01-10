@@ -42,8 +42,8 @@ class Platform {
 
     noStroke();
 
-    fill(0, 255, 0, 80);
-    rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
+    // fill(0, 255, 0, 80);
+    // rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
 
     if (isOver() && shiftKey) {
       fill(0, 0, 255);
@@ -75,10 +75,16 @@ class Platform {
       }
     }
 
-    rectMode(CORNER);
-    rect(location.x, location.y, iWidth, iHeight);
-    fill(0);
-    rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
+    if (index != 2) {
+      rectMode(CORNER);
+      rect(location.x, location.y, iWidth, iHeight);
+      fill(0);
+      rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
+    } else {
+      for (int i = 0; i < iWidth/40; ++i) {
+        triangle(location.x, location.y+iHeight, location.x+iWidth/2, location.y, location.x+iWidth, location.y+iHeight);
+      }
+    }
   }
 
 

@@ -38,6 +38,7 @@ int level;
 int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
+
 //kleur g
 int checkpointColor1;
 int checkpointColor2;
@@ -106,7 +107,7 @@ public void setup() {
 
 // rondje
   checkpointColor1 = color(245,245,230);
-  checkpointColor2 =  color(245,245,230);
+  checkpointColor2 = color(245,245,230);
   checkpointStroke = color(245,245,250);
   strokeWeight1 = 0;
   
@@ -202,9 +203,6 @@ public void update_game() {
       checkpointColor1 = color(252,252,38);
       }
     }
-
-
-
 
     for (Turret turret : turrets) {
       turret.update();
@@ -583,6 +581,7 @@ public void drawBackground() {
      float x = map( i-1, 0, fft.specSize()/9, 0, width/2);
      
      println("i: "+i);
+     strokeWeight(2);
      line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
      line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
     }
@@ -1323,8 +1322,8 @@ class Platform {
 
     noStroke();
 
-    fill(0, 255, 0, 80);
-    rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
+    // fill(0, 255, 0, 80);
+    // rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
 
     if (isOver() && shiftKey) {
       fill(0, 0, 255);
@@ -1356,10 +1355,16 @@ class Platform {
       }
     }
 
-    rectMode(CORNER);
-    rect(location.x, location.y, iWidth, iHeight);
-    fill(0);
-    rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
+    if (index != 2) {
+      rectMode(CORNER);
+      rect(location.x, location.y, iWidth, iHeight);
+      fill(0);
+      rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
+    } else {
+      for (int i = 0; i < iWidth/40; ++i) {
+        triangle(location.x, location.y+iHeight, location.x+iWidth/2, location.y, location.x+iWidth, location.y+iHeight);
+      }
+    }
   }
 
 
@@ -1582,6 +1587,7 @@ class bullet {
   }
 
   public void display() {
+    fill(255,0,0);
     rect(xBullet, yBullet, bWidth, bHeight);
   }
 
@@ -1716,6 +1722,8 @@ class Turret {
   //Position in array
   int value;
 
+  int interval; //Time between bullets shot
+
   public boolean isOver() { 
     return mousex >= location.x  && mousex < location.x + twidth && mouseY >= location.y && mouseY < location.y + theight;
   }
@@ -1730,6 +1738,8 @@ class Turret {
     theight = _height;
 
     value = i;
+
+    interval = 90;
   }
 
 
@@ -1741,11 +1751,14 @@ class Turret {
 
     float dist = sqrt(sq(player.location.x-location.x) + sq(player.location.y - location.y) );
     if (dist < 300) {
-      if (millis() % 5000 >= 0 && millis() % 2000 <= MAX_FRAMESKIP) {
+      if (interval == 0) {
         float angle =  atan((player.location.x-location.x) / (player.location.y-location.y));
         bullet.add(new bullet(location.x + twidth/2, location.y + theight/2, 3, angle));
+        interval = 60;
         enemyShootMusic.rewind();
         enemyShootMusic.play();
+      } else {
+        interval--;
       }
     }
   }
