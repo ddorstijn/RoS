@@ -32,6 +32,9 @@ int next_game_tick = millis();
 int loops;
 
 //Gloal variable INIT
+
+PImage bgMenu;
+
 JSONObject levels;
 int level;
 
@@ -105,7 +108,9 @@ public void setup() {
   
   frameRate(1000);
 
-// rondje
+  bgMenu = loadImage("img/background.png");
+
+  // rondje
   checkpointColor1 = color(245,245,230);
   checkpointColor2 = color(245,245,230);
   checkpointStroke = color(245,245,250);
@@ -569,8 +574,11 @@ class Ara {
   }
 }
 public void drawBackground() {
-  background(0); //Drawing background
-  
+  if (level != 0)
+    background(0); //Drawing background
+  else 
+    background(bgMenu);
+
   if (level != 0) {
     fft.forward(backgroundMusic.mix);
     

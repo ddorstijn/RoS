@@ -1,6 +1,9 @@
 void drawBackground() {
-  background(0); //Drawing background
-  
+  if (level != 0)
+    background(0); //Drawing background
+  else 
+    background(bgMenu);
+
   if (level != 0) {
     fft.forward(backgroundMusic.mix);
     
