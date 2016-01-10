@@ -86,7 +86,7 @@ void setup() {
 
 // rondje
   checkpointColor1 = color(245,245,230);
-  checkpointColor2 =  color(245,245,230);
+  checkpointColor2 = color(245,245,230);
   checkpointStroke = color(245,245,250);
   strokeWeight1 = 0;
   
