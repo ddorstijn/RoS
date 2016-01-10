@@ -79,7 +79,7 @@ ParticleSystem enemyParticle;
 ParticleSystem bulletParticle;
 
 void setup() {
-  size(1200, 600, P2D);
+  size(1200, 600, P3D);
   surface.setResizable(true);
   smooth(8);
   frameRate(1000);
@@ -263,7 +263,7 @@ if(level == 1){
   fill (checkpointColor2);
   ellipse(4727, 200, 20,20);
   menuMusic.pause();
-  menuMusic.rewind();
+  // menuMusic.rewind();
   backgroundMusic.play();
   }
 

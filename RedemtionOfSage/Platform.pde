@@ -42,7 +42,20 @@ class Platform {
 
     noStroke();
 
+    fill(0, 255, 0, 80);
+    rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
+
     if (isOver() && shiftKey) {
+      fill(0, 0, 255);
+    } else { 
+      switch (index) {
+      case 1:     
+        fill(255);
+        break;
+      case 2:
+        fill(255, 0, 0);
+        break;
+      case 3:if (isOver() && shiftKey) {
       fill(0, 0, 255);
     } else { 
       switch (index) {
@@ -57,10 +70,18 @@ class Platform {
         break;
       }
     }
+        fill(0, 255, 0);
+        break;
+      }
+    }
 
     rectMode(CORNER);
     rect(location.x, location.y, iWidth, iHeight);
+    fill(0);
+    rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
   }
+
+
 
   void collision() {
     float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, iWidth);

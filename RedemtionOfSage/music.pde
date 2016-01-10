@@ -22,7 +22,6 @@ void music(){
   minim = new Minim(this);
   backgroundMusic = minim.loadFile("music/background2.mp3");
   
-  
   minim = new Minim(this);
   checkpointMusic = minim.loadFile("music/checkpoint.wav");
   
@@ -55,6 +54,6 @@ void music(){
 
 void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .1);
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05);
   }
 }

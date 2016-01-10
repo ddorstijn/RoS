@@ -1,15 +1,19 @@
 void drawBackground() {
-  background(25, 41, 67); //Drawing background
-  fft.forward(backgroundMusic.mix);
+  background(0); //Drawing background
   
-  stroke(currentWaveformcolor, 71);
-  strokeWeight(7);
+  if (level != 0) {
+    fft.forward(backgroundMusic.mix);
+    
+    stroke(currentWaveformcolor, 71);
+    strokeWeight(7);
 
-  for(int i = 0; i < fft.specSize()/9; i++) {
-   float x = map( i-1, 0, fft.specSize()/9, 0, width/2);
-   println("i: "+i);
-   line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
-   line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
+    for(int i = 0; i < fft.specSize()/9; i++) {
+     float x = map( i-1, 0, fft.specSize()/9, 0, width/2);
+     
+     println("i: "+i);
+     line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
+     line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
+    }
   }
 }
 

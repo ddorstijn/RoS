@@ -283,7 +283,7 @@ if(level == 1){
   fill (checkpointColor2);
   ellipse(4727, 200, 20,20);
   menuMusic.pause();
-  menuMusic.rewind();
+  // menuMusic.rewind();
   backgroundMusic.play();
   }
 
@@ -571,17 +571,21 @@ class Ara {
   }
 }
 public void drawBackground() {
-  background(25, 41, 67); //Drawing background
-  fft.forward(backgroundMusic.mix);
+  background(0); //Drawing background
   
-  stroke(currentWaveformcolor, 71);
-  strokeWeight(7);
+  if (level != 0) {
+    fft.forward(backgroundMusic.mix);
+    
+    stroke(currentWaveformcolor, 71);
+    strokeWeight(7);
 
-  for(int i = 0; i < fft.specSize()/9; i++) {
-   float x = map( i-1, 0, fft.specSize()/9, 0, width/2);
-   println("i: "+i);
-   line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
-   line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
+    for(int i = 0; i < fft.specSize()/9; i++) {
+     float x = map( i-1, 0, fft.specSize()/9, 0, width/2);
+     
+     println("i: "+i);
+     line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
+     line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
+    }
   }
 }
 
@@ -1319,7 +1323,20 @@ class Platform {
 
     noStroke();
 
+    fill(0, 255, 0, 80);
+    rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
+
     if (isOver() && shiftKey) {
+      fill(0, 0, 255);
+    } else { 
+      switch (index) {
+      case 1:     
+        fill(255);
+        break;
+      case 2:
+        fill(255, 0, 0);
+        break;
+      case 3:if (isOver() && shiftKey) {
       fill(0, 0, 255);
     } else { 
       switch (index) {
@@ -1334,10 +1351,18 @@ class Platform {
         break;
       }
     }
+        fill(0, 255, 0);
+        break;
+      }
+    }
 
     rectMode(CORNER);
     rect(location.x, location.y, iWidth, iHeight);
+    fill(0);
+    rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
   }
+
+
 
   public void collision() {
     float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, iWidth);
@@ -1905,7 +1930,6 @@ public void music(){
   minim = new Minim(this);
   backgroundMusic = minim.loadFile("music/background2.mp3");
   
-  
   minim = new Minim(this);
   checkpointMusic = minim.loadFile("music/checkpoint.wav");
   
@@ -1938,7 +1962,7 @@ public void music(){
 
 public void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .1f);
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05f);
   }
 }
 public void displayparticles() {
@@ -2168,7 +2192,7 @@ class ParticleSystem {
       }
     }
   }
-  public void settings() {  size(1200, 600, P2D);  smooth(8); }
+  public void settings() {  size(1200, 600, P3D);  smooth(8); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "RedemtionOfSage" };
     if (passedArgs != null) {
