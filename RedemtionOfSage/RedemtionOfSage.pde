@@ -245,6 +245,8 @@ void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
+    
+    println(player.location.x, player.location.y);
 //checkpoint rondje
 if(level == 1){  
   //Drawing checkpoint 1

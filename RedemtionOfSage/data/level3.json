@@ -8,16 +8,6 @@
     {
       "index": 4,
       "position": {
-        "x": 600,
-        "width": 40,
-        "y": 280,
-        "height": 40
-      },
-      "value": 2
-    },
-    {
-      "index": 4,
-      "position": {
         "x": 2200,
         "width": 40,
         "y": 120,
@@ -54,6 +44,26 @@
         "height": 40
       },
       "value": 5
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 840,
+        "width": 40,
+        "y": 240,
+        "height": 40
+      },
+      "value": 5
+    },
+    {
+      "index": 4,
+      "position": {
+        "x": 680,
+        "width": 40,
+        "y": 240,
+        "height": 40
+      },
+      "value": 6
     }
   ],
   "MovEnemy": [
@@ -126,42 +136,12 @@
     {
       "index": 1,
       "position": {
-        "x": 160,
-        "width": 160,
-        "y": 360,
-        "height": 40
-      },
-      "value": 2
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 120,
-        "width": 40,
-        "y": 0,
-        "height": 480
-      },
-      "value": 2
-    },
-    {
-      "index": 1,
-      "position": {
         "x": 200,
         "width": 960,
         "y": 400,
         "height": 120
       },
       "value": 3
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 160,
-        "width": 40,
-        "y": 400,
-        "height": 80
-      },
-      "value": 4
     },
     {
       "index": 1,
@@ -252,76 +232,6 @@
         "height": 40
       },
       "value": 13
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 160,
-        "width": 1160,
-        "y": 0,
-        "height": 40
-      },
-      "value": 14
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 360,
-        "width": 560,
-        "y": 40,
-        "height": 40
-      },
-      "value": 15
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 840,
-        "width": 120,
-        "y": 80,
-        "height": 40
-      },
-      "value": 16
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 920,
-        "width": 120,
-        "y": 40,
-        "height": 40
-      },
-      "value": 17
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 400,
-        "width": 200,
-        "y": 80,
-        "height": 40
-      },
-      "value": 18
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 880,
-        "width": 80,
-        "y": 120,
-        "height": 40
-      },
-      "value": 19
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 960,
-        "width": 40,
-        "y": 80,
-        "height": 40
-      },
-      "value": 20
     },
     {
       "index": 1,
@@ -474,46 +384,6 @@
       "value": 35
     },
     {
-      "index": 1,
-      "position": {
-        "x": 480,
-        "width": 40,
-        "y": 200,
-        "height": 40
-      },
-      "value": 36
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 160,
-        "width": 40,
-        "y": 280,
-        "height": 40
-      },
-      "value": 38
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 0,
-        "width": 120,
-        "y": 0,
-        "height": 640
-      },
-      "value": 39
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 120,
-        "width": 80,
-        "y": 480,
-        "height": 120
-      },
-      "value": 40
-    },
-    {
       "index": 3,
       "position": {
         "x": 3080,
@@ -602,6 +472,76 @@
         "height": 40
       },
       "value": 48
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 0,
+        "width": 520,
+        "y": 400,
+        "height": 160
+      },
+      "value": 45
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 240,
+        "width": 520,
+        "y": 400,
+        "height": 80
+      },
+      "value": 46
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 320,
+        "width": 80,
+        "y": 0,
+        "height": 160
+      },
+      "value": 39
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 240,
+        "width": 280,
+        "y": 0,
+        "height": 120
+      },
+      "value": 40
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 120,
+        "width": 600,
+        "y": 0,
+        "height": 80
+      },
+      "value": 41
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 0,
+        "width": 1000,
+        "y": 0,
+        "height": 40
+      },
+      "value": 42
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 440,
+        "width": 80,
+        "y": 240,
+        "height": 40
+      },
+      "value": 42
     }
   ]
 }
