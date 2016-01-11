@@ -3,7 +3,6 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
-import fullscreen.*; 
 import ddf.minim.*; 
 import ddf.minim.analysis.*; 
 import java.util.*; 
@@ -21,13 +20,9 @@ public class RedemtionOfSage extends PApplet {
 
  //<>// //<>// //<>//
 
- //<>//
-
 
 Minim minim;
 FFT fft;
-
-SoftFullScreen fs; 
 
 int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -105,8 +100,6 @@ ParticleSystem enemyParticle;
 ParticleSystem bulletParticle;
 
 public void setup() {
-  fs = new SoftFullScreen(this); 
-  fs.enter(); 
   
   
   frameRate(1000);
@@ -212,14 +205,6 @@ public void update_game() {
       }
     }
 
-    for (Turret turret : turrets) {
-      turret.update();
-    }
-
-    for (MovEnemy o : movEnemy) {
-      o.update();
-    }
-
     for (Platform b : platforms) {
       b.update();
       if (changeLevel) {
@@ -240,6 +225,14 @@ public void update_game() {
           break;
         }
       }
+    }
+    
+    for (Turret turret : turrets) {
+      turret.update();
+    }
+
+    for (MovEnemy o : movEnemy) {
+      o.update();
     }
 
     for (bullet b : bullet) {
@@ -373,12 +366,13 @@ class Ara {
 
   int scalar;
   int timer;
+  int sTimer;
   float angle;
 
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
-    location = new PVector(_x, _y);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1f);
 
@@ -407,6 +401,7 @@ class Ara {
 
     if (!powerUpActivated[0] && !powerUpActivated[1]) {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
+      location.z = cos(angle);
       angle = angle + speed;
 
       if( location.x >= player.location.x - 39.9f && location.x < player.location.x + 20){
@@ -428,48 +423,48 @@ class Ara {
     rectMode(CORNER);
 
 
-    if (powerUpActivated[1]) {//shield timer countdown with ellipses
-      if (millis() - timer < 3000) {
+    if (powerUpActivated[1] && millis() - sTimer < 3000) {//shield timer countdown with ellipses
+      if (millis() - sTimer < 3000) {
       ellipse(player.location.x+((40/6)-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2500) {
+      if (millis() - sTimer < 2500) {
       ellipse(player.location.x+((40/6)*2-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2000) {
+      if (millis() - sTimer < 2000) {
       ellipse(player.location.x+((40/6)*3-2.5f), player.location.y-10, timerSize, timerSize);
       }      
-      if (millis() - timer < 1500) {
+      if (millis() - sTimer < 1500) {
       ellipse(player.location.x+((40/6)*4-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 1000) {
+      if (millis() - sTimer < 1000) {
       ellipse(player.location.x+((40/6)*5-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 500) {
+      if (millis() - sTimer < 500) {
       ellipse(player.location.x+((40/6)*6-2.5f), player.location.y-10, timerSize, timerSize);
       }  
     }
-    if (millis() - timer < 6500) {
+    if (!powerUpActivated[1] && millis() - timer < 3500) {
       if (!powerUpActivated[1] && timer != 0) {
-        if (millis() - timer > 3500) {
+        if (millis() - timer > 500) {
         ellipse(player.location.x+((40/6)-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4000) {
+        if (millis() - timer > 1000) {
         ellipse(player.location.x+((40/6)*2-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4500) {
+        if (millis() - timer > 1500) {
         ellipse(player.location.x+((40/6)*3-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5000) {
+        if (millis() - timer > 2000) {
         ellipse(player.location.x+((40/6)*4-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5500) {
+        if (millis() - timer > 2500) {
         ellipse(player.location.x+((40/6)*5-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 6000) {
+        if (millis() - timer > 3000) {
         ellipse(player.location.x+((40/6)*6-2.5f), player.location.y-10, timerSize, timerSize);
         }       
       }
-    }
+    } 
  
     
     if (powerUpActivated[1]) {//shield
@@ -484,18 +479,29 @@ class Ara {
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
-      rect(location.x, location.y - 35, aWidth, aHeight); 
+      pushMatrix();
+      translate(location.x, location.y, location.z);
+      rect(0, 0, aWidth, aHeight);
+      popMatrix(); 
     }
   }
 
   public void araUpdatePosition() {
 
-    if (millis() - timer > 3000) {
-      powerUpActivated[1] = false;
-    }
-    if (millis() - timer > 6000) {
+    if (powerUpActivated[1] && millis() - sTimer <= 3000) {
+      powerUpActivated[1] = true;
       shieldActivate = true;
-    }
+    }else if (powerUpActivated[1] && millis() - sTimer > 3000) {
+      powerUpActivated[1] = false;
+      shieldActivate = false;
+      ara.timer = millis();
+    } 
+
+    if (!powerUpActivated[1] && shieldActivate == false && millis() - timer <= 3000) {
+      shieldActivate = false;
+    } else if (!powerUpActivated[1] && shieldActivate == false && millis() - timer > 3000) {
+      shieldActivate = true;
+    } 
     
 
     location.add(velocity); //Speed
@@ -598,15 +604,15 @@ public void drawBackground() {
      float x = map( i-1, 0, 45, 0, width/2);
      
      strokeWeight(7);
-     line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
-     line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
+     line(width/2+x, height/2 + fft.getBand(i)*4, -1, width/2+x, height/2 - fft.getBand(i)*4, -1);
+     line(width/2-x, height/2 + fft.getBand(i)*4, -1, width/2-x, height/2 - fft.getBand(i)*4, -1);
     }
   }
 }
 
 public void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05f);
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03f);
   }
 }
 
@@ -964,10 +970,14 @@ public void araControls() {
 
   //If X is pressed turn on shield
   if (keysPressed[88] && !ara.powerUpActivated[0] && level >= 1 && ara.shieldActivate == true) {
+    if (keysPressed[88] && ara.powerUpActivated[1]) {
+      ara.timer = millis();
+      ara.shieldActivate = false;
+      }
     ara.powerUpActivated[1] = !ara.powerUpActivated[1];
     ara.powerUps();
-    ara.timer = millis();
     ara.shieldActivate = false;
+    ara.sTimer = millis();
   }
 }
 
@@ -1392,9 +1402,6 @@ class Platform {
 
     noStroke();
 
-    // fill(0, 255, 0, 80);
-    // rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
-
     if (isOver() && shiftKey) {
       fill(0, 0, 255);
     } else { 
@@ -1501,7 +1508,7 @@ class Player {
     pHeight = 40;
     angle = 0;
 
-    location = new PVector(_x, _y);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1f);
     start = new PVector(_x, _y);
@@ -1733,16 +1740,19 @@ class MovEnemy {
     if (isOver() && shiftKey)
       fill(255, 0, 0);
     else 
-      fill(113, 8, 151);
+    fill(0);
+    stroke(255, 0, 0);
+    strokeWeight(2);
 
     rectMode(CORNER);
     rect(location.x, location.y, aWidth, aHeight);
-    fill(0,255,0);
-    triangle(location.x+4,location.y+4, location.x+20, location.y+8, location.x +10, location.y +14);
-    triangle(location.x+36,location.y+4, location.x+20, location.y+8, location.x +30, location.y +14);
-    rect(location.x+4, location.y+25, aWidth-8,aHeight/5);
+    triangle(location.x + 10, location.y, location.x, location.y - 15, location.x - 10, location.y);
+    triangle(location.x + aWidth - 10, location.y, location.x + aWidth, location.y - 15, location.x + aWidth + 10, location.y);
+    //triangle(location.x+4,location.y+4, location.x+20, location.y+8, location.x +10, location.y +14);
+    //triangle(location.x+36,location.y+4, location.x+20, location.y+8, location.x +30, location.y +14);
+    //rect(location.x+4, location.y+25, aWidth-8,aHeight/5);
   }
-    
+
 
   public void enemyUpdatePosition() {
     location.add(velocity);
@@ -1775,7 +1785,6 @@ class MovEnemy {
       playerDiesMusic.play();
       player.respawn();
     }
-
   }
 }
 
@@ -1809,7 +1818,7 @@ class Turret {
 
     value = i;
 
-    interval = 90;
+    interval = 60;
   }
 
 
@@ -1838,10 +1847,13 @@ class Turret {
     if (isOver() && shiftKey) {
       fill(255, 0, 0);
     } else { 
-      fill(0, 0, 255);
+      fill(0, 0, 0);
     }
     rectMode(CORNER);
+    stroke(255, 0, 0);
+    strokeWeight(2);
     rect(location.x, location.y, twidth, theight);
+    ellipse(location.x+5, location.y+5 , twidth - 10 , theight - 10);
   }
 
   public void collision() {
@@ -1886,9 +1898,9 @@ class Boss {
     for (int i = 0; i < n; i++) {
       vertex(cx + r * cos(radians(angle * i)), 
         cy + r * sin(radians(angle * i)));
-      rect(cx - r/2,cy - r/2,20,40); 
-      rect(cx + r/4,cy - r/2,20,40);  
-      rect(cx - r/8, cy + r/3,20,20);
+      rect(cx - r/2, cy - r/2, 20, 40); 
+      rect(cx + r/4, cy - r/2, 20, 40);  
+      rect(cx - r/8, cy + r/3, 20, 20);
     }
     endShape(CLOSE);
   }
@@ -2299,7 +2311,7 @@ class ParticleSystem {
       }
     }
   }
-  public void settings() {  size(1200, 600);  smooth(8); }
+  public void settings() {  size(1200, 600, P3D);  smooth(8); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "RedemtionOfSage" };
     if (passedArgs != null) {

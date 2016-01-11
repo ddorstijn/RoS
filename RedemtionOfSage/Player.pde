@@ -30,7 +30,7 @@ class Player {
     pHeight = 40;
     angle = 0;
 
-    location = new PVector(_x, _y);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
     start = new PVector(_x, _y);

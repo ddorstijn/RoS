@@ -18,15 +18,15 @@ void drawBackground() {
      float x = map( i-1, 0, 45, 0, width/2);
      
      strokeWeight(7);
-     line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
-     line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
+     line(width/2+x, height/2 + fft.getBand(i)*4, -1, width/2+x, height/2 - fft.getBand(i)*4, -1);
+     line(width/2-x, height/2 + fft.getBand(i)*4, -1, width/2-x, height/2 - fft.getBand(i)*4, -1);
     }
   }
 }
 
 void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05);
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03);
   }
 }
 

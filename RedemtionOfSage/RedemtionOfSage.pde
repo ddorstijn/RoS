@@ -1,4 +1,4 @@
-import ddf.minim.*; //<>// //<>//
+import ddf.minim.*; //<>// //<>// //<>//
 import ddf.minim.analysis.*;
 
 Minim minim;
@@ -185,14 +185,6 @@ void update_game() {
       }
     }
 
-    for (Turret turret : turrets) {
-      turret.update();
-    }
-
-    for (MovEnemy o : movEnemy) {
-      o.update();
-    }
-
     for (Platform b : platforms) {
       b.update();
       if (changeLevel) {
@@ -213,6 +205,14 @@ void update_game() {
           break;
         }
       }
+    }
+    
+    for (Turret turret : turrets) {
+      turret.update();
+    }
+
+    for (MovEnemy o : movEnemy) {
+      o.update();
     }
 
     for (bullet b : bullet) {

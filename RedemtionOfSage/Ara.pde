@@ -15,12 +15,13 @@ class Ara {
 
   int scalar;
   int timer;
+  int sTimer;
   float angle;
 
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
-    location = new PVector(_x, _y);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
 
@@ -49,6 +50,7 @@ class Ara {
 
     if (!powerUpActivated[0] && !powerUpActivated[1]) {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
+      location.z = cos(angle);
       angle = angle + speed;
 
       if( location.x >= player.location.x - 39.9 && location.x < player.location.x + 20){
@@ -70,48 +72,48 @@ class Ara {
     rectMode(CORNER);
 
 
-    if (powerUpActivated[1]) {//shield timer countdown with ellipses
-      if (millis() - timer < 3000) {
+    if (powerUpActivated[1] && millis() - sTimer < 3000) {//shield timer countdown with ellipses
+      if (millis() - sTimer < 3000) {
       ellipse(player.location.x+((40/6)-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2500) {
+      if (millis() - sTimer < 2500) {
       ellipse(player.location.x+((40/6)*2-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2000) {
+      if (millis() - sTimer < 2000) {
       ellipse(player.location.x+((40/6)*3-2.5), player.location.y-10, timerSize, timerSize);
       }      
-      if (millis() - timer < 1500) {
+      if (millis() - sTimer < 1500) {
       ellipse(player.location.x+((40/6)*4-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 1000) {
+      if (millis() - sTimer < 1000) {
       ellipse(player.location.x+((40/6)*5-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 500) {
+      if (millis() - sTimer < 500) {
       ellipse(player.location.x+((40/6)*6-2.5), player.location.y-10, timerSize, timerSize);
       }  
     }
-    if (millis() - timer < 6500) {
+    if (!powerUpActivated[1] && millis() - timer < 3500) {
       if (!powerUpActivated[1] && timer != 0) {
-        if (millis() - timer > 3500) {
+        if (millis() - timer > 500) {
         ellipse(player.location.x+((40/6)-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4000) {
+        if (millis() - timer > 1000) {
         ellipse(player.location.x+((40/6)*2-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4500) {
+        if (millis() - timer > 1500) {
         ellipse(player.location.x+((40/6)*3-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5000) {
+        if (millis() - timer > 2000) {
         ellipse(player.location.x+((40/6)*4-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5500) {
+        if (millis() - timer > 2500) {
         ellipse(player.location.x+((40/6)*5-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 6000) {
+        if (millis() - timer > 3000) {
         ellipse(player.location.x+((40/6)*6-2.5), player.location.y-10, timerSize, timerSize);
         }       
       }
-    }
+    } 
  
     
     if (powerUpActivated[1]) {//shield
@@ -126,18 +128,29 @@ class Ara {
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
-      rect(location.x, location.y - 35, aWidth, aHeight); 
+      pushMatrix();
+      translate(location.x, location.y, location.z);
+      rect(0, 0, aWidth, aHeight);
+      popMatrix(); 
     }
   }
 
   void araUpdatePosition() {
 
-    if (millis() - timer > 3000) {
-      powerUpActivated[1] = false;
-    }
-    if (millis() - timer > 6000) {
+    if (powerUpActivated[1] && millis() - sTimer <= 3000) {
+      powerUpActivated[1] = true;
       shieldActivate = true;
-    }
+    }else if (powerUpActivated[1] && millis() - sTimer > 3000) {
+      powerUpActivated[1] = false;
+      shieldActivate = false;
+      ara.timer = millis();
+    } 
+
+    if (!powerUpActivated[1] && shieldActivate == false && millis() - timer <= 3000) {
+      shieldActivate = false;
+    } else if (!powerUpActivated[1] && shieldActivate == false && millis() - timer > 3000) {
+      shieldActivate = true;
+    } 
     
 
     location.add(velocity); //Speed
