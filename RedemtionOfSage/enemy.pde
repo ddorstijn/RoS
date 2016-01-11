@@ -114,7 +114,7 @@ class Turret {
 
     value = i;
 
-    interval = 90;
+    interval = 60;
   }
 
 
@@ -149,7 +149,7 @@ class Turret {
     stroke(255, 0, 0);
     strokeWeight(2);
     rect(location.x, location.y, twidth, theight);
-    ellipse(location.x, location.y , twidth - 5 , theight - 5);
+    ellipse(location.x+5, location.y+5 , twidth - 10 , theight - 10);
   }
 
   void collision() {

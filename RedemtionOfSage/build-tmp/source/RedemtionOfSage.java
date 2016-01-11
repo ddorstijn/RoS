@@ -18,6 +18,9 @@ import java.io.IOException;
 
 public class RedemtionOfSage extends PApplet {
 
+ //<>// //<>// //<>//
+
+
 Minim minim;
 FFT fft;
 
@@ -609,7 +612,7 @@ public void drawBackground() {
 
 public void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .01f);
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03f);
   }
 }
 
@@ -1737,16 +1740,19 @@ class MovEnemy {
     if (isOver() && shiftKey)
       fill(255, 0, 0);
     else 
-      fill(113, 8, 151);
+    fill(0);
+    stroke(255, 0, 0);
+    strokeWeight(2);
 
     rectMode(CORNER);
     rect(location.x, location.y, aWidth, aHeight);
-    fill(0,255,0);
-    triangle(location.x+4,location.y+4, location.x+20, location.y+8, location.x +10, location.y +14);
-    triangle(location.x+36,location.y+4, location.x+20, location.y+8, location.x +30, location.y +14);
-    rect(location.x+4, location.y+25, aWidth-8,aHeight/5);
+    triangle(location.x + 10, location.y, location.x, location.y - 15, location.x - 10, location.y);
+    triangle(location.x + aWidth - 10, location.y, location.x + aWidth, location.y - 15, location.x + aWidth + 10, location.y);
+    //triangle(location.x+4,location.y+4, location.x+20, location.y+8, location.x +10, location.y +14);
+    //triangle(location.x+36,location.y+4, location.x+20, location.y+8, location.x +30, location.y +14);
+    //rect(location.x+4, location.y+25, aWidth-8,aHeight/5);
   }
-    
+
 
   public void enemyUpdatePosition() {
     location.add(velocity);
@@ -1779,7 +1785,6 @@ class MovEnemy {
       playerDiesMusic.play();
       player.respawn();
     }
-
   }
 }
 
@@ -1813,7 +1818,7 @@ class Turret {
 
     value = i;
 
-    interval = 90;
+    interval = 60;
   }
 
 
@@ -1842,10 +1847,13 @@ class Turret {
     if (isOver() && shiftKey) {
       fill(255, 0, 0);
     } else { 
-      fill(0, 0, 255);
+      fill(0, 0, 0);
     }
     rectMode(CORNER);
+    stroke(255, 0, 0);
+    strokeWeight(2);
     rect(location.x, location.y, twidth, theight);
+    ellipse(location.x+5, location.y+5 , twidth - 10 , theight - 10);
   }
 
   public void collision() {
@@ -1890,9 +1898,9 @@ class Boss {
     for (int i = 0; i < n; i++) {
       vertex(cx + r * cos(radians(angle * i)), 
         cy + r * sin(radians(angle * i)));
-      rect(cx - r/2,cy - r/2,20,40); 
-      rect(cx + r/4,cy - r/2,20,40);  
-      rect(cx - r/8, cy + r/3,20,20);
+      rect(cx - r/2, cy - r/2, 20, 40); 
+      rect(cx + r/4, cy - r/2, 20, 40);  
+      rect(cx - r/8, cy + r/3, 20, 20);
     }
     endShape(CLOSE);
   }
@@ -2305,7 +2313,7 @@ class ParticleSystem {
   }
   public void settings() {  size(1200, 600, P3D);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "RedemtionOfSage" };
+    String[] appletArgs = new String[] { "RedemtionOfSage" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
