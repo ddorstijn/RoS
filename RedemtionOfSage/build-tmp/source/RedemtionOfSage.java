@@ -265,6 +265,7 @@ public void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
+    
 //checkpoint rondje
 if(level == 1){  
   //Drawing checkpoint 1
@@ -1438,13 +1439,11 @@ class Platform {
       fill(0);
       rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
     } else {
-      for (int i = 0; i < iWidth/40; ++i) {
-        triangle(location.x, location.y+iHeight, location.x+iWidth/2, location.y, location.x+iWidth, location.y+iHeight);
+      for (int i = 0; i < iWidth/40; i++) {
+        triangle(location.x+(i*40), location.y+iHeight, location.x+(i*40)+20, location.y, location.x+(i*40)+40, location.y+iHeight);
       }
     }
   }
-
-
 
   public void collision() {
     float xOverlap = calculate1DOverlap(player.location.x, location.x, player.pWidth, iWidth);

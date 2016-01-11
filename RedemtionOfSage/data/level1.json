@@ -536,26 +536,6 @@
     {
       "index": 1,
       "position": {
-        "x": 6920,
-        "width": 440,
-        "y": 0,
-        "height": 40
-      },
-      "value": 37
-    },
-    {
-      "index": 3,
-      "position": {
-        "x": 6640,
-        "width": 200,
-        "y": 200,
-        "height": 40
-      },
-      "value": 39
-    },
-    {
-      "index": 1,
-      "position": {
         "x": 5840,
         "width": 200,
         "y": 400,
@@ -632,26 +612,6 @@
         "height": 40
       },
       "value": 49
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 6960,
-        "width": 560,
-        "y": 40,
-        "height": 480
-      },
-      "value": 49
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 7360,
-        "width": 280,
-        "y": 0,
-        "height": 80
-      },
-      "value": 50
     },
     {
       "index": 1,
@@ -1486,36 +1446,6 @@
     {
       "index": 1,
       "position": {
-        "x": 6480,
-        "width": 160,
-        "y": 200,
-        "height": 80
-      },
-      "value": 110
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 6840,
-        "width": 80,
-        "y": 200,
-        "height": 80
-      },
-      "value": 110
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 6480,
-        "width": 440,
-        "y": 240,
-        "height": 40
-      },
-      "value": 111
-    },
-    {
-      "index": 1,
-      "position": {
         "x": 4400,
         "width": 240,
         "y": 200,
@@ -1602,6 +1532,36 @@
         "height": 40
       },
       "value": 111
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 6840,
+        "width": 0,
+        "y": 200,
+        "height": 40
+      },
+      "value": 111
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 6480,
+        "width": 440,
+        "y": 200,
+        "height": 80
+      },
+      "value": 109
+    },
+    {
+      "index": 3,
+      "position": {
+        "x": 7000,
+        "width": 40,
+        "y": 0,
+        "height": 600
+      },
+      "value": 107
     }
   ]
 }
