@@ -3,6 +3,7 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import fullscreen.*; 
 import ddf.minim.*; 
 import ddf.minim.analysis.*; 
 import java.util.*; 
@@ -18,11 +19,15 @@ import java.io.IOException;
 
 public class RedemtionOfSage extends PApplet {
 
+ //<>// //<>// //<>//
+
  //<>//
 
 
 Minim minim;
 FFT fft;
+
+SoftFullScreen fs; 
 
 int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -100,8 +105,9 @@ ParticleSystem enemyParticle;
 ParticleSystem bulletParticle;
 
 public void setup() {
+  fs = new SoftFullScreen(this); 
+  fs.enter(); 
   
-  surface.setResizable(true);
   
   frameRate(1000);
 
@@ -398,6 +404,22 @@ class Ara {
   public void update() {
     araUpdatePosition();
     collisionDetection();
+
+    if (!powerUpActivated[0] && !powerUpActivated[1]) {
+      location.x = (player.location.x + 10) + sin(angle) * scalar;
+      angle = angle + speed;
+
+      if( location.x >= player.location.x - 39.9f && location.x < player.location.x + 20){
+        aWidth += 0.1f; 
+        aHeight += 0.1f;
+      } else if( location.x >= player.location.x + 20 && location.x <= player.location.x + 59.9f){
+        aWidth -= 0.1f; 
+        aHeight -= 0.1f;
+      }else{
+        aWidth = 20;
+        aHeight = 20;
+      }
+    }
   }
 
   public void display() {
@@ -462,21 +484,7 @@ class Ara {
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
-      location.x = (player.location.x + 10) + sin(angle) * scalar;
-      angle = angle + speed;
       rect(location.x, location.y - 35, aWidth, aHeight); 
-      
-      if( location.x >= player.location.x - 39.9f && location.x < player.location.x + 20){
-      aWidth += 0.1f; 
-      aHeight += 0.1f;
-      }
-      else if( location.x >= player.location.x + 20 && location.x <= player.location.x + 59.9f){
-      aWidth -= 0.1f; 
-      aHeight -= 0.1f;
-      }else{
-      aWidth = 20;
-      aHeight = 20;
-      }
     }
   }
 
@@ -571,30 +579,40 @@ class Ara {
   }
 }
 public void drawBackground() {
-  if (level != 0)
+  if (level != 0) {
     background(0); //Drawing background
-  else 
+  } else if (menu.subMenu == 3){ 
+    background(bgCredits);
+  } else if (level == 0 && menu.subMenu == 4){
+    background(bgEnterName);
+  } else {
     background(bgMenu);
+  }
 
   if (level != 0) {
     fft.forward(backgroundMusic.mix);
     
     stroke(currentWaveformcolor, 71);
-    strokeWeight(7);
 
-    for(int i = 0; i < fft.specSize()/9; i++) {
-     float x = map( i-1, 0, fft.specSize()/9, 0, width/2);
+    for(int i = 0; i < 45; i++) {
+     float x = map( i-1, 0, 45, 0, width/2);
      
-     println("i: "+i);
-     strokeWeight(2);
+     strokeWeight(7);
      line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
      line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
     }
   }
 }
 
+public void colortransition() {
+  if (currentWaveformcolor != defaultWaveformcolor) {
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05f);
+  }
+}
+
 public void grid() {
   if (shiftKey == true) {  //If in buildmode 
+    strokeWeight(2);
     //horizontal gridlines
     for (int i = 0; i < height/gridSize; i++) { //Number of lines that have to be drawn is calculated by dividing the height by the gridsize. eg; 800 / 40 = 20 lines
       stroke(255, 0, 0);
@@ -945,7 +963,7 @@ public void araControls() {
   }
 
   //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0 && ara.shieldActivate == true) {
+  if (keysPressed[88] && !ara.powerUpActivated[0] && level >= 1 && ara.shieldActivate == true) {
     ara.powerUpActivated[1] = !ara.powerUpActivated[1];
     ara.powerUps();
     ara.timer = millis();
@@ -975,8 +993,6 @@ public void loadLevel(boolean objectsToo) {
    checkpoint1Activated = false;
    checkpoint2Activated = false;
       
-  
-  
   for (int i = 0; i < keysPressed.length; i++) {
     keysPressed[i] = false;
   }
@@ -1085,7 +1101,7 @@ class Button {
   PVector location;
 
   float Width, Height;
-  String[] mainMenu, levelSelect, credits;
+  String[] levelSelect, credits;
   String currentMenu;
   PFont menuFont, menuPopup;
   int menuFontSize, mpos, space, subMenu;
@@ -1095,7 +1111,6 @@ class Button {
   Button() {
     location = new PVector(width/2, height/2);
 
-    mainMenu = new String[5];
     levelSelect = new String[4];
     credits = new String[5];
 
@@ -1111,33 +1126,21 @@ class Button {
 
     currentMenu = "mainMenu";
 
-    mainMenu[0] = "Start";
-    mainMenu[1] = "Level Select";
-    mainMenu[2] = "Credits";
-    mainMenu[3] = "Highscores";
-    mainMenu[4] = "Exit";
-
     levelSelect[0] = "Level 1";   
     levelSelect[1] = "Level 2";
     levelSelect[2] = "Level 3";
     levelSelect[3] = "Go Back";
-
-    credits[0] = "Koen";
-    credits[1] = "Jamy";
-    credits[2] = "Tricia";
-    credits[3] = "Florian";
-    credits[4] = "Danny";
   }
 
   public void update() {
     switch (currentMenu) {
     case "mainMenu":
-      if (mpos > mainMenu.length-1) {
+      if (mpos > 4) {
         mpos = 0;
         break;
       }
       if (mpos < 0) {
-        mpos = mainMenu.length-1;
+        mpos = 4;
         break;
       }
     case "levelSelect":
@@ -1170,18 +1173,19 @@ class Button {
           enteredMenu = true;
           currentMenu = "levelSelect";
           break;
-          //If on Credits fo to credits
+        //Higschore 
         case 2:
           subMenu = 2;
+          highscores.load("highscore.csv");
+          enteredMenu = true;
+          break;
+        //Credits
+        case 3:
+          subMenu = 3;
           mpos = 0;
           enteredMenu = true;
           break;
-          //If on Higschore show highscore
-        case 3:
-          subMenu = 3;
-          highscores.load("highscore.csv");
-          break;
-          //Exit
+        //Exit
         case 4:
           exit();
           break;
@@ -1219,49 +1223,105 @@ class Button {
           subMenu = 0;
           enteredMenu = true;
         }
-        break;
+        break; 
+      case 3:
+        if (keyPressed) {
+          subMenu = 0;
+          enteredMenu = true;
+        }
       }
     }
   }
 
   public void display() {
-    if (level == 0 && subMenu < 2) {
-      fill(255, 0, 0);
-      ellipse(location.x - 100, location.y + mpos * space, 15, 15);
-
-      fill(0);
-      textFont(menuPopup);
-      textAlign(CENTER, CENTER);
-    }
-
+    
     textFont(menuFont);
 
     if (level == 0 && subMenu == 0) {
-      for (int i = 0; i < mainMenu.length; i++) {
-        backgroundMusic.pause();
-        backgroundMusic.rewind();
-        fill(0);
-        text(mainMenu[i], location.x, location.y + i * space);
-        //menuMusic.rewind();
-        menuMusic.play();
-      }
-    } else if (level == 0 && subMenu == 1) {
-      for (int i = 0; i < levelSelect.length; i++) {
-        fill(0);
-        text(levelSelect[i], location.x, location.y + i * space);
-      }
-    } else if (level == 0 && subMenu == 2) {
-      for (int i = 0; i < credits.length; i++) {
-        fill(0);
-        text(credits[i], location.x, location.y + i * space);
-      }
-    } else if (level == 0 && subMenu == 3) {
-      // display header row
-      fill(0);
-      textSize(20);
-      text("Place        Name        Score        Time", width/2, 70);
+      backgroundMusic.pause();
+      backgroundMusic.rewind();
 
-      textSize(16);
+      if (mpos == 0) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnStart, 411, 258);
+
+      if (mpos == 1) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnLevelSelect, 411, 309);
+
+      if (mpos == 2) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnHighscores, 411, 359);
+      
+      if (mpos == 3) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnCredits, 411, 410);
+
+      if (mpos == 4) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnExit, 411, 461);
+      
+      noTint();
+      menuMusic.play();
+      menuMusic.loop();
+    } else if (level == 0 && subMenu == 1) {
+      backgroundMusic.pause();
+      backgroundMusic.rewind();
+
+      if (mpos == 0) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnLevel1, 411, 258);
+
+      if (mpos == 1) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnLevel2, 411, 309);
+
+      if (mpos == 2) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnLevel3, 411, 359);
+      
+      if (mpos == 3) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnBack, 411, 410);
+
+      noTint();
+      
+    } else if (level == 0 && subMenu == 2) {
+      // display header row
+      fill(255);
+      textSize(32);
+      text("Place", width/5, height/2.5f);
+      text("Name", 2*width/5, height/2.5f);
+      text("Score", 3*width/5, height/2.5f);
+      text("Time", 4*width/5, height/2.5f);
+      textSize(24);
       // for each score in list
       for (int iScore=0; iScore<highscores.getScoreCount(); iScore++) {
         // only show the top 10 scores
@@ -1271,11 +1331,20 @@ class Button {
         Score score = highscores.getScore(iScore);
 
         // display score in window
-        text((iScore+1) + "            " + score.name + "        " + score.score + "        " + score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), width/2, 100 + iScore*20);
+        text((iScore+1) , width/5, height/2.5f + 100 + iScore*22);
+        text(score.name, 2*width/5, height/2.5f + 100 + iScore*22);
+        text(score.score, 3*width/5, height/2.5f + 100 +iScore*22);
+        text(score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), 4*width/5, height/2.5f + 100 + iScore*22);
       }
+    } else if (level == 0 && subMenu == 3) { 
+      
     } else if (level == 0 && subMenu == 4) {
-      text("Keep tying until password matches", width/2, 20);
-      text("Enter text here: " + userInput, width/2, height/2 - 20);
+      pushStyle();
+      fill(255);
+      textAlign(LEFT, CENTER);
+      textSize(32);
+      text(userInput, 644, 315);
+      popStyle();
     }
   }
 }
@@ -1922,21 +1991,37 @@ class HSComperator implements Comparator<Score> {
 }
 PImage bgMenu;
 PImage bgKeybindings;
+PImage bgCredits;
+PImage bgEnterName;
+
 PImage btnStart;
 PImage btnLevelSelect;
 PImage btnHighscores;
 PImage btnCredits;
 PImage btnExit;
 
+PImage btnLevel1;
+PImage btnLevel2;
+PImage btnLevel3;
+PImage btnBack;
+
+
 public void loadImages() {
 	bgMenu = loadImage("img/background.png");
-	bgKeybindings= loadImage("img/keybindings.png");
+	bgKeybindings = loadImage("img/keybindings.png");
+	bgCredits = loadImage("img/credits.png");
+	bgEnterName = loadImage("img/name.png");
 
-	btnStart = loadImage("img/buttons/startButton");
-	btnLevelSelect = loadImage("img/buttons/levelSelectButton");
-	btnHighscores = loadImage("img/buttons/highScoresButton");
-	btnCredits = loadImage("img/buttons/creditsButton");
-	btnExit = loadImage("img/buttons/exitButton");
+	btnStart = loadImage("img/buttons/startButton.JPG");
+	btnLevelSelect = loadImage("img/buttons/levelSelectButton.JPG");
+	btnHighscores = loadImage("img/buttons/highScoresButton.JPG");
+	btnCredits = loadImage("img/buttons/creditsButton.JPG");
+	btnExit = loadImage("img/buttons/exitButton.JPG");
+
+  btnLevel1 = loadImage("img/buttons/level1.PNG");
+  btnLevel2 = loadImage("img/buttons/level2.PNG");
+  btnLevel3 = loadImage("img/buttons/level3.PNG");
+  btnBack = loadImage("img/buttons/back.PNG");
 }
 
   AudioPlayer araGooienMusic;
@@ -1991,21 +2076,11 @@ public void music(){
   
   fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
 }
-
-public void colortransition() {
-  if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05f);
-  }
-}
 public void displayparticles() {
   jump.run();
   enemyParticle.run();
   bulletParticle.run();
 }
-
-
-
-
 
 // A class to describe a group of Particles
 // An ArrayList is used to manage the list of Particles 
@@ -2102,9 +2177,9 @@ class ParticleSystem {
 
     // Method to display
     public void display() {
-      c1 +=10;
-      c1%=255;
-      stroke(100, 0, 0);
+      c1 += 10;
+      c1 %= 255;
+      noStroke();
       pushStyle();
       colorMode(HSB);
       fill(c1, 255, 255, lifespan+60);
@@ -2224,7 +2299,7 @@ class ParticleSystem {
       }
     }
   }
-  public void settings() {  size(1200, 600, P3D);  smooth(8); }
+  public void settings() {  size(1200, 600);  smooth(8); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "RedemtionOfSage" };
     if (passedArgs != null) {

@@ -46,6 +46,22 @@ class Ara {
   void update() {
     araUpdatePosition();
     collisionDetection();
+
+    if (!powerUpActivated[0] && !powerUpActivated[1]) {
+      location.x = (player.location.x + 10) + sin(angle) * scalar;
+      angle = angle + speed;
+
+      if( location.x >= player.location.x - 39.9 && location.x < player.location.x + 20){
+        aWidth += 0.1; 
+        aHeight += 0.1;
+      } else if( location.x >= player.location.x + 20 && location.x <= player.location.x + 59.9){
+        aWidth -= 0.1; 
+        aHeight -= 0.1;
+      }else{
+        aWidth = 20;
+        aHeight = 20;
+      }
+    }
   }
 
   void display() {
@@ -110,21 +126,7 @@ class Ara {
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
-      location.x = (player.location.x + 10) + sin(angle) * scalar;
-      angle = angle + speed;
       rect(location.x, location.y - 35, aWidth, aHeight); 
-      
-      if( location.x >= player.location.x - 39.9 && location.x < player.location.x + 20){
-      aWidth += 0.1; 
-      aHeight += 0.1;
-      }
-      else if( location.x >= player.location.x + 20 && location.x <= player.location.x + 59.9){
-      aWidth -= 0.1; 
-      aHeight -= 0.1;
-      }else{
-      aWidth = 20;
-      aHeight = 20;
-      }
     }
   }
 

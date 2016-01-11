@@ -81,7 +81,6 @@ ParticleSystem bulletParticle;
 
 void setup() {
   size(1200, 600, P3D);
-  surface.setResizable(true);
   smooth(8);
   frameRate(1000);
 
@@ -130,7 +129,7 @@ void setup() {
   menu = new Button();
 }
 
-void draw() { //<>//
+void draw() {
 
   if (paused == false && level != 0) {
    displayTime = accumTime + millis() - startTime;
@@ -264,7 +263,7 @@ if(level == 1){
   ellipse(4727, 200, 20,20);
   menuMusic.pause();
   // menuMusic.rewind();
-  backgroundMusic.play(); //<>//
+  backgroundMusic.play();
   }
 
 
