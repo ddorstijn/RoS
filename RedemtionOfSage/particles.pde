@@ -103,10 +103,9 @@ class ParticleSystem {
 
     // Method to display
     void display() {
-      c1 +=10;
-      c1%=255;
-      stroke(100, 0, 0);
-      strokeWeight(2);
+      c1 += 10;
+      c1 %= 255;
+      noStroke();
       pushStyle();
       colorMode(HSB);
       fill(c1, 255, 255, lifespan+60);

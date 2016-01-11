@@ -265,6 +265,7 @@ if(level == 1){
   menuMusic.pause();
   // menuMusic.rewind();
   backgroundMusic.play();
+  backgroundMusic.loop();
   }
 
 

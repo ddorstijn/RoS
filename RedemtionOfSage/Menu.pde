@@ -135,27 +135,49 @@ class Button {
   }
 
   void display() {
-    if (level == 0 && subMenu < 2) {
-      fill(255, 0, 0);
-      ellipse(location.x - 100, location.y + mpos * space, 15, 15);
-
-      fill(0);
-      textFont(menuPopup);
-      textAlign(CENTER, CENTER);
-    }
-
+    
     textFont(menuFont);
 
     if (level == 0 && subMenu == 0) {
       backgroundMusic.pause();
       backgroundMusic.rewind();
-    
+
+      if (mpos == 0) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
       image(btnStart, 411, 258);
+
+      if (mpos == 1) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
       image(btnLevelSelect, 411, 309);
+
+      if (mpos == 2) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
       image(btnHighscores, 411, 359);
+      
+      if (mpos == 3) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
       image(btnCredits, 411, 410);
+
+      if (mpos == 4) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
       image(btnExit, 411, 461);
       
+      noTint();
       menuMusic.play();
       menuMusic.loop();
     } else if (level == 0 && subMenu == 1) {
@@ -165,11 +187,13 @@ class Button {
       }
     } else if (level == 0 && subMenu == 2) {
       // display header row
-      fill(0);
-      textSize(20);
-      text("Place        Name        Score        Time", width/2, 70);
-
-      textSize(16);
+      fill(255);
+      textSize(32);
+      text("Place", width/5, height/2.5);
+      text("Name", 2*width/5, height/2.5);
+      text("Score", 3*width/5, height/2.5);
+      text("Time", 4*width/5, height/2.5);
+      textSize(24);
       // for each score in list
       for (int iScore=0; iScore<highscores.getScoreCount(); iScore++) {
         // only show the top 10 scores
@@ -179,15 +203,20 @@ class Button {
         Score score = highscores.getScore(iScore);
 
         // display score in window
-        text((iScore+1) , width/2, 100 + iScore*20);
-        text(score.name, width/2, 100 + iScore*20);
-        text(score.score, width/2, 100 + iScore*20);
-        text(score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), width/2, 100 + iScore*20);
+        text((iScore+1) , width/5, height/2.5 + 100 + iScore*22);
+        text(score.name, 2*width/5, height/2.5 + 100 + iScore*22);
+        text(score.score, 3*width/5, height/2.5 + 100 +iScore*22);
+        text(score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), 4*width/5, height/2.5 + 100 + iScore*22);
       }
     } else if (level == 0 && subMenu == 3) { 
       
     } else if (level == 0 && subMenu == 4) {
-      text("Enter your name: " + userInput, width/2, height/2 - 20);
+      pushStyle();
+      fill(255);
+      textAlign(LEFT, CENTER);
+      textSize(32);
+      text(userInput, 644, 315);
+      popStyle();
     }
   }
 }

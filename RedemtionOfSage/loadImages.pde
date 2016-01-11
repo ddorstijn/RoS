@@ -1,6 +1,7 @@
 PImage bgMenu;
 PImage bgKeybindings;
 PImage bgCredits;
+PImage bgEnterName;
 
 PImage btnStart;
 PImage btnLevelSelect;
@@ -12,6 +13,7 @@ void loadImages() {
 	bgMenu = loadImage("img/background.png");
 	bgKeybindings = loadImage("img/keybindings.png");
 	bgCredits = loadImage("img/credits.png");
+	bgEnterName = loadImage("img/name.png");
 
 	btnStart = loadImage("img/buttons/startButton.JPG");
 	btnLevelSelect = loadImage("img/buttons/levelSelectButton.JPG");

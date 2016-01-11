@@ -3,6 +3,8 @@ void drawBackground() {
     background(0); //Drawing background
   } else if (menu.subMenu == 3){ 
     background(bgCredits);
+  } else if (level == 0 && menu.subMenu == 4){
+    background(bgEnterName);
   } else {
     background(bgMenu);
   }
