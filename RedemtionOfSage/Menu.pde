@@ -47,7 +47,7 @@ class Button {
         break;
       }
       if (mpos < 0) {
-        mpos = mainMenu.length-1;
+        mpos = 4;
         break;
       }
     case "levelSelect":
@@ -187,8 +187,7 @@ class Button {
         text((iScore+1) + "            " + score.name + "        " + score.score + "        " + score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), width/2, 100 + iScore*20);
       }
     } else if (level == 0 && subMenu == 4) {
-      text("Keep tying until password matches", width/2, 20);
-      text("Enter text here: " + userInput, width/2, height/2 - 20);
+      text("Enter your name: " + userInput, width/2, height/2 - 20);
     }
   }
 }
