@@ -1,4 +1,4 @@
-import ddf.minim.*; //<>//
+import ddf.minim.*; //<>// //<>//
 import ddf.minim.analysis.*;
 
 Minim minim;
@@ -130,7 +130,7 @@ void setup() {
   menu = new Button();
 }
 
-void draw() {
+void draw() { //<>//
 
   if (paused == false && level != 0) {
    displayTime = accumTime + millis() - startTime;
@@ -264,8 +264,7 @@ if(level == 1){
   ellipse(4727, 200, 20,20);
   menuMusic.pause();
   // menuMusic.rewind();
-  backgroundMusic.play();
-  backgroundMusic.loop();
+  backgroundMusic.play(); //<>//
   }
 
 

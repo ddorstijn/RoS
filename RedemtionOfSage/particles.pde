@@ -4,10 +4,6 @@ void displayparticles() {
   bulletParticle.run();
 }
 
-
-
-
-
 // A class to describe a group of Particles
 // An ArrayList is used to manage the list of Particles 
 

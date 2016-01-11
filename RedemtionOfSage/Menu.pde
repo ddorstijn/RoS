@@ -181,10 +181,39 @@ class Button {
       menuMusic.play();
       menuMusic.loop();
     } else if (level == 0 && subMenu == 1) {
-      for (int i = 0; i < levelSelect.length; i++) {
-        fill(0);
-        text(levelSelect[i], location.x, location.y + i * space);
-      }
+      backgroundMusic.pause();
+      backgroundMusic.rewind();
+
+      if (mpos == 0) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnLevel1, 411, 258);
+
+      if (mpos == 1) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnLevel2, 411, 309);
+
+      if (mpos == 2) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnLevel3, 411, 359);
+      
+      if (mpos == 3) 
+        tint(255, 0, 0);
+      else 
+        noTint();
+
+      image(btnBack, 411, 410);
+
+      noTint();
+      
     } else if (level == 0 && subMenu == 2) {
       // display header row
       fill(255);

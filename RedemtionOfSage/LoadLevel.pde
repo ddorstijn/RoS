@@ -3,8 +3,6 @@ void loadLevel(boolean objectsToo) {
    checkpoint1Activated = false;
    checkpoint2Activated = false;
       
-  
-  
   for (int i = 0; i < keysPressed.length; i++) {
     keysPressed[i] = false;
   }
