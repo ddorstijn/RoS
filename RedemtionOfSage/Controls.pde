@@ -276,7 +276,7 @@ void araControls() {
   }
 
   //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0] && level != 0 && ara.shieldActivate == true) {
+  if (keysPressed[88] && !ara.powerUpActivated[0] && level >= 1 && ara.shieldActivate == true) {
     ara.powerUpActivated[1] = !ara.powerUpActivated[1];
     ara.powerUps();
     ara.timer = millis();
