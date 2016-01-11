@@ -3,7 +3,6 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
-import fullscreen.*; 
 import ddf.minim.*; 
 import ddf.minim.analysis.*; 
 import java.util.*; 
@@ -19,15 +18,11 @@ import java.io.IOException;
 
 public class RedemtionOfSage extends PApplet {
 
- //<>// //<>// //<>//
-
- //<>//
+ //<>// //<>//
 
 
 Minim minim;
 FFT fft;
-
-SoftFullScreen fs; 
 
 int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -105,8 +100,6 @@ ParticleSystem enemyParticle;
 ParticleSystem bulletParticle;
 
 public void setup() {
-  fs = new SoftFullScreen(this); 
-  fs.enter(); 
   
   
   frameRate(1000);
@@ -373,6 +366,7 @@ class Ara {
 
   int scalar;
   int timer;
+  int sTimer;
   float angle;
 
   //OBJECT
@@ -428,48 +422,48 @@ class Ara {
     rectMode(CORNER);
 
 
-    if (powerUpActivated[1]) {//shield timer countdown with ellipses
-      if (millis() - timer < 3000) {
+    if (powerUpActivated[1] && millis() - sTimer < 3000) {//shield timer countdown with ellipses
+      if (millis() - sTimer < 3000) {
       ellipse(player.location.x+((40/6)-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2500) {
+      if (millis() - sTimer < 2500) {
       ellipse(player.location.x+((40/6)*2-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2000) {
+      if (millis() - sTimer < 2000) {
       ellipse(player.location.x+((40/6)*3-2.5f), player.location.y-10, timerSize, timerSize);
       }      
-      if (millis() - timer < 1500) {
+      if (millis() - sTimer < 1500) {
       ellipse(player.location.x+((40/6)*4-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 1000) {
+      if (millis() - sTimer < 1000) {
       ellipse(player.location.x+((40/6)*5-2.5f), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 500) {
+      if (millis() - sTimer < 500) {
       ellipse(player.location.x+((40/6)*6-2.5f), player.location.y-10, timerSize, timerSize);
       }  
     }
-    if (millis() - timer < 6500) {
+    if (!powerUpActivated[1] && millis() - timer < 3500) {
       if (!powerUpActivated[1] && timer != 0) {
-        if (millis() - timer > 3500) {
+        if (millis() - timer > 500) {
         ellipse(player.location.x+((40/6)-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4000) {
+        if (millis() - timer > 1000) {
         ellipse(player.location.x+((40/6)*2-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4500) {
+        if (millis() - timer > 1500) {
         ellipse(player.location.x+((40/6)*3-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5000) {
+        if (millis() - timer > 2000) {
         ellipse(player.location.x+((40/6)*4-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5500) {
+        if (millis() - timer > 2500) {
         ellipse(player.location.x+((40/6)*5-2.5f), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 6000) {
+        if (millis() - timer > 3000) {
         ellipse(player.location.x+((40/6)*6-2.5f), player.location.y-10, timerSize, timerSize);
         }       
       }
-    }
+    } 
  
     
     if (powerUpActivated[1]) {//shield
@@ -490,12 +484,20 @@ class Ara {
 
   public void araUpdatePosition() {
 
-    if (millis() - timer > 3000) {
-      powerUpActivated[1] = false;
-    }
-    if (millis() - timer > 6000) {
+    if (powerUpActivated[1] && millis() - sTimer <= 3000) {
+      powerUpActivated[1] = true;
       shieldActivate = true;
-    }
+    }else if (powerUpActivated[1] && millis() - sTimer > 3000) {
+      powerUpActivated[1] = false;
+      shieldActivate = false;
+      ara.timer = millis();
+    } 
+
+    if (!powerUpActivated[1] && shieldActivate == false && millis() - timer <= 3000) {
+      shieldActivate = false;
+    } else if (!powerUpActivated[1] && shieldActivate == false && millis() - timer > 3000) {
+      shieldActivate = true;
+    } 
     
 
     location.add(velocity); //Speed
@@ -964,10 +966,14 @@ public void araControls() {
 
   //If X is pressed turn on shield
   if (keysPressed[88] && !ara.powerUpActivated[0] && level >= 1 && ara.shieldActivate == true) {
+    if (keysPressed[88] && ara.powerUpActivated[1]) {
+      ara.timer = millis();
+      ara.shieldActivate = false;
+      }
     ara.powerUpActivated[1] = !ara.powerUpActivated[1];
     ara.powerUps();
-    ara.timer = millis();
     ara.shieldActivate = false;
+    ara.sTimer = millis();
   }
 }
 
@@ -2299,9 +2305,9 @@ class ParticleSystem {
       }
     }
   }
-  public void settings() {  size(1200, 600);  smooth(8); }
+  public void settings() {  size(1200, 600, P3D);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "RedemtionOfSage" };
+    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "RedemtionOfSage" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
