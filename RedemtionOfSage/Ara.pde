@@ -15,6 +15,7 @@ class Ara {
 
   int scalar;
   int timer;
+  int sTimer;
   float angle;
 
   //OBJECT
@@ -71,48 +72,48 @@ class Ara {
     rectMode(CORNER);
 
 
-    if (powerUpActivated[1]) {//shield timer countdown with ellipses
-      if (millis() - timer < 3000) {
+    if (powerUpActivated[1] && millis() - sTimer < 3000) {//shield timer countdown with ellipses
+      if (millis() - sTimer < 3000) {
       ellipse(player.location.x+((40/6)-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2500) {
+      if (millis() - sTimer < 2500) {
       ellipse(player.location.x+((40/6)*2-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 2000) {
+      if (millis() - sTimer < 2000) {
       ellipse(player.location.x+((40/6)*3-2.5), player.location.y-10, timerSize, timerSize);
       }      
-      if (millis() - timer < 1500) {
+      if (millis() - sTimer < 1500) {
       ellipse(player.location.x+((40/6)*4-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 1000) {
+      if (millis() - sTimer < 1000) {
       ellipse(player.location.x+((40/6)*5-2.5), player.location.y-10, timerSize, timerSize);
       }
-      if (millis() - timer < 500) {
+      if (millis() - sTimer < 500) {
       ellipse(player.location.x+((40/6)*6-2.5), player.location.y-10, timerSize, timerSize);
       }  
     }
-    if (millis() - timer < 6500) {
+    if (!powerUpActivated[1] && millis() - timer < 3500) {
       if (!powerUpActivated[1] && timer != 0) {
-        if (millis() - timer > 3500) {
+        if (millis() - timer > 500) {
         ellipse(player.location.x+((40/6)-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4000) {
+        if (millis() - timer > 1000) {
         ellipse(player.location.x+((40/6)*2-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 4500) {
+        if (millis() - timer > 1500) {
         ellipse(player.location.x+((40/6)*3-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5000) {
+        if (millis() - timer > 2000) {
         ellipse(player.location.x+((40/6)*4-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 5500) {
+        if (millis() - timer > 2500) {
         ellipse(player.location.x+((40/6)*5-2.5), player.location.y-10, timerSize, timerSize);
         }
-        if (millis() - timer > 6000) {
+        if (millis() - timer > 3000) {
         ellipse(player.location.x+((40/6)*6-2.5), player.location.y-10, timerSize, timerSize);
         }       
       }
-    }
+    } 
  
     
     if (powerUpActivated[1]) {//shield
@@ -136,12 +137,20 @@ class Ara {
 
   void araUpdatePosition() {
 
-    if (millis() - timer > 3000) {
-      powerUpActivated[1] = false;
-    }
-    if (millis() - timer > 6000) {
+    if (powerUpActivated[1] && millis() - sTimer <= 3000) {
+      powerUpActivated[1] = true;
       shieldActivate = true;
-    }
+    }else if (powerUpActivated[1] && millis() - sTimer > 3000) {
+      powerUpActivated[1] = false;
+      shieldActivate = false;
+      ara.timer = millis();
+    } 
+
+    if (!powerUpActivated[1] && shieldActivate == false && millis() - timer <= 3000) {
+      shieldActivate = false;
+    } else if (!powerUpActivated[1] && shieldActivate == false && millis() - timer > 3000) {
+      shieldActivate = true;
+    } 
     
 
     location.add(velocity); //Speed
