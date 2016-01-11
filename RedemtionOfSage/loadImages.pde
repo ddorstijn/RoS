@@ -1,5 +1,7 @@
 PImage bgMenu;
 PImage bgKeybindings;
+PImage bgCredits;
+
 PImage btnStart;
 PImage btnLevelSelect;
 PImage btnHighscores;
@@ -8,7 +10,8 @@ PImage btnExit;
 
 void loadImages() {
 	bgMenu = loadImage("img/background.png");
-	bgKeybindings= loadImage("img/keybindings.png");
+	bgKeybindings = loadImage("img/keybindings.png");
+	bgCredits = loadImage("img/credits.png");
 
 	btnStart = loadImage("img/buttons/startButton.JPG");
 	btnLevelSelect = loadImage("img/buttons/levelSelectButton.JPG");

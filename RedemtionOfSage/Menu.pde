@@ -31,12 +31,6 @@ class Button {
     levelSelect[1] = "Level 2";
     levelSelect[2] = "Level 3";
     levelSelect[3] = "Go Back";
-
-    credits[0] = "Koen";
-    credits[1] = "Jamy";
-    credits[2] = "Tricia";
-    credits[3] = "Florian";
-    credits[4] = "Danny";
   }
 
   void update() {
@@ -80,18 +74,19 @@ class Button {
           enteredMenu = true;
           currentMenu = "levelSelect";
           break;
-          //If on Credits fo to credits
+        //Higschore 
         case 2:
           subMenu = 2;
+          highscores.load("highscore.csv");
+          enteredMenu = true;
+          break;
+        //Credits
+        case 3:
+          subMenu = 3;
           mpos = 0;
           enteredMenu = true;
           break;
-          //If on Higschore show highscore
-        case 3:
-          subMenu = 3;
-          highscores.load("highscore.csv");
-          break;
-          //Exit
+        //Exit
         case 4:
           exit();
           break;
@@ -129,7 +124,12 @@ class Button {
           subMenu = 0;
           enteredMenu = true;
         }
-        break;
+        break; 
+      case 3:
+        if (keyPressed) {
+          subMenu = 0;
+          enteredMenu = true;
+        }
       }
     }
   }
@@ -164,11 +164,6 @@ class Button {
         text(levelSelect[i], location.x, location.y + i * space);
       }
     } else if (level == 0 && subMenu == 2) {
-      for (int i = 0; i < credits.length; i++) {
-        fill(0);
-        text(credits[i], location.x, location.y + i * space);
-      }
-    } else if (level == 0 && subMenu == 3) {
       // display header row
       fill(0);
       textSize(20);
@@ -186,6 +181,8 @@ class Button {
         // display score in window
         text((iScore+1) + "            " + score.name + "        " + score.score + "        " + score.time / 1000/ 60 + ":" + nf(score.time / 1000 % 60, 2), width/2, 100 + iScore*20);
       }
+    } else if (level == 0 && subMenu == 3) { 
+      
     } else if (level == 0 && subMenu == 4) {
       text("Enter your name: " + userInput, width/2, height/2 - 20);
     }

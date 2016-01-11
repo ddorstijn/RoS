@@ -106,6 +106,7 @@ class ParticleSystem {
       c1 +=10;
       c1%=255;
       stroke(100, 0, 0);
+      strokeWeight(2);
       pushStyle();
       colorMode(HSB);
       fill(c1, 255, 255, lifespan+60);

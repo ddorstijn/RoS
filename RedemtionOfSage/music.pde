@@ -51,9 +51,3 @@ void music(){
   
   fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
 }
-
-void colortransition() {
-  if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05);
-  }
-}
