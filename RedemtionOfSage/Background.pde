@@ -15,11 +15,11 @@ void drawBackground() {
     stroke(currentWaveformcolor, 71);
 
     for(int i = 0; i < 45; i++) {
-     float x = map( i-1, 0, 45, 0, width/2);
+     float x = map( i-1, 0, 45, 0, width/3);
      
-     strokeWeight(7);
-     line(width/2+x, height/2 + fft.getBand(i)*4, -1, width/2+x, height/2 - fft.getBand(i)*4, -1);
-     line(width/2-x, height/2 + fft.getBand(i)*4, -1, width/2-x, height/2 - fft.getBand(i)*4, -1);
+     strokeWeight(4);
+     line(width/2+x, height/3 + fft.getBand(i)*4, -1, width/2+x, height/3 - fft.getBand(i)*3, -1);
+     line(width/2-x, height/3 + fft.getBand(i)*4, -1, width/2-x, height/3 - fft.getBand(i)*3, -1);
     }
   }
 }
