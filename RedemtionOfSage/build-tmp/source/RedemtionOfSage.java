@@ -3,7 +3,6 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
-import fullscreen.*; 
 import ddf.minim.*; 
 import ddf.minim.analysis.*; 
 import java.util.*; 
@@ -21,13 +20,9 @@ public class RedemtionOfSage extends PApplet {
 
  //<>// //<>// //<>//
 
- //<>//
-
 
 Minim minim;
 FFT fft;
-
-SoftFullScreen fs; 
 
 int TICKS_PER_SECOND = 60;
 int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -105,8 +100,6 @@ ParticleSystem enemyParticle;
 ParticleSystem bulletParticle;
 
 public void setup() {
-  fs = new SoftFullScreen(this); 
-  fs.enter(); 
   
   
   frameRate(1000);
@@ -212,14 +205,6 @@ public void update_game() {
       }
     }
 
-    for (Turret turret : turrets) {
-      turret.update();
-    }
-
-    for (MovEnemy o : movEnemy) {
-      o.update();
-    }
-
     for (Platform b : platforms) {
       b.update();
       if (changeLevel) {
@@ -240,6 +225,14 @@ public void update_game() {
           break;
         }
       }
+    }
+    
+    for (Turret turret : turrets) {
+      turret.update();
+    }
+
+    for (MovEnemy o : movEnemy) {
+      o.update();
     }
 
     for (bullet b : bullet) {
@@ -378,7 +371,7 @@ class Ara {
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
-    location = new PVector(_x, _y);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1f);
 
@@ -407,6 +400,7 @@ class Ara {
 
     if (!powerUpActivated[0] && !powerUpActivated[1]) {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
+      location.z = cos(angle);
       angle = angle + speed;
 
       if( location.x >= player.location.x - 39.9f && location.x < player.location.x + 20){
@@ -484,7 +478,10 @@ class Ara {
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
-      rect(location.x, location.y - 35, aWidth, aHeight); 
+      pushMatrix();
+      translate(location.x, location.y, location.z);
+      rect(0, 0, aWidth, aHeight);
+      popMatrix(); 
     }
   }
 
@@ -598,15 +595,15 @@ public void drawBackground() {
      float x = map( i-1, 0, 45, 0, width/2);
      
      strokeWeight(7);
-     line(width/2+x, height/2 + fft.getBand(i)*4, width/2+x, height/2 - fft.getBand(i)*4);
-     line(width/2-x, height/2 + fft.getBand(i)*4, width/2-x, height/2 - fft.getBand(i)*4);
+     line(width/2+x, height/2 + fft.getBand(i)*4, -1, width/2+x, height/2 - fft.getBand(i)*4, -1);
+     line(width/2-x, height/2 + fft.getBand(i)*4, -1, width/2-x, height/2 - fft.getBand(i)*4, -1);
     }
   }
 }
 
 public void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .05f);
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .01f);
   }
 }
 
@@ -1392,9 +1389,6 @@ class Platform {
 
     noStroke();
 
-    // fill(0, 255, 0, 80);
-    // rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
-
     if (isOver() && shiftKey) {
       fill(0, 0, 255);
     } else { 
@@ -1501,7 +1495,7 @@ class Player {
     pHeight = 40;
     angle = 0;
 
-    location = new PVector(_x, _y);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1f);
     start = new PVector(_x, _y);
@@ -2299,7 +2293,7 @@ class ParticleSystem {
       }
     }
   }
-  public void settings() {  size(1200, 600);  smooth(8); }
+  public void settings() {  size(1200, 600, P3D);  smooth(8); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "RedemtionOfSage" };
     if (passedArgs != null) {

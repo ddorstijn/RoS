@@ -20,7 +20,7 @@ class Ara {
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
-    location = new PVector(_x, _y);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
 
@@ -49,6 +49,7 @@ class Ara {
 
     if (!powerUpActivated[0] && !powerUpActivated[1]) {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
+      location.z = cos(angle);
       angle = angle + speed;
 
       if( location.x >= player.location.x - 39.9 && location.x < player.location.x + 20){
@@ -126,7 +127,10 @@ class Ara {
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
-      rect(location.x, location.y - 35, aWidth, aHeight); 
+      pushMatrix();
+      translate(location.x, location.y, location.z);
+      rect(0, 0, aWidth, aHeight);
+      popMatrix(); 
     }
   }
 

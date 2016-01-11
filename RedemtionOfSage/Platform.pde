@@ -42,9 +42,6 @@ class Platform {
 
     noStroke();
 
-    // fill(0, 255, 0, 80);
-    // rect(location.x-2, location.y-2, iWidth+4, iHeight+4);
-
     if (isOver() && shiftKey) {
       fill(0, 0, 255);
     } else { 
