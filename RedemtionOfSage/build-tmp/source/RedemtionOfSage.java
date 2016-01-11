@@ -370,6 +370,8 @@ class Ara {
   int sTimer;
   float angle;
 
+  int colour, sColour;
+
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
@@ -379,6 +381,9 @@ class Ara {
 
     startX = location.x;
     startY = location.y;
+
+    colour = color (76,84,0);
+    sColour = color (230,255,0);
 
     aWidth = 20;
     aHeight = 20; 
@@ -476,11 +481,17 @@ class Ara {
       rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
       popStyle();
     } else if (powerUpActivated[0]) {//shoot
+      stroke(sColour);
+      strokeWeight(1);
+      fill(colour);
       aWidth = 20;
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
       pushMatrix();
+      stroke(sColour);
+      strokeWeight(1);
+      fill(colour);
       translate(location.x, location.y, location.z);
       rect(0, 0, aWidth, aHeight);
       popMatrix(); 
@@ -1489,7 +1500,7 @@ class Player {
   boolean canJump = true; //Check if able to jump
   boolean canJumpAgain = true; //Check if player can jump second time
   
-  int colour;
+  int colour, sColour;
 
   //OBJECT
   Player(int _x, int _y) {
@@ -1501,7 +1512,8 @@ class Player {
 
     canJump = true; //Check if able to jump
     canJumpAgain = true; //check if able tu double jump
-    colour = 255; //White
+    colour = color (0,55,55); //White
+    sColour = color (0,255,255);
 
     pWidth = 40;
     pHeight = 40;
@@ -1522,14 +1534,14 @@ class Player {
   }
 
   public void display() {
-    noStroke(); //No outline
+    stroke(sColour); //No outline
+    strokeWeight(3);
     fill(colour); //Fill it white
     pushMatrix(); //Create a drawing without affecting other objects 
     translate(location.x + pWidth/2, location.y + pHeight/2); //Move the box to the x and I position
     rotate(angle); //For the jump mechanic
     rect(-pWidth/2, -pHeight/2, pWidth, pHeight); // character 
-    popMatrix(); //End the drawing
-    
+    popMatrix(); //End the drawing    
   }
 
   public void playerUpdatePosition() {
@@ -2312,7 +2324,7 @@ class ParticleSystem {
   }
   public void settings() {  size(1200, 600, P3D);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "RedemtionOfSage" };
+    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "RedemtionOfSage" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

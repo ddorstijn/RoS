@@ -18,6 +18,8 @@ class Ara {
   int sTimer;
   float angle;
 
+  int colour, sColour;
+
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
@@ -27,6 +29,9 @@ class Ara {
 
     startX = location.x;
     startY = location.y;
+
+    colour = color (76,84,0);
+    sColour = color (230,255,0);
 
     aWidth = 20;
     aHeight = 20; 
@@ -124,11 +129,17 @@ class Ara {
       rect(player.location.x, player.location.y, player.pWidth, player.pHeight);
       popStyle();
     } else if (powerUpActivated[0]) {//shoot
+      stroke(sColour);
+      strokeWeight(1);
+      fill(colour);
       aWidth = 20;
       aHeight = 20;
       rect(location.x, location.y, aWidth, aHeight);
     } else {
       pushMatrix();
+      stroke(sColour);
+      strokeWeight(1);
+      fill(colour);
       translate(location.x, location.y, location.z);
       rect(0, 0, aWidth, aHeight);
       popMatrix(); 
