@@ -14,10 +14,6 @@ PImage btnLevel2;
 PImage btnLevel3;
 PImage btnBack;
 
-PImage imgScore100;
-PImage imgLevel1;
-PImage imgLevel2;
-PImage imgLevel3;
 
 void loadImages() {
 	bgMenu = loadImage("img/background.png");
@@ -35,9 +31,4 @@ void loadImages() {
   btnLevel2 = loadImage("img/buttons/level2.PNG");
   btnLevel3 = loadImage("img/buttons/level3.PNG");
   btnBack = loadImage("img/buttons/back.PNG");
-
-  imgScore100 = loadImage("img/misc/100.png");
-  imgLevel1 = loadImage("img/misc/level1.png");
-  imgLevel2 = loadImage("img/misc/level2.png");
-  imgLevel3 = loadImage("img/misc/level3.png");
 }

@@ -78,8 +78,8 @@ class Platform {
       fill(0);
       rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
     } else {
-      for (int i = 0; i < iWidth/gridSize; i++) {
-        triangle(location.x+(i*gridSize), location.y+iHeight, location.x+(i*gridSize)+20, location.y, location.x+(i*gridSize)+gridSize, location.y+iHeight);
+      for (int i = 0; i < iWidth/40; i++) {
+        triangle(location.x+(i*40), location.y+iHeight, location.x+(i*40)+20, location.y, location.x+(i*40)+40, location.y+iHeight);
       }
     }
   }

@@ -31,7 +31,7 @@ class Player {
     pHeight = 40;
     angle = 0;
 
-    location = new PVector(_x, _y, 1);
+    location = new PVector(_x, _y, 0);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1);
     start = new PVector(_x, _y);
@@ -50,7 +50,7 @@ class Player {
     strokeWeight(3);
     fill(colour); //Fill it white
     pushMatrix(); //Create a drawing without affecting other objects 
-    translate(location.x + pWidth/2, location.y + pHeight/2, location.z); //Move the box to the x and I position
+    translate(location.x + pWidth/2, location.y + pHeight/2); //Move the box to the x and I position
     rotate(angle); //For the jump mechanic
     rect(-pWidth/2, -pHeight/2, pWidth, pHeight); // character 
     popMatrix(); //End the drawing    
@@ -84,15 +84,12 @@ class Player {
     }
   }
 
+  
+// 1765,200 
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
       velocity.x = 0;
-    }
-
-    if (location.y < 0) {
-      location.y = 0;
-      velocity.y = 0; 
     }
 
     if (velocity.y < 0 && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
@@ -128,6 +125,7 @@ class Player {
   }
 
   void respawn() {
+    //lives--;
     playerDiesMusic.rewind();
     playerDiesMusic.play();
     location.set(start);
@@ -143,7 +141,7 @@ class Player {
       velocity.x -= acceleration;
       if (canJump){
         for (int i = 0; i < 1; i++) {
-          jump.addParticle();
+        jump.addParticle();
         }
       }
     }
