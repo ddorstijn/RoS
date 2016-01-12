@@ -373,7 +373,7 @@ class Ara {
   //OBJECT
   Ara(float _x, float _y) {
     //INITIALIZE
-    location = new PVector(_x, _y, 0);
+    location = new PVector(_x, _y, 1);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1f);
 
@@ -402,7 +402,7 @@ class Ara {
 
     if (!powerUpActivated[0] && !powerUpActivated[1]) {
       location.x = (player.location.x + 10) + sin(angle) * scalar;
-      location.z = cos(angle);
+      location.z = 1 + cos(angle);
       angle = angle + speed;
 
       if( location.x >= player.location.x - 39.9f && location.x < player.location.x + 20){
@@ -1439,8 +1439,8 @@ class Platform {
       fill(0);
       rect(location.x+3, location.y+3, iWidth-6, iHeight-6);
     } else {
-      for (int i = 0; i < iWidth/40; i++) {
-        triangle(location.x+(i*40), location.y+iHeight, location.x+(i*40)+20, location.y, location.x+(i*40)+40, location.y+iHeight);
+      for (int i = 0; i < iWidth/gridSize; i++) {
+        triangle(location.x+(i*gridSize), location.y+iHeight, location.x+(i*gridSize)+20, location.y, location.x+(i*gridSize)+gridSize, location.y+iHeight);
       }
     }
   }
@@ -1507,7 +1507,7 @@ class Player {
     pHeight = 40;
     angle = 0;
 
-    location = new PVector(_x, _y, 0);
+    location = new PVector(_x, _y, 1);
     velocity = new PVector(0, 0);
     gravity = new PVector(0, 0.1f);
     start = new PVector(_x, _y);
@@ -1525,7 +1525,7 @@ class Player {
     noStroke(); //No outline
     fill(colour); //Fill it white
     pushMatrix(); //Create a drawing without affecting other objects 
-    translate(location.x + pWidth/2, location.y + pHeight/2); //Move the box to the x and I position
+    translate(location.x + pWidth/2, location.y + pHeight/2, location.z); //Move the box to the x and I position
     rotate(angle); //For the jump mechanic
     rect(-pWidth/2, -pHeight/2, pWidth, pHeight); // character 
     popMatrix(); //End the drawing
@@ -1560,12 +1560,15 @@ class Player {
     }
   }
 
-  
-// 1765,200 
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
       velocity.x = 0;
+    }
+
+    if (location.y < 0) {
+      location.y = 0;
+      velocity.y = 0; 
     }
 
     if (velocity.y < 0 && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
@@ -1617,7 +1620,7 @@ class Player {
       velocity.x -= acceleration;
       if (canJump){
         for (int i = 0; i < 1; i++) {
-        jump.addParticle();
+          jump.addParticle();
         }
       }
     }
@@ -2016,6 +2019,10 @@ PImage btnLevel2;
 PImage btnLevel3;
 PImage btnBack;
 
+PImage imgScore100;
+PImage imgLevel1;
+PImage imgLevel2;
+PImage imgLevel3;
 
 public void loadImages() {
 	bgMenu = loadImage("img/background.png");
@@ -2033,6 +2040,11 @@ public void loadImages() {
   btnLevel2 = loadImage("img/buttons/level2.PNG");
   btnLevel3 = loadImage("img/buttons/level3.PNG");
   btnBack = loadImage("img/buttons/back.PNG");
+
+  imgScore100 = loadImage("img/misc/100.png");
+  imgLevel1 = loadImage("img/misc/level1.png");
+  imgLevel2 = loadImage("img/misc/level2.png");
+  imgLevel3 = loadImage("img/misc/level3.png");
 }
 
   AudioPlayer araGooienMusic;
