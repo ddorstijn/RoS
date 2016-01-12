@@ -12,7 +12,7 @@ class Player {
   boolean canJump = true; //Check if able to jump
   boolean canJumpAgain = true; //Check if player can jump second time
   
-  int colour;
+  int colour, sColour;
 
   //OBJECT
   Player(int _x, int _y) {
@@ -24,7 +24,8 @@ class Player {
 
     canJump = true; //Check if able to jump
     canJumpAgain = true; //check if able tu double jump
-    colour = 255; //White
+    colour = color (0,55,55); //White
+    sColour = color (0,255,255);
 
     pWidth = 40;
     pHeight = 40;
@@ -45,14 +46,14 @@ class Player {
   }
 
   void display() {
-    noStroke(); //No outline
+    stroke(sColour); //No outline
+    strokeWeight(3);
     fill(colour); //Fill it white
     pushMatrix(); //Create a drawing without affecting other objects 
     translate(location.x + pWidth/2, location.y + pHeight/2, location.z); //Move the box to the x and I position
     rotate(angle); //For the jump mechanic
     rect(-pWidth/2, -pHeight/2, pWidth, pHeight); // character 
-    popMatrix(); //End the drawing
-    
+    popMatrix(); //End the drawing    
   }
 
   void playerUpdatePosition() {
