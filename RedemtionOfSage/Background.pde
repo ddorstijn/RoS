@@ -1,13 +1,16 @@
 void drawBackground() {
+  pushMatrix();
+  translate(0,0, -1);
   if (level != 0) {
     background(0); //Drawing background
   } else if (menu.subMenu == 3){ 
-    background(bgCredits);
+    image(bgCredits,0,0,width,height);
   } else if (level == 0 && menu.subMenu == 4){
-    background(bgEnterName);
+    image(bgEnterName,0,0,width,height);
   } else {
-    background(bgMenu);
+    image(bgMenu, 0,0,width,height);
   }
+  popMatrix();
 
   if (level != 0) {
     fft.forward(backgroundMusic.mix);

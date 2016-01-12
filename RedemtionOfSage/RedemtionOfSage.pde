@@ -1,4 +1,4 @@
-import ddf.minim.*; //<>// //<>// //<>// //<>//
+import ddf.minim.*; //<>// //<>// //<>// //<>// //<>//
 import ddf.minim.analysis.*;
 
 Minim minim;
@@ -337,9 +337,9 @@ if(level == 3){
     textAlign(LEFT);
     textFont(statsFont);
     textSize(14);
-    fill(255);
+    fill(255, 0, 255);
     text("fps: " + (int) frameRate, 10, 20);
-    text("score: " + score, 10, 40);
+    text("score: " + score, 10, 52);
 
 
     textAlign(CENTER, TOP);
