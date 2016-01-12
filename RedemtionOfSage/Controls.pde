@@ -215,7 +215,7 @@ void menuControls() {
   }
 
   if (level == 0) {
-    if (keyCode == DOWN) {
+    if (keyCode == DOWN || keysPressed[53]) {
       menu.mpos++;
     }
     if (keyCode == UP) {
@@ -238,7 +238,7 @@ void gameControls() {
   }
 
   //P-key to pause
-  if (keyCode == 80 && level != 0) {
+  if (keyCode == 80 || keysPressed[54] && level != 0) {
     paused = !paused;
 
     accumTime = accumTime + millis() - startTime;
@@ -246,7 +246,7 @@ void gameControls() {
 }
 
 void playerControls() {
-  if (keyCode == UP && level != 0) {//////Check for (double) jump
+  if ((keyCode == UP || keysPressed[50]) && level != 0) {//////Check for (double) jump
     if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
       player.velocity.y = player.jumpSpeed / 1.2;
       player.canJumpAgain = false;
@@ -269,7 +269,7 @@ void playerControls() {
 
 void araControls() {
   //If Z is pressed Ara shoots off
-  if (keysPressed[90] && !ara.powerUpActivated[1] && level != 0 && ara.canShoot == true) {
+  if ((keysPressed[90] || keysPressed[48]) && !ara.powerUpActivated[1] && level != 0 && ara.canShoot == true) {
     ara.powerUpActivated[0] = !ara.powerUpActivated[0];
     ara.powerUps();
     araGooienMusic.rewind();
@@ -277,8 +277,8 @@ void araControls() {
   }
 
   //If X is pressed turn on shield
-  if (keysPressed[88] && !ara.powerUpActivated[0] && level >= 1 && ara.shieldActivate == true) {
-    if (keysPressed[88] && ara.powerUpActivated[1]) {
+  if ((keysPressed[88] || keysPressed[49]) && !ara.powerUpActivated[0] && level >= 1 && ara.shieldActivate == true) {
+    if ((keysPressed[88] || keysPressed[49]) && ara.powerUpActivated[1]) {
       ara.timer = millis();
       ara.shieldActivate = false;
       }

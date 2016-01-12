@@ -61,7 +61,7 @@ class Player {
     velocity.add(gravity);
     velocity.x *= friction;
 
-
+//Checkpoint respawn
   if( level == 1){
     if (location.x >= 2291 && !checkpoint2Activated){
       start = new PVector(2291, 150);
@@ -83,7 +83,11 @@ class Player {
       start = new PVector(3336, 130);
     }
   }
-
+  if(level == 3){
+    if(location.x >= 3290){
+      start = new PVector(3290, 110);
+    }
+  }
   
 // 1765,200 
     //Border left side of the level
@@ -91,7 +95,12 @@ class Player {
       location.x = 0;
       velocity.x = 0;
     }
-
+    
+    if (location.y < 0) {
+      location.y = 0;
+      velocity.y = 0;
+    }
+    
     if (velocity.y < 0 && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
       angle += 2 * PI / 360 * 8;
     } else if (velocity.y < 0 && angle >= -(PI / 2) && velocity.x < 0 && angle < PI / 2) {
@@ -125,7 +134,7 @@ class Player {
   }
 
   void respawn() {
-    //lives--;
+    score -= 100;
     playerDiesMusic.rewind();
     playerDiesMusic.play();
     location.set(start);
@@ -137,7 +146,7 @@ class Player {
       canJump = false;
     }
 
-    if (keysPressed[LEFT]) {  
+    if (keysPressed[LEFT] || keysPressed[51]) {  
       velocity.x -= acceleration;
       if (canJump){
         for (int i = 0; i < 1; i++) {
@@ -145,7 +154,7 @@ class Player {
         }
       }
     }
-    if (keysPressed[RIGHT]) {
+    if (keysPressed[RIGHT] || keysPressed[52]) {
       velocity.x += acceleration;
       if (canJump){
         for (int i = 0; i < 1; i++) {

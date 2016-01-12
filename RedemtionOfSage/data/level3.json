@@ -213,6 +213,36 @@
         "height": 10
       },
       "value": 7
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 3460,
+        "width": 10,
+        "y": 420,
+        "height": 10
+      },
+      "value": 7
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 3500,
+        "width": 10,
+        "y": 420,
+        "height": 10
+      },
+      "value": 7
+    },
+    {
+      "index": 6,
+      "position": {
+        "x": 3540,
+        "width": 10,
+        "y": 420,
+        "height": 10
+      },
+      "value": 7
     }
   ],
   "turrets": [
@@ -427,6 +457,16 @@
         "height": 40
       },
       "value": 6
+    },
+    {
+      "index": 5,
+      "position": {
+        "x": 3560,
+        "width": 40,
+        "y": 160,
+        "height": 40
+      },
+      "value": 7
     }
   ],
   "player": {
@@ -653,16 +693,6 @@
         "height": 40
       },
       "value": 35
-    },
-    {
-      "index": 1,
-      "position": {
-        "x": 1560,
-        "width": 40,
-        "y": 0,
-        "height": 40
-      },
-      "value": 37
     },
     {
       "index": 1,
@@ -1153,6 +1183,16 @@
         "height": 40
       },
       "value": 77
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 3680,
+        "width": 80,
+        "y": 320,
+        "height": 40
+      },
+      "value": 72
     }
   ]
 }
