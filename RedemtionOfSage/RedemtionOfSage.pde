@@ -167,10 +167,11 @@ void update_game() {
       }
     }
     //veranderd
+    println(player.location.x, player.location.y);
+    
     if(level == 1){
     if((player.location.x >= 2291) == true){
-      strokeWeight1 = 3;
-      checkpointStroke = color(255);
+      checkpointStroke = color(242,242,99);
       checkpointColor1 = color(252,252,38);
     }
     if(player.location.x >= 4733){
@@ -184,6 +185,13 @@ void update_game() {
       checkpointColor1 = color(252,252,38);
       }
     }
+    if(level == 3){
+      if(player.location.x >= 3290){
+      checkpointStroke = color(242,242,99);
+      checkpointColor1 = color(252,252,38);
+      }
+    }
+        
 
     for (Platform b : platforms) {
       b.update();
@@ -245,38 +253,49 @@ void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
-    
-//checkpoint rondje
+if(level != 0){
+   menuMusic.pause();
+  // menuMusic.rewind();
+  backgroundMusic.play();
+  backgroundMusic.setGain(-15);
+}
+
+//Checkpoints level 1
 if(level == 1){  
-  //Drawing checkpoint 1
   noStroke();
   fill(64,64,64);
   rect(2291, 220, 8, 80);
-  //strokeWeight(strokeWeight1);
-  stroke(checkpointStroke);
   fill(checkpointColor1);
   ellipse(2285, 210, 20,20);
+  
   noStroke();
-  //Drawing checkpoint 2
   fill(64,64,64); 
   rect(4733, 210, 8, 80);
+  //stroke(checkpointStroke);
   fill (checkpointColor2);
   ellipse(4727, 200, 20,20);
-  menuMusic.pause();
-  // menuMusic.rewind();
-  backgroundMusic.play();
   }
 
-
-if (level == 2){ 
-  //Drawing checkpoint 1
-  fill(64,64,64);
+//checkpoint level 2
+if (level == 2){
   noStroke();
+  fill(64,64,64);
   rect(3336, 200, 8, 80);
   stroke(checkpointStroke);
   fill(checkpointColor1);
   ellipse(3330, 190, 20,20);
 }
+
+//checkpoints level 3
+if(level == 3){
+  noStroke();
+  fill(64,64,64);
+  rect(3290, 220, 8, 80);
+  stroke(checkpointStroke);
+  fill(checkpointColor1);
+  ellipse(3284, 210, 20,20);
+}
+
     levelBuild();
 
     //setuppreview();

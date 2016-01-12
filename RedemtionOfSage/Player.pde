@@ -61,7 +61,7 @@ class Player {
     velocity.add(gravity);
     velocity.x *= friction;
 
-
+//Checkpoint respawn
   if( level == 1){
     if (location.x >= 2291 && !checkpoint2Activated){
       start = new PVector(2291, 150);
@@ -83,7 +83,11 @@ class Player {
       start = new PVector(3336, 130);
     }
   }
-
+  if(level == 3){
+    if(location.x >= 3290){
+      start = new PVector(3290, 110);
+    }
+  }
   
 // 1765,200 
     //Border left side of the level
