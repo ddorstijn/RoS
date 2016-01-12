@@ -7,7 +7,16 @@ void loadLevel(boolean objectsToo) {
     keysPressed[i] = false;
   }
   bullet.removeAll(bullet);
+  if (level != 0 || level == 3) {
+    backgroundMusic.play();
+    menuMusic.pause();
+    menuMusic.rewind();
+  }
   if (level == 0) {
+    menuMusic.play();
+    backgroundMusic.pause();
+    backgroundMusic.rewind();
+    
   } else {
     levels = loadJSONObject("level" + level + ".json");
 

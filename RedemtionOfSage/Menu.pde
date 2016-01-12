@@ -178,11 +178,9 @@ class Button {
       image(btnExit, 411, 461);
       
       noTint();
-      menuMusic.play();
-      menuMusic.loop();
+      
+      
     } else if (level == 0 && subMenu == 1) {
-      backgroundMusic.pause();
-      backgroundMusic.rewind();
 
       if (mpos == 0) 
         tint(255, 0, 0);

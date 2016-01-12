@@ -234,6 +234,7 @@ void gameControls() {
   if (keysPressed[77]) {
     menu.subMenu = 0;
     level = 0;
+    menuMusic.play();
   }
 
   //P-key to pause

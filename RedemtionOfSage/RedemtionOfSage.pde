@@ -153,6 +153,7 @@ void draw() {
 
 void update_game() {
   colortransition();
+  
 
   if (level != 0) {
     player.update();
@@ -239,6 +240,8 @@ void update_game() {
 void draw_game() {
   drawBackground(); //
 
+
+
   if (level != 0) {
     grid();
 
@@ -263,7 +266,7 @@ if(level == 1){
   fill (checkpointColor2);
   ellipse(4727, 200, 20,20);
   menuMusic.pause();
-  // menuMusic.rewind();
+  menuMusic.rewind();
   backgroundMusic.play();
   }
 
