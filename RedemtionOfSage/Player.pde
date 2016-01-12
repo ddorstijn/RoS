@@ -91,7 +91,12 @@ class Player {
       location.x = 0;
       velocity.x = 0;
     }
-
+    
+    if (location.y < 0) {
+      location.y = 0;
+      velocity.y = 0;
+    }
+    
     if (velocity.y < 0 && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
       angle += 2 * PI / 360 * 8;
     } else if (velocity.y < 0 && angle >= -(PI / 2) && velocity.x < 0 && angle < PI / 2) {
