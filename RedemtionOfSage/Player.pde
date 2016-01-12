@@ -130,7 +130,7 @@ class Player {
   }
 
   void respawn() {
-    //lives--;
+    score -= 100;
     playerDiesMusic.rewind();
     playerDiesMusic.play();
     location.set(start);
