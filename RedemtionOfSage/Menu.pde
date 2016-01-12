@@ -56,7 +56,7 @@ class Button {
       }
     }
 
-    if (keysPressed[67] && !enteredMenu && level == 0) {
+    if ((keysPressed[67] || keysPressed[50]) && !enteredMenu && level == 0) {
       switch (subMenu) {
         //If in main menu
       case 0:
