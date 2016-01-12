@@ -137,7 +137,7 @@ class Player {
       canJump = false;
     }
 
-    if (keysPressed[LEFT]) {  
+    if (keysPressed[LEFT] || keysPressed[51]) {  
       velocity.x -= acceleration;
       if (canJump){
         for (int i = 0; i < 1; i++) {
@@ -145,7 +145,7 @@ class Player {
         }
       }
     }
-    if (keysPressed[RIGHT]) {
+    if (keysPressed[RIGHT] || keysPressed[52]) {
       velocity.x += acceleration;
       if (canJump){
         for (int i = 0; i < 1; i++) {
