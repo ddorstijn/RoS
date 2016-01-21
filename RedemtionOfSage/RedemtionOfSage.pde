@@ -19,11 +19,7 @@ int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
 
-//kleur g
-int checkpointColor1;
-int checkpointColor2;
-int checkpointStroke;
-int strokeWeight1;
+
 int score;
 int lives;
 
@@ -85,12 +81,9 @@ void setup() {
   frameRate(1000);
 
   loadImages();
-  
-  // rondje
-  checkpointColor1 = color(245,245,230);
-  checkpointColor2 = color(245,245,230);
-  checkpointStroke = color(245,245,250);
-  strokeWeight1 = 0;
+
+//Code cleanup
+checkpointSetup();
   
   music();
   fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
@@ -139,6 +132,7 @@ void draw() {
   }
 
   loops = 0;
+  //update game
   while (millis () > next_game_tick && loops < MAX_FRAMESKIP) {
     if (!paused) { 
       update_game();
@@ -167,31 +161,9 @@ void update_game() {
         break;
       }
     }
-    //veranderd
-    println(player.location.x, player.location.y);
-    
-    if(level == 1){
-    if((player.location.x >= 2291) == true){
-      checkpointStroke = color(242,242,99);
-      checkpointColor1 = color(252,252,38);
-    }
-    if(player.location.x >= 4733){
-      checkpointStroke = color(242,242,99);
-      checkpointColor2 = color(252,252,38);
-      }
-    }
-    if(level == 2){
-      if(player.location.x >= 3336){
-      checkpointStroke = color(242,242,99);
-      checkpointColor1 = color(252,252,38);
-      }
-    }
-    if(level == 3){
-      if(player.location.x >= 3290){
-      checkpointStroke = color(242,242,99);
-      checkpointColor1 = color(252,252,38);
-      }
-    }
+
+//Checkpoint Cleanup
+checkpointUpdate();
         
 
     for (Platform b : platforms) {
