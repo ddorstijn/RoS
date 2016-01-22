@@ -231,7 +231,7 @@ void gameControls() {
   }
 
   //M-key to go to menu
-  if (keysPressed[77]) {
+  if (keysPressed[77] && menu.subMenu != 4) {
     menu.subMenu = 0;
     level = 0;
     menuMusic.play();

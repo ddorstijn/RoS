@@ -1,4 +1,4 @@
-import ddf.minim.*; //<>// //<>// //<>// //<>// //<>//
+import ddf.minim.*; 
 import ddf.minim.analysis.*;
 
 Minim minim;
@@ -56,7 +56,7 @@ boolean collisionDetect(float playerLeft, float playerTop, float playerRight, fl
 // Basic collision detection method
 float calculate1DOverlap(float p0, float p1, float d0, float d1) {
   float dl = p0+d0-p1, dr = p1+d1-p0;  
-  return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr; 
+  return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr;
 }
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
@@ -85,20 +85,20 @@ void setup() {
   frameRate(1000);
 
   loadImages();
-  
+
   // rondje
-  checkpointColor1 = color(245,245,230);
-  checkpointColor2 = color(245,245,230);
-  checkpointStroke = color(245,245,250);
+  checkpointColor1 = color(245, 245, 230);
+  checkpointColor2 = color(245, 245, 230);
+  checkpointStroke = color(245, 245, 250);
   strokeWeight1 = 0;
-  
+
   music();
   fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
-  
+
   gridSize = 40;
 
   keysPressed = new boolean[256];
-  particlePos = new PVector(100,100);
+  particlePos = new PVector(100, 100);
 
   defaultWaveformcolor = color(20, 77, 207);
   currentWaveformcolor = color(20, 77, 207);
@@ -132,7 +132,7 @@ void setup() {
 void draw() {
 
   if (paused == false && level != 0) {
-   displayTime = accumTime + millis() - startTime;
+    displayTime = accumTime + millis() - startTime;
   }
   if (paused == true) {
     startTime = millis();
@@ -147,13 +147,12 @@ void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
-  
+
   draw_game();
 }
 
 void update_game() {
   colortransition();
-  
 
   if (level != 0) {
     player.update();
@@ -161,38 +160,36 @@ void update_game() {
 
     for (Collectable coin : coins) {
       coin.update();
-      if (collisionObject){
+      if (collisionObject) {
         collisionObject = false;
         coins.remove(coin);
         break;
       }
     }
-    //veranderd
-    println(player.location.x, player.location.y);
-    
-    if(level == 1){
-    if((player.location.x >= 2291) == true){
-      checkpointStroke = color(242,242,99);
-      checkpointColor1 = color(252,252,38);
-    }
-    if(player.location.x >= 4733){
-      checkpointStroke = color(242,242,99);
-      checkpointColor2 = color(252,252,38);
+
+    if (level == 1) {
+      if ((player.location.x >= 2291) == true) {
+        checkpointStroke = color(242, 242, 99);
+        checkpointColor1 = color(252, 252, 38);
+      }
+      if (player.location.x >= 4733) {
+        checkpointStroke = color(242, 242, 99);
+        checkpointColor2 = color(252, 252, 38);
       }
     }
-    if(level == 2){
-      if(player.location.x >= 3336){
-      checkpointStroke = color(242,242,99);
-      checkpointColor1 = color(252,252,38);
+    if (level == 2) {
+      if (player.location.x >= 3336) {
+        checkpointStroke = color(242, 242, 99);
+        checkpointColor1 = color(252, 252, 38);
       }
     }
-    if(level == 3){
-      if(player.location.x >= 3290){
-      checkpointStroke = color(242,242,99);
-      checkpointColor1 = color(252,252,38);
+    if (level == 3) {
+      if (player.location.x >= 3290) {
+        checkpointStroke = color(242, 242, 99);
+        checkpointColor1 = color(252, 252, 38);
       }
     }
-        
+
 
     for (Platform b : platforms) {
       b.update();
@@ -215,7 +212,7 @@ void update_game() {
         }
       }
     }
-    
+
     for (Turret turret : turrets) {
       turret.update();
     }
@@ -226,13 +223,13 @@ void update_game() {
 
     for (bullet b : bullet) {
       b.update();
-      if (collisionObject){
+      if (collisionObject) {
         collisionObject = false;
         bullet.remove(b);
         break;
       }
     }
- 
+
     worldCamera.drawWorld();
   }
 
@@ -256,60 +253,59 @@ void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
-if(level != 0){
-   menuMusic.pause();
-  // menuMusic.rewind();
-  backgroundMusic.play();
-  backgroundMusic.setGain(-15);
-}
+    if (level != 0) {
+      menuMusic.pause();
+      // menuMusic.rewind();
+      backgroundMusic.play();
+      backgroundMusic.setGain(-15);
+    }
 
-//Checkpoints level 1
-if(level == 1){  
-  noStroke();
-  fill(64,64,64);
-  rect(2291, 220, 8, 80);
-  fill(checkpointColor1);
-  ellipse(2285, 210, 20,20);
-  
-  noStroke();
-  fill(64,64,64); 
-  rect(4733, 210, 8, 80);
-  //stroke(checkpointStroke);
-  fill (checkpointColor2);
-  ellipse(4727, 200, 20,20);
+    //Checkpoints level 1
+    if (level == 1) {  
+      noStroke();
+      fill(64, 64, 64);
+      rect(2291, 220, 8, 80);
+      fill(checkpointColor1);
+      ellipse(2285, 210, 20, 20);
 
-  menuMusic.pause();
-  menuMusic.rewind();
-  backgroundMusic.play();
+      noStroke();
+      fill(64, 64, 64); 
+      rect(4733, 210, 8, 80);
+      //stroke(checkpointStroke);
+      fill (checkpointColor2);
+      ellipse(4727, 200, 20, 20);
 
-  }
+      menuMusic.pause();
+      menuMusic.rewind();
+      backgroundMusic.play();
+    }
 
-//checkpoint level 2
-if (level == 2){
-  noStroke();
-  fill(64,64,64);
-  rect(3336, 200, 8, 80);
-  stroke(checkpointStroke);
-  fill(checkpointColor1);
-  ellipse(3330, 190, 20,20);
-}
+    //checkpoint level 2
+    if (level == 2) {
+      noStroke();
+      fill(64, 64, 64);
+      rect(3336, 200, 8, 80);
+      stroke(checkpointStroke);
+      fill(checkpointColor1);
+      ellipse(3330, 190, 20, 20);
+    }
 
-//checkpoints level 3
-if(level == 3){
-  noStroke();
-  fill(64,64,64);
-  rect(3290, 220, 8, 80);
-  stroke(checkpointStroke);
-  fill(checkpointColor1);
-  ellipse(3284, 210, 20,20);
-}
+    //checkpoints level 3
+    if (level == 3) {
+      noStroke();
+      fill(64, 64, 64);
+      rect(3290, 220, 8, 80);
+      stroke(checkpointStroke);
+      fill(checkpointColor1);
+      ellipse(3284, 210, 20, 20);
+    }
 
     levelBuild();
 
     //setuppreview();
     player.display();
     ara.display();
-    
+
     for (Collectable b : coins) {
       b.display();
     }

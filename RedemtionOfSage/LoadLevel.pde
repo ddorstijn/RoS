@@ -6,7 +6,10 @@ void loadLevel(boolean objectsToo) {
   for (int i = 0; i < keysPressed.length; i++) {
     keysPressed[i] = false;
   }
+  
+  //Remove all bullets
   bullet.removeAll(bullet);
+  
   if (level != 0 || level == 3) {
     backgroundMusic.play();
     menuMusic.pause();
