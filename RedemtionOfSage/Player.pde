@@ -89,7 +89,7 @@ class Player {
     }
   }
   
-// 1765,200 
+ 
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
