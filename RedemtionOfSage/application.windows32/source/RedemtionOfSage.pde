@@ -216,7 +216,7 @@ void update_game() {
 void draw_game() {
   drawBackground(); //
 
-  checkBeat();
+
 
   if (level != 0) {
     grid();
