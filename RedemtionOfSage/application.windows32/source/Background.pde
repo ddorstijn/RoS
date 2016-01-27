@@ -30,7 +30,11 @@ void drawBackground() {
 
 void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
+<<<<<<< HEAD
       currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03);//maatk in kleine stapjes de kleur naar defaultWave
+=======
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03);
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   }
 }
 

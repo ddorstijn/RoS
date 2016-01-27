@@ -27,8 +27,9 @@ class Collectable {
 
   void display() {
     fill(255, 255, 0);
+    ellipseMode(CENTER);
+    ellipse(location.x+cwidth/2, location.y+cheight/2, cwidth+kickSize/2, cheight+kickSize/2);
     ellipseMode(CORNER);
-    ellipse(location.x, location.y, cwidth, cheight);
   }
 
   void collision() {

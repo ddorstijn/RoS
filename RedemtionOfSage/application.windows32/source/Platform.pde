@@ -95,7 +95,11 @@ class Platform {
       } else if (index == 3) {
         changeLevel = true;
       }
+<<<<<<< HEAD
       if (abs(xOverlap) > abs(yOverlap)) {//abs geeft een positieve waarde terug(- wordt dus +)
+=======
+      if (abs(xOverlap) > abs(yOverlap)) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         player.location.y += yOverlap; // adjust player x - position based on overlap
         //If bottom collision
         if (player.velocity.y < 0) {

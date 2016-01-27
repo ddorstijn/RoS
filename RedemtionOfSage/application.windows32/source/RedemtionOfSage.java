@@ -18,7 +18,11 @@ import java.io.IOException;
 
 public class RedemtionOfSage extends PApplet {
 
+<<<<<<< HEAD
  //<>// //<>// //<>//
+=======
+ 
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
 
 Minim minim;
@@ -39,11 +43,15 @@ int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
 
+<<<<<<< HEAD
 //kleur g
 int checkpointColor1;
 int checkpointColor2;
 int checkpointStroke;
 int strokeWeight1;
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 int score;
 int lives;
 
@@ -76,7 +84,11 @@ public boolean collisionDetect(float playerLeft, float playerTop, float playerRi
 // Basic collision detection method
 public float calculate1DOverlap(float p0, float p1, float d0, float d1) {
   float dl = p0+d0-p1, dr = p1+d1-p0;  
+<<<<<<< HEAD
   return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr; 
+=======
+  return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr;
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 }
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
@@ -106,6 +118,7 @@ public void setup() {
 
   loadImages();
   
+<<<<<<< HEAD
   // rondje
   checkpointColor1 = color(245,245,230);
   checkpointColor2 = color(245,245,230);
@@ -119,6 +132,17 @@ public void setup() {
 
   keysPressed = new boolean[256];
   particlePos = new PVector(100,100);
+=======
+  //Code cleanup
+  checkpointSetup();
+  music();
+  fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
+
+  gridSize = 40;
+
+  keysPressed = new boolean[256];
+  particlePos = new PVector(100, 100);
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
   defaultWaveformcolor = color(20, 77, 207);
   currentWaveformcolor = color(20, 77, 207);
@@ -152,13 +176,21 @@ public void setup() {
 public void draw() {
 
   if (paused == false && level != 0) {
+<<<<<<< HEAD
    displayTime = accumTime + millis() - startTime;
+=======
+    displayTime = accumTime + millis() - startTime;
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   }
   if (paused == true) {
     startTime = millis();
   }
 
   loops = 0;
+<<<<<<< HEAD
+=======
+  //update game
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   while (millis () > next_game_tick && loops < MAX_FRAMESKIP) {
     if (!paused) { 
       update_game();
@@ -167,13 +199,20 @@ public void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   draw_game();
 }
 
 public void update_game() {
   colortransition();
+<<<<<<< HEAD
   
+=======
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
   if (level != 0) {
     player.update();
@@ -181,12 +220,17 @@ public void update_game() {
 
     for (Collectable coin : coins) {
       coin.update();
+<<<<<<< HEAD
       if (collisionObject){
+=======
+      if (collisionObject) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         collisionObject = false;
         coins.remove(coin);
         break;
       }
     }
+<<<<<<< HEAD
     //veranderd
     println(player.location.x, player.location.y);
     
@@ -213,6 +257,10 @@ public void update_game() {
       }
     }
         
+=======
+    //Checkpoint Cleanup
+    checkpointUpdate();
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
     for (Platform b : platforms) {
       b.update();
@@ -235,7 +283,11 @@ public void update_game() {
         }
       }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     for (Turret turret : turrets) {
       turret.update();
     }
@@ -246,13 +298,21 @@ public void update_game() {
 
     for (bullet b : bullet) {
       b.update();
+<<<<<<< HEAD
       if (collisionObject){
+=======
+      if (collisionObject) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         collisionObject = false;
         bullet.remove(b);
         break;
       }
     }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     worldCamera.drawWorld();
   }
 
@@ -276,6 +336,7 @@ public void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
+<<<<<<< HEAD
 if(level != 0){
    menuMusic.pause();
   // menuMusic.rewind();
@@ -323,13 +384,65 @@ if(level == 3){
   fill(checkpointColor1);
   ellipse(3284, 210, 20,20);
 }
+=======
+    if (level != 0) {
+      menuMusic.pause();
+      // menuMusic.rewind();
+      backgroundMusic.play();
+      backgroundMusic.setGain(-15);
+    }
+
+    //Checkpoints level 1
+    if (level == 1) {  
+      noStroke();
+      fill(64, 64, 64);
+      rect(2291, 220, 8, 80);
+      fill(checkpointColor1);
+      ellipse(2285, 210, 20, 20);
+
+      noStroke();
+      fill(64, 64, 64); 
+      rect(4733, 210, 8, 80);
+      //stroke(checkpointStroke);
+      fill (checkpointColor2);
+      ellipse(4727, 200, 20, 20);
+
+      menuMusic.pause();
+      menuMusic.rewind();
+      backgroundMusic.play();
+    }
+
+    //checkpoint level 2
+    if (level == 2) {
+      noStroke();
+      fill(64, 64, 64);
+      rect(3336, 200, 8, 80);
+      stroke(checkpointStroke);
+      fill(checkpointColor1);
+      ellipse(3330, 190, 20, 20);
+    }
+
+    //checkpoints level 3
+    if (level == 3) {
+      noStroke();
+      fill(64, 64, 64);
+      rect(3290, 220, 8, 80);
+      stroke(checkpointStroke);
+      fill(checkpointColor1);
+      ellipse(3284, 210, 20, 20);
+    }
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
     levelBuild();
 
     //setuppreview();
     player.display();
     ara.display();
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     for (Collectable b : coins) {
       b.display();
     }
@@ -357,9 +470,15 @@ if(level == 3){
     textAlign(LEFT);
     textFont(statsFont);
     textSize(14);
+<<<<<<< HEAD
     fill(255);
     text("fps: " + (int) frameRate, 10, 20);
     text("score: " + score, 10, 40);
+=======
+    fill(255, 0, 255);
+    text("fps: " + (int) frameRate, 10, 20);
+    text("score: " + score, 10, 52);
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
 
     textAlign(CENTER, TOP);
@@ -655,7 +774,11 @@ public void drawBackground() {
 
 public void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
+<<<<<<< HEAD
       currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03f);//maatk in kleine stapjes de kleur naar defaultWave
+=======
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03f);
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   }
 }
 
@@ -686,6 +809,50 @@ class Camera {
     }
   }
 }
+<<<<<<< HEAD
+=======
+//Colour variable Checkpoints
+int checkpointColor1;
+int checkpointColor2;
+int checkpointStroke;
+int strokeWeight1;
+
+public void checkpointSetup() { 
+  //Colours checkpoint
+  checkpointColor1 = color(245, 245, 230);
+  checkpointColor2 = color(245, 245, 230);
+  checkpointStroke = color(245, 245, 250);
+  strokeWeight1 = 0;
+} 
+public void checkpointUpdate() {
+ 
+  //Colour Changing
+  if (level == 1) {
+    if ((player.location.x >= 2291) == true) {
+      checkpointStroke = color(242, 242, 99);
+      checkpointColor1 = color(252, 252, 38);
+    }
+    if (player.location.x >= 4733) {
+      checkpointStroke = color(242, 242, 99);
+      checkpointColor2 = color(252, 252, 38);
+    }
+  }
+  if (level == 2) {
+    checkpointColor1 = color(245, 245, 230);
+    if (player.location.x >= 3336) {
+      checkpointStroke = color(242, 242, 99);
+      checkpointColor1 = color(252, 252, 38);
+    }
+  }
+  if (level == 3) {
+    checkpointColor1 = color(245, 245, 230);
+    if (player.location.x >= 3290) {
+      checkpointStroke = color(242, 242, 99);
+      checkpointColor1 = color(252, 252, 38);
+    }
+  }
+}
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 class Collectable {
 
   //DECLARE
@@ -967,7 +1134,11 @@ public void gameControls() {
   }
 
   //M-key to go to menu
+<<<<<<< HEAD
   if (keysPressed[77]) {
+=======
+  if (keysPressed[77] && menu.subMenu != 4) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     menu.subMenu = 0;
     level = 0;
     menuMusic.play();
@@ -983,7 +1154,11 @@ public void gameControls() {
 
 public void playerControls() {
   if ((keyCode == UP || keysPressed[50]) && level != 0) {//////Check for (double) jump
+<<<<<<< HEAD
     if (player.canJumpAgain == true && player.canJump == false && /*(player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&*/(!ara.powerUpActivated[1])) {
+=======
+    if (player.canJumpAgain == true && player.canJump == false &&(!ara.powerUpActivated[1])) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
       player.velocity.y = player.jumpSpeed / 1.2f;
       player.canJumpAgain = false;
       jumpMusic.rewind();
@@ -997,7 +1172,11 @@ public void playerControls() {
         jump.addParticle();
         jumpMusic.rewind();
         jumpMusic.play();
+<<<<<<< HEAD
       }
+=======
+      }  
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     }
   }
 }
@@ -1043,6 +1222,7 @@ public void buildControls() {
 }
 public void loadLevel(boolean objectsToo) {
    
+<<<<<<< HEAD
    checkpoint1Activated = false;//elke x naar nieuw level, staat op vals
    checkpoint2Activated = false;
       
@@ -1051,17 +1231,38 @@ public void loadLevel(boolean objectsToo) {
   }
   bullet.removeAll(bullet);//verwijdert alle bullets zodra je nieuw level laad
   if (level != 0 || level == 3) {//in de levels start hij background muziek
+=======
+   checkpoint1Activated = false;
+   checkpoint2Activated = false;
+      
+  for (int i = 0; i < keysPressed.length; i++) {
+    keysPressed[i] = false;
+  }
+  
+  //Remove all bullets
+  bullet.removeAll(bullet);
+  
+  if (level != 0 || level == 3) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     backgroundMusic.play();
     menuMusic.pause();
     menuMusic.rewind();
   }
+<<<<<<< HEAD
   if (level == 0) {//in menu start hij menu muziek
+=======
+  if (level == 0) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     menuMusic.play();
     backgroundMusic.pause();
     backgroundMusic.rewind();
     
   } else {
+<<<<<<< HEAD
     levels = loadJSONObject("level" + level + ".json");//laden van JSON level file
+=======
+    levels = loadJSONObject("level" + level + ".json");
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
     levelData = levels.getJSONArray("platforms");
     turretData = levels.getJSONArray("turrets");
@@ -1078,6 +1279,7 @@ public void loadLevel(boolean objectsToo) {
     if (setIndex < 4) {
       platforms.removeAll(platforms);
 
+<<<<<<< HEAD
       for (int i = 0; i < levelData.size(); i++) {//totale size van array
         // Get each object in the array
         JSONObject platform = levelData.getJSONObject(i); 
@@ -1085,6 +1287,15 @@ public void loadLevel(boolean objectsToo) {
         JSONObject position = platform.getJSONObject("position"); //pakt position
         // Get properties from position
         float x = position.getFloat("x"); //lezen van alle data
+=======
+      for (int i = 0; i < levelData.size(); i++) {
+        // Get each object in the array
+        JSONObject platform = levelData.getJSONObject(i); 
+        // Get a position object
+        JSONObject position = platform.getJSONObject("position");
+        // Get properties from position
+        float x = position.getFloat("x");
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         float y = position.getFloat("y");
         float Pwidth = position.getFloat("width");
         float Pheight = position.getFloat("height");
@@ -1505,7 +1716,11 @@ class Platform {
       } else if (index == 3) {
         changeLevel = true;
       }
+<<<<<<< HEAD
       if (abs(xOverlap) > abs(yOverlap)) {//abs geeft een positieve waarde terug(- wordt dus +)
+=======
+      if (abs(xOverlap) > abs(yOverlap)) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         player.location.y += yOverlap; // adjust player x - position based on overlap
         //If bottom collision
         if (player.velocity.y < 0) {
@@ -1615,7 +1830,11 @@ class Player {
     }
   }
   
+<<<<<<< HEAD
 // 1765,200 
+=======
+ 
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     //Border left side of the level
     if (location.x < 0) {
       location.x = 0;
@@ -2077,6 +2296,7 @@ PImage btnBack;
 
 
 public void loadImages() {
+<<<<<<< HEAD
 	bgMenu = loadImage("img/background.png");
 	bgKeybindings = loadImage("img/keybindings.png");
 	bgCredits = loadImage("img/credits.png");
@@ -2087,6 +2307,18 @@ public void loadImages() {
 	btnHighscores = loadImage("img/buttons/highScoresButton.JPG");
 	btnCredits = loadImage("img/buttons/creditsButton.JPG");
 	btnExit = loadImage("img/buttons/exitButton.JPG");
+=======
+  bgMenu = loadImage("img/background.png");
+  bgKeybindings = loadImage("img/keybindings.png");
+  bgCredits = loadImage("img/credits.png");
+  bgEnterName = loadImage("img/name.png");
+
+  btnStart = loadImage("img/buttons/startButton.JPG");
+  btnLevelSelect = loadImage("img/buttons/levelSelectButton.JPG");
+  btnHighscores = loadImage("img/buttons/highScoresButton.JPG");
+  btnCredits = loadImage("img/buttons/creditsButton.JPG");
+  btnExit = loadImage("img/buttons/exitButton.JPG");
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
   btnLevel1 = loadImage("img/buttons/level1.PNG");
   btnLevel2 = loadImage("img/buttons/level2.PNG");
@@ -2369,7 +2601,11 @@ class ParticleSystem {
       }
     }
   }
+<<<<<<< HEAD
   public void settings() {  size(1500, 750, P3D);  smooth(8); }
+=======
+  public void settings() {  size(1200, 600, P3D);  smooth(8); }
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "RedemtionOfSage" };
     if (passedArgs != null) {

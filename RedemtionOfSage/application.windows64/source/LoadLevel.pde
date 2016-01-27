@@ -1,5 +1,6 @@
 void loadLevel(boolean objectsToo) {
    
+<<<<<<< HEAD
    checkpoint1Activated = false;//elke x naar nieuw level, staat op vals
    checkpoint2Activated = false;
       
@@ -8,17 +9,38 @@ void loadLevel(boolean objectsToo) {
   }
   bullet.removeAll(bullet);//verwijdert alle bullets zodra je nieuw level laad
   if (level != 0 || level == 3) {//in de levels start hij background muziek
+=======
+   checkpoint1Activated = false;
+   checkpoint2Activated = false;
+      
+  for (int i = 0; i < keysPressed.length; i++) {
+    keysPressed[i] = false;
+  }
+  
+  //Remove all bullets
+  bullet.removeAll(bullet);
+  
+  if (level != 0 || level == 3) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     backgroundMusic.play();
     menuMusic.pause();
     menuMusic.rewind();
   }
+<<<<<<< HEAD
   if (level == 0) {//in menu start hij menu muziek
+=======
+  if (level == 0) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     menuMusic.play();
     backgroundMusic.pause();
     backgroundMusic.rewind();
     
   } else {
+<<<<<<< HEAD
     levels = loadJSONObject("level" + level + ".json");//laden van JSON level file
+=======
+    levels = loadJSONObject("level" + level + ".json");
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
     levelData = levels.getJSONArray("platforms");
     turretData = levels.getJSONArray("turrets");
@@ -35,6 +57,7 @@ void loadLevel(boolean objectsToo) {
     if (setIndex < 4) {
       platforms.removeAll(platforms);
 
+<<<<<<< HEAD
       for (int i = 0; i < levelData.size(); i++) {//totale size van array
         // Get each object in the array
         JSONObject platform = levelData.getJSONObject(i); 
@@ -42,6 +65,15 @@ void loadLevel(boolean objectsToo) {
         JSONObject position = platform.getJSONObject("position"); //pakt position
         // Get properties from position
         float x = position.getFloat("x"); //lezen van alle data
+=======
+      for (int i = 0; i < levelData.size(); i++) {
+        // Get each object in the array
+        JSONObject platform = levelData.getJSONObject(i); 
+        // Get a position object
+        JSONObject position = platform.getJSONObject("position");
+        // Get properties from position
+        float x = position.getFloat("x");
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         float y = position.getFloat("y");
         float Pwidth = position.getFloat("width");
         float Pheight = position.getFloat("height");

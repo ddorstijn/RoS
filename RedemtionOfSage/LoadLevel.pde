@@ -6,8 +6,16 @@ void loadLevel(boolean objectsToo) {
   for (int i = 0; i < keysPressed.length; i++) {//alles wat je hebt ingevuld staat op vals
     keysPressed[i] = false;
   }
+<<<<<<< HEAD
   bullet.removeAll(bullet);//verwijdert alle bullets zodra je nieuw level laad
   if (level != 0) {//in de levels start hij background muziek
+=======
+  
+  //Remove all bullets
+  bullet.removeAll(bullet);
+  
+  if (level != 0 || level == 3) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     backgroundMusic.play();
     menuMusic.pause();
     menuMusic.rewind();

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import ddf.minim.*; //<>// //<>// //<>//
+=======
+import ddf.minim.*; 
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 import ddf.minim.analysis.*;
 
 Minim minim;
@@ -19,11 +23,15 @@ int accumTime;   // total time accumulated in previous intervals
 int startTime;   // time when this interval started
 int displayTime;   // value to display on the clock face
 
+<<<<<<< HEAD
 //kleur g
 int checkpointColor1;
 int checkpointColor2;
 int checkpointStroke;
 int strokeWeight1;
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 int score;
 int lives;
 
@@ -56,7 +64,11 @@ boolean collisionDetect(float playerLeft, float playerTop, float playerRight, fl
 // Basic collision detection method
 float calculate1DOverlap(float p0, float p1, float d0, float d1) {
   float dl = p0+d0-p1, dr = p1+d1-p0;  
+<<<<<<< HEAD
   return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr; 
+=======
+  return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr;
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 }
 
 float beginX, endX, beginY, endY, gridSize; //Size of the grid the game is built around
@@ -80,12 +92,17 @@ ParticleSystem enemyParticle;
 ParticleSystem bulletParticle;
 
 void setup() {
+<<<<<<< HEAD
   size(1500, 750, P3D);
+=======
+  size(1200, 600, P3D);
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   smooth(8);
   frameRate(1000);
 
   loadImages();
   
+<<<<<<< HEAD
   // rondje
   checkpointColor1 = color(245,245,230);
   checkpointColor2 = color(245,245,230);
@@ -99,6 +116,17 @@ void setup() {
 
   keysPressed = new boolean[256];
   particlePos = new PVector(100,100);
+=======
+  //Code cleanup
+  checkpointSetup();
+  music();
+  fft = new FFT(backgroundMusic.bufferSize(), backgroundMusic.sampleRate());
+
+  gridSize = 40;
+
+  keysPressed = new boolean[256];
+  particlePos = new PVector(100, 100);
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
   defaultWaveformcolor = color(20, 77, 207);
   currentWaveformcolor = color(20, 77, 207);
@@ -132,13 +160,21 @@ void setup() {
 void draw() {
 
   if (paused == false && level != 0) {
+<<<<<<< HEAD
    displayTime = accumTime + millis() - startTime;
+=======
+    displayTime = accumTime + millis() - startTime;
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   }
   if (paused == true) {
     startTime = millis();
   }
 
   loops = 0;
+<<<<<<< HEAD
+=======
+  //update game
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   while (millis () > next_game_tick && loops < MAX_FRAMESKIP) {
     if (!paused) { 
       update_game();
@@ -147,13 +183,20 @@ void draw() {
     next_game_tick += SKIP_TICKS;
     loops++;
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
   draw_game();
 }
 
 void update_game() {
   colortransition();
+<<<<<<< HEAD
   
+=======
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
   if (level != 0) {
     player.update();
@@ -161,12 +204,17 @@ void update_game() {
 
     for (Collectable coin : coins) {
       coin.update();
+<<<<<<< HEAD
       if (collisionObject){
+=======
+      if (collisionObject) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         collisionObject = false;
         coins.remove(coin);
         break;
       }
     }
+<<<<<<< HEAD
     //veranderd
     println(player.location.x, player.location.y);
     
@@ -193,6 +241,10 @@ void update_game() {
       }
     }
         
+=======
+    //Checkpoint Cleanup
+    checkpointUpdate();
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
     for (Platform b : platforms) {
       b.update();
@@ -215,7 +267,11 @@ void update_game() {
         }
       }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     for (Turret turret : turrets) {
       turret.update();
     }
@@ -226,13 +282,21 @@ void update_game() {
 
     for (bullet b : bullet) {
       b.update();
+<<<<<<< HEAD
       if (collisionObject){
+=======
+      if (collisionObject) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
         collisionObject = false;
         bullet.remove(b);
         break;
       }
     }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     worldCamera.drawWorld();
   }
 
@@ -256,6 +320,7 @@ void draw_game() {
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
+<<<<<<< HEAD
 if(level != 0){
    menuMusic.pause();
   // menuMusic.rewind();
@@ -303,13 +368,65 @@ if(level == 3){
   fill(checkpointColor1);
   ellipse(3284, 210, 20,20);
 }
+=======
+    if (level != 0) {
+      menuMusic.pause();
+      // menuMusic.rewind();
+      backgroundMusic.play();
+      backgroundMusic.setGain(-15);
+    }
+
+    //Checkpoints level 1
+    if (level == 1) {  
+      noStroke();
+      fill(64, 64, 64);
+      rect(2291, 220, 8, 80);
+      fill(checkpointColor1);
+      ellipse(2285, 210, 20, 20);
+
+      noStroke();
+      fill(64, 64, 64); 
+      rect(4733, 210, 8, 80);
+      //stroke(checkpointStroke);
+      fill (checkpointColor2);
+      ellipse(4727, 200, 20, 20);
+
+      menuMusic.pause();
+      menuMusic.rewind();
+      backgroundMusic.play();
+    }
+
+    //checkpoint level 2
+    if (level == 2) {
+      noStroke();
+      fill(64, 64, 64);
+      rect(3336, 200, 8, 80);
+      stroke(checkpointStroke);
+      fill(checkpointColor1);
+      ellipse(3330, 190, 20, 20);
+    }
+
+    //checkpoints level 3
+    if (level == 3) {
+      noStroke();
+      fill(64, 64, 64);
+      rect(3290, 220, 8, 80);
+      stroke(checkpointStroke);
+      fill(checkpointColor1);
+      ellipse(3284, 210, 20, 20);
+    }
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
     levelBuild();
 
     //setuppreview();
     player.display();
     ara.display();
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     for (Collectable b : coins) {
       b.display();
     }
@@ -337,9 +454,15 @@ if(level == 3){
     textAlign(LEFT);
     textFont(statsFont);
     textSize(14);
+<<<<<<< HEAD
     fill(255);
     text("fps: " + (int) frameRate, 10, 20);
     text("score: " + score, 10, 40);
+=======
+    fill(255, 0, 255);
+    text("fps: " + (int) frameRate, 10, 20);
+    text("score: " + score, 10, 52);
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
 
 
     textAlign(CENTER, TOP);

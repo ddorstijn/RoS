@@ -231,7 +231,7 @@ void gameControls() {
   }
 
   //M-key to go to menu
-  if (keysPressed[77]) {
+  if (keysPressed[77] && menu.subMenu != 4) {
     menu.subMenu = 0;
     level = 0;
     menuMusic.play();
@@ -246,8 +246,13 @@ void gameControls() {
 }
 
 void playerControls() {
+<<<<<<< HEAD
   if ((keyCode == UP) && level != 0) {//////Check for (double) jump
     if (player.canJumpAgain == true && player.canJump == false && /*(player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&*/(!ara.powerUpActivated[1])) {
+=======
+  if ((keyCode == UP || keysPressed[50]) && level != 0) {//////Check for (double) jump
+    if (player.canJumpAgain == true && player.canJump == false &&(!ara.powerUpActivated[1])) {
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
       player.velocity.y = player.jumpSpeed / 1.2;
       player.canJumpAgain = false;
       jumpMusic.rewind();
@@ -261,7 +266,11 @@ void playerControls() {
         jump.addParticle();
         jumpMusic.rewind();
         jumpMusic.play();
+<<<<<<< HEAD
       }
+=======
+      }  
+>>>>>>> ff9b1fa7f0ea32063bd741ecd5c51e74531e2d31
     }
   }
 }
