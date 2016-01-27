@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class RedemtionOfSage extends PApplet {
 
- //<>// //<>// //<>//
+ //<>// //<>// //<>// //<>//
 
 
 Minim minim;
@@ -173,6 +173,7 @@ public void draw() {
 
 public void update_game() {
   colortransition();
+  
 
   if (level != 0) {
     player.update();
@@ -187,10 +188,11 @@ public void update_game() {
       }
     }
     //veranderd
+    println(player.location.x, player.location.y);
+    
     if(level == 1){
     if((player.location.x >= 2291) == true){
-      strokeWeight1 = 3;
-      checkpointStroke = color(255);
+      checkpointStroke = color(242,242,99);
       checkpointColor1 = color(252,252,38);
     }
     if(player.location.x >= 4733){
@@ -204,6 +206,13 @@ public void update_game() {
       checkpointColor1 = color(252,252,38);
       }
     }
+    if(level == 3){
+      if(player.location.x >= 3290){
+      checkpointStroke = color(242,242,99);
+      checkpointColor1 = color(252,252,38);
+      }
+    }
+        
 
     for (Platform b : platforms) {
       b.update();
@@ -259,44 +268,62 @@ public void update_game() {
 public void draw_game() {
   drawBackground(); //
 
+
+
   if (level != 0) {
     grid();
 
     //LEVEL
     pushMatrix();
     translate(-pos.x, -pos.y);
-    
-//checkpoint rondje
+if(level != 0){
+   menuMusic.pause();
+  // menuMusic.rewind();
+  backgroundMusic.play();
+  backgroundMusic.setGain(-12);
+}
+
+//Checkpoints level 1
 if(level == 1){  
-  //Drawing checkpoint 1
   noStroke();
   fill(64,64,64);
   rect(2291, 220, 8, 80);
-  //strokeWeight(strokeWeight1);
-  stroke(checkpointStroke);
   fill(checkpointColor1);
   ellipse(2285, 210, 20,20);
+  
   noStroke();
-  //Drawing checkpoint 2
   fill(64,64,64); 
   rect(4733, 210, 8, 80);
+  //stroke(checkpointStroke);
   fill (checkpointColor2);
   ellipse(4727, 200, 20,20);
+
   menuMusic.pause();
-  // menuMusic.rewind();
+  menuMusic.rewind();
   backgroundMusic.play();
+
   }
 
-
-if (level == 2){ 
-  //Drawing checkpoint 1
-  fill(64,64,64);
+//checkpoint level 2
+if (level == 2){
   noStroke();
+  fill(64,64,64);
   rect(3336, 200, 8, 80);
   stroke(checkpointStroke);
   fill(checkpointColor1);
   ellipse(3330, 190, 20,20);
 }
+
+//checkpoints level 3
+if(level == 3){
+  noStroke();
+  fill(64,64,64);
+  rect(3290, 220, 8, 80);
+  stroke(checkpointStroke);
+  fill(checkpointColor1);
+  ellipse(3284, 210, 20,20);
+}
+
     levelBuild();
 
     //setuppreview();
@@ -597,15 +624,18 @@ class Ara {
   }
 }
 public void drawBackground() {
+  pushMatrix();
+  translate(0,0, -1);
   if (level != 0) {
     background(0); //Drawing background
   } else if (menu.subMenu == 3){ 
-    background(bgCredits);
+    image(bgCredits,0,0,width,height);
   } else if (level == 0 && menu.subMenu == 4){
-    background(bgEnterName);
+    image(bgEnterName,0,0,width,height);
   } else {
-    background(bgMenu);
+    image(bgMenu, 0,0,width,height);
   }
+  popMatrix();
 
   if (level != 0) {
     fft.forward(backgroundMusic.mix);
@@ -614,6 +644,7 @@ public void drawBackground() {
 
     for(int i = 0; i < 45; i++) {
      float x = map( i-1, 0, 45, 0, width/3);
+     
      
      strokeWeight(4);
      line(width/2+x, height/3 + fft.getBand(i)*4, -1, width/2+x, height/3 - fft.getBand(i)*3, -1);
@@ -624,7 +655,7 @@ public void drawBackground() {
 
 public void colortransition() {
   if (currentWaveformcolor != defaultWaveformcolor) {
-      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03f);
+      currentWaveformcolor = lerpColor(currentWaveformcolor, defaultWaveformcolor, .03f);//maatk in kleine stapjes de kleur naar defaultWave
   }
 }
 
@@ -939,6 +970,7 @@ public void gameControls() {
   if (keysPressed[77]) {
     menu.subMenu = 0;
     level = 0;
+    menuMusic.play();
   }
 
   //P-key to pause
@@ -951,7 +983,7 @@ public void gameControls() {
 
 public void playerControls() {
   if ((keyCode == UP || keysPressed[50]) && level != 0) {//////Check for (double) jump
-    if (player.canJumpAgain == true && player.canJump == false && (player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&(!ara.powerUpActivated[1])) {
+    if (player.canJumpAgain == true && player.canJump == false && /*(player.velocity.y > 0 || player.velocity.y < 0 && player.velocity.y != 0)&&*/(!ara.powerUpActivated[1])) {
       player.velocity.y = player.jumpSpeed / 1.2f;
       player.canJumpAgain = false;
       jumpMusic.rewind();
@@ -966,7 +998,6 @@ public void playerControls() {
         jumpMusic.rewind();
         jumpMusic.play();
       }
-      player.canJump = false;
     }
   }
 }
@@ -1012,16 +1043,25 @@ public void buildControls() {
 }
 public void loadLevel(boolean objectsToo) {
    
-   checkpoint1Activated = false;
+   checkpoint1Activated = false;//elke x naar nieuw level, staat op vals
    checkpoint2Activated = false;
       
-  for (int i = 0; i < keysPressed.length; i++) {
+  for (int i = 0; i < keysPressed.length; i++) {//alles wat je hebt ingevuld staat op vals
     keysPressed[i] = false;
   }
-  bullet.removeAll(bullet);
-  if (level == 0) {
+  bullet.removeAll(bullet);//verwijdert alle bullets zodra je nieuw level laad
+  if (level != 0 || level == 3) {//in de levels start hij background muziek
+    backgroundMusic.play();
+    menuMusic.pause();
+    menuMusic.rewind();
+  }
+  if (level == 0) {//in menu start hij menu muziek
+    menuMusic.play();
+    backgroundMusic.pause();
+    backgroundMusic.rewind();
+    
   } else {
-    levels = loadJSONObject("level" + level + ".json");
+    levels = loadJSONObject("level" + level + ".json");//laden van JSON level file
 
     levelData = levels.getJSONArray("platforms");
     turretData = levels.getJSONArray("turrets");
@@ -1038,13 +1078,13 @@ public void loadLevel(boolean objectsToo) {
     if (setIndex < 4) {
       platforms.removeAll(platforms);
 
-      for (int i = 0; i < levelData.size(); i++) {
+      for (int i = 0; i < levelData.size(); i++) {//totale size van array
         // Get each object in the array
         JSONObject platform = levelData.getJSONObject(i); 
         // Get a position object
-        JSONObject position = platform.getJSONObject("position");
+        JSONObject position = platform.getJSONObject("position"); //pakt position
         // Get properties from position
-        float x = position.getFloat("x");
+        float x = position.getFloat("x"); //lezen van alle data
         float y = position.getFloat("y");
         float Pwidth = position.getFloat("width");
         float Pheight = position.getFloat("height");
@@ -1299,11 +1339,9 @@ class Button {
       image(btnExit, 411, 461);
       
       noTint();
-      menuMusic.play();
-      menuMusic.loop();
+      
+      
     } else if (level == 0 && subMenu == 1) {
-      backgroundMusic.pause();
-      backgroundMusic.rewind();
 
       if (mpos == 0) 
         tint(255, 0, 0);
@@ -1467,7 +1505,7 @@ class Platform {
       } else if (index == 3) {
         changeLevel = true;
       }
-      if (abs(xOverlap) > abs(yOverlap)) {
+      if (abs(xOverlap) > abs(yOverlap)) {//abs geeft een positieve waarde terug(- wordt dus +)
         player.location.y += yOverlap; // adjust player x - position based on overlap
         //If bottom collision
         if (player.velocity.y < 0) {
@@ -1549,7 +1587,7 @@ class Player {
     velocity.add(gravity);
     velocity.x *= friction;
 
-
+//Checkpoint respawn
   if( level == 1){
     if (location.x >= 2291 && !checkpoint2Activated){
       start = new PVector(2291, 150);
@@ -1571,7 +1609,11 @@ class Player {
       start = new PVector(3336, 130);
     }
   }
-
+  if(level == 3){
+    if(location.x >= 3290){
+      start = new PVector(3290, 110);
+    }
+  }
   
 // 1765,200 
     //Border left side of the level
@@ -1579,7 +1621,12 @@ class Player {
       location.x = 0;
       velocity.x = 0;
     }
-
+    
+    if (location.y < 0) {
+      location.y = 0;
+      velocity.y = 0;
+    }
+    
     if (velocity.y < 0 && angle <= PI / 2 && velocity.x >= 0 && angle > -(PI / 2)) {
       angle += 2 * PI / 360 * 8;
     } else if (velocity.y < 0 && angle >= -(PI / 2) && velocity.x < 0 && angle < PI / 2) {
@@ -1613,7 +1660,7 @@ class Player {
   }
 
   public void respawn() {
-    //lives--;
+    score -= 100;
     playerDiesMusic.rewind();
     playerDiesMusic.play();
     location.set(start);
@@ -2322,7 +2369,7 @@ class ParticleSystem {
       }
     }
   }
-  public void settings() {  size(1200, 600, P3D);  smooth(8); }
+  public void settings() {  size(1500, 750, P3D);  smooth(8); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "RedemtionOfSage" };
     if (passedArgs != null) {

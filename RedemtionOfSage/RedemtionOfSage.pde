@@ -1,4 +1,4 @@
-import ddf.minim.*; //<>// //<>// //<>// //<>// //<>//
+import ddf.minim.*; //<>// //<>// //<>// //<>//
 import ddf.minim.analysis.*;
 
 Minim minim;
@@ -80,7 +80,7 @@ ParticleSystem enemyParticle;
 ParticleSystem bulletParticle;
 
 void setup() {
-  size(1200, 600, P3D);
+  size(1500, 750, P3D);
   smooth(8);
   frameRate(1000);
 
@@ -197,7 +197,7 @@ void update_game() {
     for (Platform b : platforms) {
       b.update();
       if (changeLevel) {
-        if (level < 3) {
+        if (level < 4) {
           level ++;
           setIndex = 0;
           loadLevel(true);
@@ -260,7 +260,7 @@ if(level != 0){
    menuMusic.pause();
   // menuMusic.rewind();
   backgroundMusic.play();
-  backgroundMusic.setGain(-15);
+  backgroundMusic.setGain(-12);
 }
 
 //Checkpoints level 1
@@ -337,9 +337,9 @@ if(level == 3){
     textAlign(LEFT);
     textFont(statsFont);
     textSize(14);
-    fill(255, 0, 255);
+    fill(255);
     text("fps: " + (int) frameRate, 10, 20);
-    text("score: " + score, 10, 52);
+    text("score: " + score, 10, 40);
 
 
     textAlign(CENTER, TOP);

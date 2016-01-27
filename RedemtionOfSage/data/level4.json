@@ -1,0 +1,55 @@
+{
+  "ara": {
+    "x": 250,
+    "y": 200
+  },
+  "coins": [],
+  "turrets": [],
+  "MovEnemy": [],
+  "player": {
+    "x": 200,
+    "y": 200
+  },
+  "platforms": [
+    {
+      "index": 1,
+      "position": {
+        "x": 160,
+        "width": 120,
+        "y": 440,
+        "height": 40
+      },
+      "value": 1
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 120,
+        "width": 40,
+        "y": 440,
+        "height": 0
+      },
+      "value": 2
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 120,
+        "width": 0,
+        "y": 440,
+        "height": 0
+      },
+      "value": 3
+    },
+    {
+      "index": 1,
+      "position": {
+        "x": 120,
+        "width": 40,
+        "y": 0,
+        "height": 480
+      },
+      "value": 4
+    }
+  ]
+}

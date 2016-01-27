@@ -1,24 +1,24 @@
 void loadLevel(boolean objectsToo) {
    
-   checkpoint1Activated = false;
+   checkpoint1Activated = false;//elke x naar nieuw level, staat op vals
    checkpoint2Activated = false;
       
-  for (int i = 0; i < keysPressed.length; i++) {
+  for (int i = 0; i < keysPressed.length; i++) {//alles wat je hebt ingevuld staat op vals
     keysPressed[i] = false;
   }
-  bullet.removeAll(bullet);
-  if (level != 0 || level == 3) {
+  bullet.removeAll(bullet);//verwijdert alle bullets zodra je nieuw level laad
+  if (level != 0) {//in de levels start hij background muziek
     backgroundMusic.play();
     menuMusic.pause();
     menuMusic.rewind();
   }
-  if (level == 0) {
+  if (level == 0) {//in menu start hij menu muziek
     menuMusic.play();
     backgroundMusic.pause();
     backgroundMusic.rewind();
     
   } else {
-    levels = loadJSONObject("level" + level + ".json");
+    levels = loadJSONObject("level" + level + ".json");//laden van JSON level file
 
     levelData = levels.getJSONArray("platforms");
     turretData = levels.getJSONArray("turrets");
@@ -35,13 +35,13 @@ void loadLevel(boolean objectsToo) {
     if (setIndex < 4) {
       platforms.removeAll(platforms);
 
-      for (int i = 0; i < levelData.size(); i++) {
+      for (int i = 0; i < levelData.size(); i++) {//totale size van array
         // Get each object in the array
         JSONObject platform = levelData.getJSONObject(i); 
         // Get a position object
-        JSONObject position = platform.getJSONObject("position");
+        JSONObject position = platform.getJSONObject("position"); //pakt position
         // Get properties from position
-        float x = position.getFloat("x");
+        float x = position.getFloat("x"); //lezen van alle data
         float y = position.getFloat("y");
         float Pwidth = position.getFloat("width");
         float Pheight = position.getFloat("height");
